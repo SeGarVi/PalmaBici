@@ -17,20 +17,8 @@ import android.util.Log;
 public class Synchronizer {
 	
 	private static final String URL = "http://api.citybik.es/palma.json";
-	private static Synchronizer sync = null;
 	
-	public static Synchronizer getInstance () {
-		if (sync == null)
-			sync = new Synchronizer();
-		
-		return sync;
-	}
-	
-	private Synchronizer() {
-		
-	}
-	
-	private String getNetworkInfo() {
+	public static String getNetworkInfo() {
 		StringBuilder builder = new StringBuilder();
 		HttpClient    client  = new DefaultHttpClient();
 		HttpGet 	  request = new HttpGet(URL);
@@ -55,15 +43,5 @@ public class Synchronizer {
 			e.printStackTrace();
 		}		
 		return builder.toString();
-	}
-	
-	//TODO change name
-	public ArrayList <Station> synchronize () {		
-		return JSONParser.getInstance().parse(this.getNetworkInfo());
-	}
-	
-	//TODO update only number of bikes
-	public ArrayList <Station> update () {
-		return null;
 	}
 }

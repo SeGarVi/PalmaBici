@@ -1,5 +1,6 @@
 package com.poguico.palmabici;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -7,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class StationList extends ArrayAdapter<Station> {
@@ -16,6 +16,9 @@ public class StationList extends ArrayAdapter<Station> {
 
 	public StationList(Context context, List<Station> stations) {
 		super(context, R.layout.main_list_item_layout, stations);
+		
+		Collections.sort(stations);
+		
 		this.context = context;
 		this.stations = stations;
 	}
@@ -24,14 +27,14 @@ public class StationList extends ArrayAdapter<Station> {
 	public View getView(int position, View convertView, ViewGroup parent) {		
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView = inflater.inflate(R.layout.main_list_item_layout, parent, false);
-		TextView id = (TextView) rowView.findViewById(R.id.id);
-		TextView name = (TextView) rowView.findViewById(R.id.name);
+		View rowView   = inflater.inflate(R.layout.main_list_item_layout, parent, false);
+		TextView id    = (TextView) rowView.findViewById(R.id.id);
+		TextView name  = (TextView) rowView.findViewById(R.id.name);
 		TextView bikes = (TextView) rowView.findViewById(R.id.bikes);
 		TextView holes = (TextView) rowView.findViewById(R.id.holes);
 		//ImageView favourite = (ImageView) rowView.findViewById(R.id.favourite);
 				
-		id.setText(stations.get(position).getId() + " · ");
+		id.setText(stations.get(position).getN_estacio() + " · ");
 		name.setText(stations.get(position).getName());
 		bikes.setText("Bicicletas: " + stations.get(position).getBusy_slots());
 		holes.setText("Sitios libres: " + stations.get(position).getFree_slots());

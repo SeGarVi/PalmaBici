@@ -6,20 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JSONParser {
-	private static JSONParser parser = null;
 	
-	public static JSONParser getInstance() {
-		if (parser == null)
-			parser = new JSONParser();
-		
-		return parser;
-	}
-	
-	private JSONParser () {
-		
-	}
-	
-	public ArrayList <Station> parse (String data) {
+	public static ArrayList <Station> parse (String data) {
 		ArrayList <Station> stations = new ArrayList<Station>();
 		JSONArray json_array;
 		JSONObject json_object;
@@ -31,8 +19,9 @@ public class JSONParser {
 				json_object = json_array.getJSONObject(i);
 				
 				stations.add(new Station(json_object.getInt("id"),
-										 json_object.getString("name"),
-										 json_object.getLong("long"),
+										 json_object.getString("name").substring(1, 3),
+										 json_object.getString("name").substring(5),
+										 json_object.getLong("lng"),
 										 json_object.getLong("lat"),
 										 json_object.getInt("free"),
 										 json_object.getInt("bikes"),
@@ -40,13 +29,8 @@ public class JSONParser {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
 		
 		return stations;
-	}
-	
-	//TODO update only number of bikes
-	public ArrayList <Station> parseUpdate (String data) {
-		return null;
 	}
 }

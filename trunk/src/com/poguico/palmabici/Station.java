@@ -1,14 +1,15 @@
 package com.poguico.palmabici;
 
-public class Station {
+public class Station implements Comparable <Station> {
 	private int id, free_slots, busy_slots;
-	private String name;
+	private String n_estacio, name;
 	private long station_long, station_lat;
 	private boolean favourite;
 	
-	public Station(int id, String name, long station_long, long station_lat,
+	public Station(int id, String n_estacio, String name, long station_long, long station_lat,
 				   int free_slots, int busy_slots, boolean favourite) {
 		this.id = id;
+		this.n_estacio = n_estacio;
 		this.free_slots = free_slots;
 		this.busy_slots = busy_slots;
 		this.name = name;
@@ -23,6 +24,14 @@ public class Station {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getN_estacio() {
+		return n_estacio;
+	}
+
+	public void setN_estacio(String n_estacio) {
+		this.n_estacio = n_estacio;
 	}
 
 	public int getFree_slots() {
@@ -71,5 +80,13 @@ public class Station {
 
 	public void setFavourite(boolean favourite) {
 		this.favourite = favourite;
+	}
+
+	@Override
+	public int compareTo(Station altra) {
+		Integer inter = new Integer(this.n_estacio);
+		Integer exter = new Integer(altra.n_estacio);
+		
+		return inter.compareTo(exter);
 	}
 }
