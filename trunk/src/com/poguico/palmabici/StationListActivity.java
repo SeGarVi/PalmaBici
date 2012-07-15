@@ -1,12 +1,10 @@
 package com.poguico.palmabici;
 
 import java.util.ArrayList;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
-public class StationListActivity extends Activity {
+public class StationListActivity extends ActionBarActivity {
 	ArrayList <Station> stations;
 
     @Override

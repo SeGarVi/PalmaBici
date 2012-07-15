@@ -3,5 +3,9 @@
 
     <string name="hello">Hello World, PalmaBiciActivity!</string>
     <string name="app_name">PalmaBici</string>
+    <string name="menu_report">Reportar</string>
+    <string name="menu_preferences">Preferències</string>
+    <string name="menu_credits">menu_credits</string>
+    <string name="menu_refresh">Refresh</string>
 
 </resources>
