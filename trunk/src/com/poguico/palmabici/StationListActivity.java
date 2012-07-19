@@ -33,7 +33,7 @@ public class StationListActivity extends ActionBarActivity {
 
         protected void onPostExecute(Void params) {
         	dialog.hide();
-        	Toast.makeText(activity, "Estacions actualitzades!", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(activity, R.string.refresh_succesful, Toast.LENGTH_SHORT).show();
         	StationList station_list = new StationList(activity, NetworkInfo.getNetwork());        
             ListView list = (ListView) findViewById(R.id.stationList);        
             list.setAdapter(station_list);
@@ -69,12 +69,13 @@ public class StationListActivity extends ActionBarActivity {
                 break;
 
             case R.id.menu_refresh:
-            	dialog = ProgressDialog.show(this, "", "Actualitzant estat...", true);
+            	//dialog = ProgressDialog.show(this, "", R.string.refresh_ongoing, true);
                 new SynchronizeTask(this).execute((Void [])null);
                 break;
 
             case R.id.menu_credits:
-                Toast.makeText(this, "Tapped credits", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Tapped credits", Toast.LENGTH_SHORT).show();
+            	new CreditsDialog(this).show();
                 break;
 
             case R.id.menu_preferences:
@@ -83,7 +84,7 @@ public class StationListActivity extends ActionBarActivity {
                 
             case R.id.menu_report:
                 Intent issue_intent = new Intent(Intent.ACTION_VIEW);
-                issue_intent.setData(Uri.parse("https://github.com/SeGarVi/PalmaBici/issues"));
+                issue_intent.setData(Uri.parse("https://github.com/SeGarVi/PalmaBici/issues/new"));
                 startActivity(issue_intent);
                 break;
         }

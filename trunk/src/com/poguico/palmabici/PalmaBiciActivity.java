@@ -18,7 +18,7 @@ public class PalmaBiciActivity extends Activity {
         
         protected void onProgressUpdate(Void... params) {
         	TextView text = (TextView)findViewById(R.id.textView1);
-        	text.setText("Loaded!");
+        	text.setText(R.string.refresh_succesful);
         }
 
         protected void onPostExecute(Void params) {
