@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -80,7 +82,9 @@ public class StationListActivity extends ActionBarActivity {
                 break;
                 
             case R.id.menu_report:
-                Toast.makeText(this, "Tapped share", Toast.LENGTH_SHORT).show();
+                Intent issue_intent = new Intent(Intent.ACTION_VIEW);
+                issue_intent.setData(Uri.parse("https://github.com/SeGarVi/PalmaBici/issues"));
+                startActivity(issue_intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
