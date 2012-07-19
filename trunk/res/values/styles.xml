@@ -16,6 +16,11 @@
 
 <resources>
 
+    <style name="WelcomeTheme" parent="android:style/Theme.Light">
+        <item name="android:background">#00599e</item>
+        <item name="android:textColor" >#ffffff</item>
+    </style>
+    
     <style name="AppTheme" parent="android:style/Theme.Light">
         <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
@@ -29,7 +34,7 @@
     </style>
 
     <style name="ActionBarCompat">
-        <item name="android:background">#eee</item>
+        <item name="android:background">#00599e</item>
     </style>
 
     <style name="ActionBarCompatItemBase">
@@ -46,7 +51,7 @@
         <item name="android:id">@id/actionbar_compat_title</item>
         <!-- layout_width/height/weight must be set in code -->
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:paddingLeft">6dp</item>
         <item name="android:paddingRight">6dp</item>
         <item name="android:singleLine">true</item>
@@ -55,6 +60,7 @@
 
     <style name="ActionBarCompatTitle" parent="style/ActionBarCompatTitleBase">
         <item name="android:textColor">@color/actionbar_title_color</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ActionBarCompatItem" parent="style/ActionBarCompatItemBase">
