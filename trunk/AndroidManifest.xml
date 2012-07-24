@@ -26,6 +26,11 @@
                 <action android:name="android.intent.action.RUN"/>
             </intent-filter>
         </activity>
+        <activity android:name=".PreferencesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.RUN"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -2,7 +2,6 @@ package com.poguico.palmabici;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.util.Linkify;

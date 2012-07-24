@@ -17,5 +17,6 @@
     <string name="credits_license">Aquesta aplicació és programari lliure, distribuit sota la llicència AGPL v.3. excepte el codi per implementar una action bar compatible amb les diferents versions d\'Android (autoria de Google i sota llicència Apache v.2). Abaix pots accedir al text complet de les llicències.</string>
     <string name="credits_collaborate">Ets lliure de descarregar-te i modificar el codi font d\'aquesta app, així com de redistribuir-la amb o sense modificacions amb la mateixa llicència. Si vols participar en el desenvolupament, envia\'m un correu :)</string>
     <string name="close">Tanca</string>
+    <string name="preferences_autoupdate">Auto Actualitzar</string>
 
 </resources>

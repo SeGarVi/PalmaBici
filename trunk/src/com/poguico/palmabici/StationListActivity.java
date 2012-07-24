@@ -1,13 +1,16 @@
 package com.poguico.palmabici;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +20,11 @@ import android.widget.Toast;
 public class StationListActivity extends ActionBarActivity {
 	ArrayList <Station> stations;
 	ProgressDialog dialog;
+	
+	/**
+	 * Put in other place
+	 */
+	private Long last_update = Calendar.getInstance().getTimeInMillis();
 
 	private class SynchronizeTask extends AsyncTask <Void, Void, Void> {
         
@@ -32,7 +40,11 @@ public class StationListActivity extends ActionBarActivity {
         }
 
         protected void onPostExecute(Void params) {
-        	dialog.hide();
+        	last_update = Calendar.getInstance().getTimeInMillis();
+        	
+        	if (dialog != null)
+        		dialog.hide();
+        	
         	Toast.makeText(activity, R.string.refresh_succesful, Toast.LENGTH_SHORT).show();
         	StationList station_list = new StationList(activity, NetworkInfo.getNetwork());        
             ListView list = (ListView) findViewById(R.id.stationList);        
@@ -74,12 +86,12 @@ public class StationListActivity extends ActionBarActivity {
                 break;
 
             case R.id.menu_credits:
-                //Toast.makeText(this, "Tapped credits", Toast.LENGTH_SHORT).show();
             	new CreditsDialog(this).show();
                 break;
 
             case R.id.menu_preferences:
-                Toast.makeText(this, "Tapped share", Toast.LENGTH_SHORT).show();
+            	Intent preferences_activity = new Intent(this, PreferencesActivity.class);
+            	this.startActivity(preferences_activity);
                 break;
                 
             case R.id.menu_report:
@@ -90,4 +102,19 @@ public class StationListActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		SharedPreferences conf=PreferenceManager
+				.getDefaultSharedPreferences(this);
+
+		long now = Calendar.getInstance().getTimeInMillis();
+		
+		if (conf.getBoolean("autoupdate", true) && (now-last_update) > 60000) {
+			new SynchronizeTask(this).execute((Void [])null);
+		}
+	}
 }
