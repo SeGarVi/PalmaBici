@@ -14,7 +14,7 @@
   limitations under the License.
   -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="WelcomeTheme" parent="android:style/Theme.Light">
         <item name="android:background">#00599e</item>
@@ -67,6 +67,10 @@
     </style>
 
     <style name="ActionBarCompatHomeItem" parent="style/ActionBarCompatItemBase">
+    </style>
+    
+    <style name="CreditsDialogWindow" parent="android:Theme.Dialog">
+        <item name="android:padding"> 10dp </item>
     </style>
     
 </resources>
