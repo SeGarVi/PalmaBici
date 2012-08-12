@@ -18,5 +18,6 @@
     <string name="credits_collaborate">Ets lliure de descarregar-te i modificar el codi font d\'aquesta app, així com de redistribuir-la amb o sense modificacions amb la mateixa llicència. Si vols participar en el desenvolupament, envia\'m un correu :)</string>
     <string name="close">Tanca</string>
     <string name="preferences_autoupdate">Auto Actualitzar</string>
+    <string name="connectivity_error">No disposes de connexió a internet!</string>
 
 </resources>

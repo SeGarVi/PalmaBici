@@ -1,31 +1,12 @@
 package com.poguico.palmabici;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class PalmaBiciActivity extends Activity {
+public class PalmaBiciActivity extends SynchronizableActivity {
 
-    private class SynchronizeTask extends AsyncTask <Void, Void, Void> {
-        
-    	protected Void doInBackground(Void... params) {
-    		NetworkInfo.setNetwork(Synchronizer.getNetworkInfo());
-            publishProgress((Void [])null);
-            return null;
-        }        
-        
-        protected void onProgressUpdate(Void... params) {
-        	TextView text = (TextView)findViewById(R.id.textView1);
-        	text.setText(R.string.refresh_succesful);
-        }
-
-        protected void onPostExecute(Void params) {
-        	enter_app();
-        }
-    }
-	
+	Synchronizer synchronizer;	
 	String stations;
 	
     /** Called when the activity is first created. */
@@ -33,12 +14,30 @@ public class PalmaBiciActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        synchronizer = Synchronizer.getInstance();
+        
         setContentView(R.layout.welcome);
-        new SynchronizeTask().execute((Void [])null);
+        synchronizer.new SynchronizeTask(this).execute((Void [])null);
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        setContentView(R.layout.welcome);
+        synchronizer.new SynchronizeTask(this).execute((Void [])null);
     }
     
-    private void enter_app () {
-    	Intent next_activity = new Intent(this, StationListActivity.class);
+	@Override
+	public void successfulSynchronization() {
+		TextView text = (TextView)findViewById(R.id.textView1);
+    	text.setText(R.string.refresh_succesful);
+		Intent next_activity = new Intent(this, StationListActivity.class);
     	this.startActivity(next_activity);
-    }
+	}
+
+	@Override
+	public void unsuccessfulSynchronization() {
+		TextView text = (TextView)findViewById(R.id.textView1);
+    	text.setText(R.string.connectivity_error);
+	}
 }

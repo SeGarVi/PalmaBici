@@ -3,12 +3,10 @@ package com.poguico.palmabici;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -20,37 +18,7 @@ import android.widget.Toast;
 public class StationListActivity extends ActionBarActivity {
 	ArrayList <Station> stations;
 	ProgressDialog dialog;
-	
-	/**
-	 * Put in other place
-	 */
-	private Long last_update = Calendar.getInstance().getTimeInMillis();
-
-	private class SynchronizeTask extends AsyncTask <Void, Void, Void> {
-        
-		Activity activity;
-		
-		public SynchronizeTask (Activity activity) {
-			this.activity = activity;
-		}
-		
-    	protected Void doInBackground(Void... params) {
-    		NetworkInfo.setNetwork(Synchronizer.getNetworkInfo());
-            return null;
-        }
-
-        protected void onPostExecute(Void params) {
-        	last_update = Calendar.getInstance().getTimeInMillis();
-        	
-        	if (dialog != null)
-        		dialog.hide();
-        	
-        	Toast.makeText(activity, R.string.refresh_succesful, Toast.LENGTH_SHORT).show();
-        	StationList station_list = new StationList(activity, NetworkInfo.getNetwork());        
-            ListView list = (ListView) findViewById(R.id.stationList);        
-            list.setAdapter(station_list);
-        }
-    }
+	Synchronizer synchronizer;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +26,8 @@ public class StationListActivity extends ActionBarActivity {
         
         setContentView(R.layout.main);
         
-        StationList station_list = new StationList(this, NetworkInfo.getNetwork());        
+        //synchronizer = Synchronizer.getInstance();
+        StationList station_list = new StationList(this, NetworkInformation.getNetwork());        
         ListView list = (ListView) findViewById(R.id.stationList);        
         list.setAdapter(station_list);
     }
@@ -82,7 +51,7 @@ public class StationListActivity extends ActionBarActivity {
 
             case R.id.menu_refresh:
             	//dialog = ProgressDialog.show(this, "", R.string.refresh_ongoing, true);
-                new SynchronizeTask(this).execute((Void [])null);
+            	synchronizer.new SynchronizeTask(this).execute((Void [])null);
                 break;
 
             case R.id.menu_credits:
@@ -104,17 +73,32 @@ public class StationListActivity extends ActionBarActivity {
     }
 
 	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
+	protected void onRestart() {
+		super.onRestart();
 		
 		SharedPreferences conf=PreferenceManager
 				.getDefaultSharedPreferences(this);
 
 		long now = Calendar.getInstance().getTimeInMillis();
 		
-		if (conf.getBoolean("autoupdate", true) && (now-last_update) > 60000) {
-			new SynchronizeTask(this).execute((Void [])null);
+		if (conf.getBoolean("autoupdate", true) && (now - synchronizer.getLastUpdate()) > 60000) {
+			synchronizer.new SynchronizeTask(this).execute((Void [])null);
 		}
+	}
+
+	@Override
+	public void successfulSynchronization() {
+		if (dialog != null)
+    		dialog.hide();
+    	
+    	Toast.makeText(this, R.string.refresh_succesful, Toast.LENGTH_SHORT).show();
+    	StationList station_list = new StationList(this, NetworkInformation.getNetwork());        
+        ListView list = (ListView) findViewById(R.id.stationList);        
+        list.setAdapter(station_list);
+	}
+
+	@Override
+	public void unsuccessfulSynchronization() {
+		Toast.makeText(this, R.string.connectivity_error, Toast.LENGTH_SHORT).show();
 	}
 }

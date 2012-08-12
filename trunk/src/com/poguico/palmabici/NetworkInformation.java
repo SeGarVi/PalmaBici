@@ -2,7 +2,7 @@ package com.poguico.palmabici;
 
 import java.util.ArrayList;
 
-public class NetworkInfo {
+public class NetworkInformation {
 	private static ArrayList <Station> network;
 	
 	public static void setNetwork(String stations) {
