@@ -26,7 +26,7 @@ public class StationListActivity extends ActionBarActivity {
         
         setContentView(R.layout.main);
         
-        //synchronizer = Synchronizer.getInstance();
+        synchronizer = Synchronizer.getInstance();
         StationList station_list = new StationList(this, NetworkInformation.getNetwork());        
         ListView list = (ListView) findViewById(R.id.stationList);        
         list.setAdapter(station_list);

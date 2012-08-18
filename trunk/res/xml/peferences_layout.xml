@@ -5,7 +5,7 @@
     <CheckBoxPreference
         android:key="autoupdate"
         android:defaultValue="true"
-        android:summary="Actualitzar automaticament"
+        android:summary="@string/preferences_autoupdate_tip"
         android:title="@string/preferences_autoupdate">        
     </CheckBoxPreference>
 

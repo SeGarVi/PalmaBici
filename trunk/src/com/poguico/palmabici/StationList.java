@@ -6,15 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+
+
 public class StationList extends ArrayAdapter<Station> {
 	private final Context context;
-	private final List<Station> stations;
+	private final List<Station> stations;	
 	
 	/*
 	 * Ugly solution to keep nice names
@@ -75,8 +78,8 @@ public class StationList extends ArrayAdapter<Station> {
 				
 		id.setText(stations.get(position).getN_estacio() + " · ");		
 		name.setText(myMap.get(stations.get(position).getN_estacio()));
-		bikes.setText("Bicicletas: " + stations.get(position).getBusy_slots());
-		holes.setText("Sitios libres: " + stations.get(position).getFree_slots());
+		bikes.setText(context.getString(R.string.bikes) + ": " + stations.get(position).getBusy_slots());
+		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
 
 		/*if (stations.get(position).isFavourite()) {
 			favourite.setImageResource(R.drawable.bookmarks);

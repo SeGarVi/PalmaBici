@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, PalmaBiciActivity!</string>
+    <string name="app_name">PalmaBici</string>
+    <string name="menu_report">Reportar</string>
+    <string name="menu_preferences">Preferències</string>
+    <string name="menu_credits">Crèdits</string>
+    <string name="menu_refresh">Sincronitzar</string>
+    <string name="refresh_ongoing">Actualitzant estat...</string>
+    <string name="refresh_succesful">Estacions actualitzades!</string>
+    <string name="visit_app_site">Vés a la web de l\'app</string>
+    <string name="get_code">Codi font</string>
+    <string name="view_agpl_license">Llicència AGPL sencera</string>
+    <string name="view_apache_license">Llicència Apache v.2 sencera</string>
+    <string name="credits_author">Aplicació creada per Sergio García Villalonga (yayalose@gmail.com)</string>
+    <string name="credits_license">Aquesta aplicació és programari lliure, distribuit sota la llicència AGPL v.3. excepte el codi per implementar una action bar compatible amb les diferents versions d\'Android (autoria de Google i sota llicència Apache v.2). Abaix pots accedir al text complet de les llicències.</string>
+    <string name="credits_collaborate">Ets lliure de descarregar-te i modificar el codi font d\'aquesta app, així com de redistribuir-la amb o sense modificacions amb la mateixa llicència. Si vols participar en el desenvolupament, envia\'m un correu :)</string>
+    <string name="close">Tanca</string>
+    <string name="preferences_autoupdate">Auto actualitzar</string>
+    <string name="preferences_autoupdate_tip">Actualitzar l\'estat de les estacions automàticament</string>
+    <string name="connectivity_error">No disposes de connexió a internet!</string>
+    <string name="bikes">Bicicletes</string>
+    <string name="free_slots">Anclatges lliures</string>
+
+</resources>

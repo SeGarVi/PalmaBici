@@ -3,21 +3,24 @@
 
     <string name="hello">Hello World, PalmaBiciActivity!</string>
     <string name="app_name">PalmaBici</string>
-    <string name="menu_report">Reportar</string>
-    <string name="menu_preferences">Preferències</string>
-    <string name="menu_credits">Crèdits</string>
-    <string name="menu_refresh">Sincronitzar</string>
-    <string name="refresh_ongoing">Actualitzant estat...</string>
-    <string name="refresh_succesful">Estacions actualitzades!</string>
-    <string name="visit_app_site">Vés a la web de l\'app</string>
-    <string name="get_code">Codi font</string>
-    <string name="view_agpl_license">Llicència AGPL sencera</string>
-    <string name="view_apache_license">Llicència Apache v.2 sencera</string>
-    <string name="credits_author">Aplicació creada per Sergio García Villalonga (yayalose@gmail.com)</string>
-    <string name="credits_license">Aquesta aplicació és programari lliure, distribuit sota la llicència AGPL v.3. excepte el codi per implementar una action bar compatible amb les diferents versions d\'Android (autoria de Google i sota llicència Apache v.2). Abaix pots accedir al text complet de les llicències.</string>
-    <string name="credits_collaborate">Ets lliure de descarregar-te i modificar el codi font d\'aquesta app, així com de redistribuir-la amb o sense modificacions amb la mateixa llicència. Si vols participar en el desenvolupament, envia\'m un correu :)</string>
-    <string name="close">Tanca</string>
-    <string name="preferences_autoupdate">Auto Actualitzar</string>
-    <string name="connectivity_error">No disposes de connexió a internet!</string>
+    <string name="menu_report">Report</string>
+    <string name="menu_preferences">Settings</string>
+    <string name="menu_credits">Credits</string>
+    <string name="menu_refresh">Syncronize</string>
+    <string name="refresh_ongoing">Updating state...</string>
+    <string name="refresh_succesful">Stations up to date!</string>
+    <string name="visit_app_site">Go to the app web</string>
+    <string name="get_code">Source code</string>
+    <string name="view_agpl_license">AGPL v.3 license</string>
+    <string name="view_apache_license">Apache v.2</string>
+    <string name="credits_author">This app has been created by (yayalose@gmail.com)</string>
+    <string name="credits_license">This application is free/libre software and is distributed under the AGPL v.3 license, except the code for implementing a backwards compatible action bar (authored by Google and distributed under the Apache v.2 license). The whole text of both licenses can be accessed below.</string>
+    <string name="credits_collaborate"> You are allowed to download and modify the source code of this app, as well as redistribute it with or without modifications under the same license. If you want to be part of the development, contact me :)</string>
+    <string name="close">Close</string>
+    <string name="preferences_autoupdate">Auto update</string>
+    <string name="preferences_autoupdate_tip">Automatically update the stations state</string>
+    <string name="connectivity_error">You don\'t have internet connection!</string>
+    <string name="bikes">Bikes</string>
+    <string name="free_slots">Free slots</string>
 
 </resources>
