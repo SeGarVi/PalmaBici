@@ -82,6 +82,7 @@ public class CreditsDialog extends Dialog {
 		});
 		
 		Linkify.addLinks((TextView)findViewById(R.id.label_author), Linkify.EMAIL_ADDRESSES);
+		Linkify.addLinks((TextView)findViewById(R.id.label_citybik), Linkify.WEB_URLS);
 	}
 
 	private void open_url(String url) {

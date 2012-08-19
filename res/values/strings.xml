@@ -33,6 +33,7 @@
     <string name="view_apache_license">Apache v.2 license</string>
     <string name="credits_author">©Sergio García Villalonga (yayalose@gmail.com)</string>
     <string name="credits_license">This application is free/libre software and is distributed under the AGPL v.3 license (it contains Google code under the Apache v.2 license). The whole text of both licenses can be accessed below.</string>
+    <string name="credits_citybik">The information about the stations\' state is retrieved using the City Bikes API (http://www.citybik.es/), under the LGPL license.</string>
     <string name="credits_collaborate"> You are allowed to download and modify the source code of this app, as well as redistribute it with or without modifications under the same license. If you want to be part of the development, contact me :)</string>
     <string name="close">Close</string>
     <string name="preferences_autoupdate">Auto update</string>

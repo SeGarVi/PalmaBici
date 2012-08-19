@@ -34,6 +34,7 @@
     <string name="credits_author">©Sergio García Villalonga (yayalose@gmail.com)</string>
     <string name="credits_license">Aquesta aplicació és programari lliure, distribuit sota la llicència AGPL v.3. (conté codi de Google sota la licencia Apache v.2). A baix pots accedir al text complet de les llicències.</string>
     <string name="credits_collaborate">Ets lliure de descarregar-te i modificar el codi font d\'aquesta app, així com de redistribuir-la amb o sense modificacions amb la mateixa llicència. Si vols participar en el desenvolupament, envia\'m un correu :)</string>
+    <string name="credits_citybik">La informació sobre l\'estat de les estacions s\'obté fent servir l\'API de City Bikes (http://www.citybik.es/), sota llicència LGPL.</string>
     <string name="close">Tanca</string>
     <string name="preferences_autoupdate">Auto actualitzar</string>
     <string name="preferences_autoupdate_tip">Actualitzar l\'estat de les estacions automàticament</string>
