@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, PalmaBiciActivity!</string>
     <string name="app_name">PalmaBici</string>
     <string name="menu_report">Report</string>
     <string name="menu_preferences">Settings</string>
@@ -12,13 +11,13 @@
     <string name="visit_app_site">Go to the app web</string>
     <string name="get_code">Source code</string>
     <string name="view_agpl_license">AGPL v.3 license</string>
-    <string name="view_apache_license">Apache v.2</string>
-    <string name="credits_author">This app has been created by (yayalose@gmail.com)</string>
-    <string name="credits_license">This application is free/libre software and is distributed under the AGPL v.3 license, except the code for implementing a backwards compatible action bar (authored by Google and distributed under the Apache v.2 license). The whole text of both licenses can be accessed below.</string>
+    <string name="view_apache_license">Apache v.2 license</string>
+    <string name="credits_author">©Sergio García Villalonga (yayalose@gmail.com)</string>
+    <string name="credits_license">This application is free/libre software and is distributed under the AGPL v.3 license (it contains Google code under the Apache v.2 license). The whole text of both licenses can be accessed below.</string>
     <string name="credits_collaborate"> You are allowed to download and modify the source code of this app, as well as redistribute it with or without modifications under the same license. If you want to be part of the development, contact me :)</string>
     <string name="close">Close</string>
     <string name="preferences_autoupdate">Auto update</string>
-    <string name="preferences_autoupdate_tip">Automatically update the stations state</string>
+    <string name="preferences_autoupdate_tip">Automatically update the stations\' state</string>
     <string name="connectivity_error">You don\'t have internet connection!</string>
     <string name="bikes">Bikes</string>
     <string name="free_slots">Free slots</string>

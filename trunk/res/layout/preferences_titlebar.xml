@@ -2,20 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    style="@style/ActionBarCompatTitleBase" >
+    android:orientation="horizontal" >
 
-    <ImageView
+    <ImageButton
         android:id="@+id/preferences_back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/actionbar_compat_button_home_width"
+        android:layout_height="@dimen/actionbar_compat_height"
         android:src="@drawable/back"
-        style="@style/TitleBarButton" />
+        style="@style/TitleBarButton"/>
 
     <TextView
         android:id="@+id/preferences_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:text="@string/menu_preferences"
         style="@style/ActionBarCompatTitle" />
 

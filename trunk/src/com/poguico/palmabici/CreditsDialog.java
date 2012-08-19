@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.util.Linkify;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,9 +20,9 @@ public class CreditsDialog extends Dialog {
 		super(context);
 		this.context = context;
 		self = this;
-		// TODO Auto-generated constructor stub
-		this.setContentView(R.layout.credits_layout);
-		this.setTitle(R.string.menu_credits);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		this.setContentView(R.layout.credits_layout);	
 		
 		web_button    = (Button)findViewById(R.id.button_visit_web);
 		code_button   = (Button)findViewById(R.id.button_source_code);

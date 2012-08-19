@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, PalmaBiciActivity!</string>
     <string name="app_name">PalmaBici</string>
     <string name="menu_report">Reportar</string>
     <string name="menu_preferences">Ajustes</string>
@@ -11,11 +10,11 @@
     <string name="refresh_succesful">¡Estaciones actualizadas!</string>
     <string name="visit_app_site">Ir a la web de la app</string>
     <string name="get_code">Código fuente</string>
-    <string name="view_agpl_license">Licencia AGPL entera</string>
-    <string name="view_apache_license">Licencia Apache v.2 entera</string>
-    <string name="credits_author">Aplicación creada por Sergio García Villalonga (yayalose@gmail.com)</string>
-    <string name="credits_license">Esta aplicación es software libre, distribuida bajo la licencia AGPL v.3. excepto el código para implementar una action bar compatible con las diferentes versiones de Android (autoría de Google y bajo licencia Apache v.2). Abajo puedes acceder al texto completo de las licencias.</string>
-    <string name="credits_collaborate">Eres libre de descargarte i modificar el código fuente de esta app, así como de redistribuirla con o sin modificaciones con la misma licencia. Si quieres participar en el desarrollo, envíame un correo :)</string>
+    <string name="view_agpl_license">Licencia AGPL v.3</string>
+    <string name="view_apache_license">Licencia Apache v.2</string>
+    <string name="credits_author">©Sergio García Villalonga (yayalose@gmail.com)</string>
+    <string name="credits_license">Esta aplicación es software libre, distribuida bajo la licencia AGPL v.3. (contiene código de Google bajo licencia Apache v.2). Abajo puedes acceder al texto completo de las licencias.</string>
+    <string name="credits_collaborate">Eres libre de descargarte y modificar el código fuente de esta app, así como de redistribuirla con o sin modificaciones con la misma licencia. Si quieres participar en el desarrollo no dudes en contactarme :)</string>
     <string name="close">Cerrar</string>
     <string name="preferences_autoupdate">Auto actualizar</string>
     <string name="preferences_autoupdate_tip">Actualizar el estado de las estaciones automáticamente</string>

@@ -15,6 +15,11 @@
   -->
 
 <resources>
+    
+    <style name="WelcomeTheme" parent="android:style/Theme.Holo.Light.NoActionBar">
+        <item name="android:background">#00599e</item>
+        <item name="android:textColor" >#ffffff</item>
+    </style>
 
     <style name="AppTheme" parent="android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/ActionBar</item>

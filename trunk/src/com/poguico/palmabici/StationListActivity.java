@@ -46,11 +46,10 @@ public class StationListActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.menu_refresh:
-            	//dialog = ProgressDialog.show(this, "", R.string.refresh_ongoing, true);
+            	dialog = ProgressDialog.show(this, "", getString(R.string.refresh_ongoing), true);
             	synchronizer.new SynchronizeTask(this).execute((Void [])null);
                 break;
 
