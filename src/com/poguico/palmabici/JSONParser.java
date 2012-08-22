@@ -42,7 +42,7 @@ public class JSONParser {
 										 json_object.getLong("lat"),
 										 json_object.getInt("free"),
 										 json_object.getInt("bikes"),
-										 false));
+										 NetworkInformation.isFavourite(json_object.getString("name").substring(1, 3))));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

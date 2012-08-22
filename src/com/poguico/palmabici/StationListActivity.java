@@ -29,11 +29,10 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class StationListActivity extends ActionBarActivity {
-	ArrayList <Station> stations;
 	ProgressDialog dialog;
 	Synchronizer synchronizer;
 	
@@ -45,8 +44,8 @@ public class StationListActivity extends ActionBarActivity {
         
         synchronizer = Synchronizer.getInstance();
         StationList station_list = new StationList(this, NetworkInformation.getNetwork());        
-        ListView list = (ListView) findViewById(R.id.stationList);        
-        list.setAdapter(station_list);
+        LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
+        main_layout_panel.addView(station_list);
     }
     
     @Override
@@ -102,6 +101,13 @@ public class StationListActivity extends ActionBarActivity {
 		}
 	}
 
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		DatabaseManager.saveFavouriteStations(NetworkInformation.getNetwork());
+	}
+	
 	@Override
 	public void successfulSynchronization() {
 		if (dialog != null)
@@ -109,8 +115,8 @@ public class StationListActivity extends ActionBarActivity {
     	
     	Toast.makeText(this, R.string.refresh_succesful, Toast.LENGTH_SHORT).show();
     	StationList station_list = new StationList(this, NetworkInformation.getNetwork());        
-        ListView list = (ListView) findViewById(R.id.stationList);        
-        list.setAdapter(station_list);
+    	LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
+        main_layout_panel.addView(station_list);
 	}
 
 	@Override

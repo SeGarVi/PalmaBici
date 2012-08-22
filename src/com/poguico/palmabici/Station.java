@@ -95,15 +95,30 @@ public class Station implements Comparable <Station> {
 		return favourite;
 	}
 
-	public void setFavourite(boolean favourite) {
-		this.favourite = favourite;
+	public void changeFavouriteState() {
+		favourite = !favourite;
+		
+		if (favourite)
+			NetworkInformation.setFavourite(n_estacio);
+		else
+			NetworkInformation.unSetFavourite(n_estacio);
 	}
-
+	
 	@Override
 	public int compareTo(Station altra) {
-		Integer inter = new Integer(this.n_estacio);
-		Integer exter = new Integer(altra.n_estacio);
+		int res;
 		
-		return inter.compareTo(exter);
+		Integer inter_n = Integer.valueOf(this.n_estacio);
+		Integer exter_n = Integer.valueOf(altra.n_estacio);
+		Boolean inter_f = this.favourite;
+		Boolean exter_f = altra.favourite;
+		
+		if ((this.favourite && altra.favourite) ||
+			(!this.favourite && !altra.favourite))
+			res = inter_n.compareTo(exter_n);
+		else
+			res = exter_f.compareTo(inter_f);
+		
+		return res;
 	}
 }

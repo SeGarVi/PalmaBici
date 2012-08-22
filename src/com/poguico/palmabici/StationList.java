@@ -17,25 +17,30 @@
 
 package com.poguico.palmabici;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
 
-public class StationList extends ArrayAdapter<Station> {
+public class StationList extends ListView {
+	private StationAdapter adapter;
 	private final Context context;
-	private final List<Station> stations;	
-	
+	private final ArrayList<Station> stations;
+	private final ListView self = this;
+		
 	/*
 	 * Ugly solution to keep nice names
 	 */
@@ -73,37 +78,85 @@ public class StationList extends ArrayAdapter<Station> {
         myMap = Collections.unmodifiableMap(aMap);
     }
 
-	public StationList(Context context, List<Station> stations) {
-		super(context, R.layout.main_list_item_layout, stations);
-		
-		Collections.sort(stations);
-		
-		this.context = context;
-		this.stations = stations;
-	}
+    private class StationAdapter extends ArrayAdapter<Station> {    	
+    	private final Context context;
+    	private final ArrayList<Station> stations;
+    	
+    	public StationAdapter(Context context, ArrayList<Station> stations) {
+    		super(context, R.layout.main_list_item_layout, stations);
+    		
+    		Collections.sort(stations);
+    		
+    		this.context = context;
+    		this.stations = stations;
+    	}
+    	
+    	@Override
+    	public View getView(int position, View convertView, ViewGroup parent) {		
+    		LayoutInflater inflater = (LayoutInflater) context
+    				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    		View rowView   = inflater.inflate(R.layout.main_list_item_layout, parent, false);
+    		
+    		if (stations.get(position).isFavourite())
+    			rowView.setBackgroundColor(context.getResources().getColor(R.color.list_favourite_item));
+    				
+    		TextView id    = (TextView) rowView.findViewById(R.id.id);
+    		TextView name  = (TextView) rowView.findViewById(R.id.name);
+    		TextView bikes = (TextView) rowView.findViewById(R.id.bikes);
+    		TextView holes = (TextView) rowView.findViewById(R.id.holes);
+    				
+    		id.setText(stations.get(position).getN_estacio() + " · ");		
+    		name.setText(myMap.get(stations.get(position).getN_estacio()));
+    		bikes.setText(context.getString(R.string.bikes) + ": " + stations.get(position).getBusy_slots());
+    		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
+    		
+    		return rowView;
+    	}
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {		
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView   = inflater.inflate(R.layout.main_list_item_layout, parent, false);
-		TextView id    = (TextView) rowView.findViewById(R.id.id);
-		TextView name  = (TextView) rowView.findViewById(R.id.name);
-		TextView bikes = (TextView) rowView.findViewById(R.id.bikes);
-		TextView holes = (TextView) rowView.findViewById(R.id.holes);
-		//ImageView favourite = (ImageView) rowView.findViewById(R.id.favourite);
+    	public void sort() {
+    		Collections.sort(stations);
+    	}
+    }
+    
+	public StationList(Context c, ArrayList<Station> s) {
+		super(c);
+		
+		this.context = c;
+		this.stations = s;
+		
+		adapter = new StationAdapter(this.context, this.stations);
+		this.setAdapter(adapter);
+		
+		this.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
 				
-		id.setText(stations.get(position).getN_estacio() + " · ");		
-		name.setText(myMap.get(stations.get(position).getN_estacio()));
-		bikes.setText(context.getString(R.string.bikes) + ": " + stations.get(position).getBusy_slots());
-		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
+				final Station station = adapter.getItem(position);
+        		String message;	
+        		
+        		if (station.isFavourite()) {
+        			message = new String(context.getString(R.string.remove_from_favorites));
+        		} else {
+        			message = new String(context.getString(R.string.add_to_favorites));
+        		}
 
-		/*if (stations.get(position).isFavourite()) {
-			favourite.setImageResource(R.drawable.bookmarks);
-		} else {
-			favourite.setImageResource(R.drawable.bookmarks_desaturate);
-		}*/
-		
-		return rowView;
+        		final CharSequence[] item = {message.subSequence(0, message.length())};
+        		
+        		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        		builder.setTitle(myMap.get(station.getN_estacio()));
+        		builder.setItems(item, new DialogInterface.OnClickListener() {
+        		    public void onClick(DialogInterface dialog, int item) {
+        		        station.changeFavouriteState();
+        		        adapter.sort();
+        		        self.setAdapter(adapter);
+        		    }
+        		});
+        		builder.show();
+        		return true;
+			}
+			
+		});
 	}
 }

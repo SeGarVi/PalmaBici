@@ -21,12 +21,28 @@ import java.util.ArrayList;
 
 public class NetworkInformation {
 	private static ArrayList <Station> network;
+	private static ArrayList <String>  favourites = null;
 	
 	public static void setNetwork(String stations) {
+		if (favourites == null)
+			favourites = DatabaseManager.getFavouriteStations();
+		
 		network = JSONParser.parse(stations);
 	}
 	
 	public static ArrayList <Station> getNetwork() {
 		return network;
+	}
+	
+	public static void setFavourite(String id) {
+		favourites.add(id);
+	}
+	
+	public static void unSetFavourite(String id) {
+		favourites.remove(id);
+	}
+	
+	public static boolean isFavourite(String id) {
+		return favourites.contains(id);
 	}
 }

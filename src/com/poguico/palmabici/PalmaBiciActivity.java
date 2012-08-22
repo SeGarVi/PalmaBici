@@ -31,6 +31,7 @@ public class PalmaBiciActivity extends SynchronizableActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        DatabaseManager.initDB(this);
         synchronizer = Synchronizer.getInstance();
         
         setContentView(R.layout.welcome);

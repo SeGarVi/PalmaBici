@@ -17,7 +17,6 @@
   (https://www.gnu.org/licenses/agpl-3.0.html).
     
 -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
@@ -25,8 +24,9 @@
     android:orientation="horizontal" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1.33"
         android:gravity="center_vertical|left"
         android:orientation="vertical" >
 
@@ -47,7 +47,6 @@
                 android:layout_height="wrap_content"
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -68,15 +67,7 @@
                 android:layout_height="wrap_content"
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-
         </LinearLayout>
-
     </LinearLayout>
 
-	<!-- <ImageView
-        android:id="@+id/favourite"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:src="@drawable/bookmarks" />
-	-->
 </LinearLayout>
