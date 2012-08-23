@@ -19,6 +19,7 @@ package com.poguico.palmabici;
 
 import java.util.ArrayList;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -81,16 +82,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	
 	public static void saveFavouriteStations (ArrayList <Station> stations) {
 		SQLiteDatabase db;
+		ContentValues values = new ContentValues(2);
 		
 		db = instance.getWritableDatabase();
 		
 		for (Station station : stations) {
-			if (station.isFavourite())
-				db.execSQL("INSERT INTO \"" + FAVORITES_TABLE_NAME +
-						   "\" VALUES ("+ station.getId() + ",'" +
-						   station.getN_estacio() + "')");
-			else
+			if (station.isFavourite()) {
+				values.put("id", station.getId());
+				values.put("nestacio", station.getN_estacio());
+				db.insert(FAVORITES_TABLE_NAME, null, values);
+			} else {
 				db.delete(FAVORITES_TABLE_NAME,"id='"+ station.getId() +"'", null);
+			}
 		}
 		
 		if (db != null)
