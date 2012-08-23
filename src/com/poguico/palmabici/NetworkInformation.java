@@ -19,6 +19,8 @@ package com.poguico.palmabici;
 
 import java.util.ArrayList;
 
+import com.poguico.palmabici.parsers.Parser;
+
 public class NetworkInformation {
 	private static ArrayList <Station> network;
 	private static ArrayList <String>  favourites = null;
@@ -27,7 +29,7 @@ public class NetworkInformation {
 		if (favourites == null)
 			favourites = DatabaseManager.getFavouriteStations();
 		
-		network = JSONParser.parse(stations);
+		network = Parser.parseNetworkJSON(stations);
 	}
 	
 	public static ArrayList <Station> getNetwork() {

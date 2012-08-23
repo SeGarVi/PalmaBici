@@ -74,6 +74,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			} while(c.moveToNext());
 		}
 		
+		c.close();		
 		if (db != null)
 		    db.close();
 		

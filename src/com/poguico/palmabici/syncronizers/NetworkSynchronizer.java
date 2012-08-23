@@ -15,7 +15,7 @@
  *    
  */
 
-package com.poguico.palmabici;
+package com.poguico.palmabici.syncronizers;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,15 +29,18 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.poguico.palmabici.NetworkInformation;
+import com.poguico.palmabici.SynchronizableActivity;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class Synchronizer {
+public class NetworkSynchronizer {
 	
-	private static Synchronizer instance = null;
+	private static NetworkSynchronizer instance = null;
 	
 	private static final String URL = "http://api.citybik.es/palma.json";
 	private Long last_update = Calendar.getInstance().getTimeInMillis();
@@ -46,7 +49,7 @@ public class Synchronizer {
         
 		SynchronizableActivity activity;
 		boolean connectivity = true;
-		Synchronizer synchronizer = Synchronizer.getInstance();
+		NetworkSynchronizer synchronizer = NetworkSynchronizer.getInstance();
 		
 		public SynchronizeTask (SynchronizableActivity activity) {
 			this.activity = activity;
@@ -67,16 +70,16 @@ public class Synchronizer {
         protected void onPostExecute(Void params) {
         	if (connectivity) {
 	        	synchronizer.last_update = Calendar.getInstance().getTimeInMillis();
-	        	activity.successfulSynchronization();
+	        	activity.onSuccessfulNetworkSynchronization();
         	} else {
-        		activity.unsuccessfulSynchronization();
+        		activity.onUnsuccessfulNetworkSynchronization();
         	}
         }
     }
 	
-	protected static Synchronizer getInstance () {
+	public static NetworkSynchronizer getInstance () {
 		if (instance == null)
-			instance = new Synchronizer();
+			instance = new NetworkSynchronizer();
 		
 		return instance;
 	}
@@ -100,7 +103,7 @@ public class Synchronizer {
 					builder.append(line);
 				}
 			} else {
-				Log.e(Synchronizer.class.toString(), "Failed to download file");
+				Log.e(NetworkSynchronizer.class.toString(), "Failed to download file");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

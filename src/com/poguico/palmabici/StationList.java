@@ -33,7 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
+import com.poguico.palmabici.parsers.*;
 
 public class StationList extends ListView {
 	private StationAdapter adapter;
@@ -92,7 +92,9 @@ public class StationList extends ListView {
     	}
     	
     	@Override
-    	public View getView(int position, View convertView, ViewGroup parent) {		
+    	public View getView(int position, View convertView, ViewGroup parent) {
+    		String  dist_s;
+    		Float dist_f;
     		LayoutInflater inflater = (LayoutInflater) context
     				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		View rowView   = inflater.inflate(R.layout.main_list_item_layout, parent, false);
@@ -100,15 +102,23 @@ public class StationList extends ListView {
     		if (stations.get(position).isFavourite())
     			rowView.setBackgroundColor(context.getResources().getColor(R.color.list_favourite_item));
     				
-    		TextView id    = (TextView) rowView.findViewById(R.id.id);
-    		TextView name  = (TextView) rowView.findViewById(R.id.name);
-    		TextView bikes = (TextView) rowView.findViewById(R.id.bikes);
-    		TextView holes = (TextView) rowView.findViewById(R.id.holes);
+    		TextView id       = (TextView) rowView.findViewById(R.id.id);
+    		TextView name     = (TextView) rowView.findViewById(R.id.name);
+    		TextView bikes    = (TextView) rowView.findViewById(R.id.bikes);
+    		TextView holes    = (TextView) rowView.findViewById(R.id.holes);
+    		TextView distance = (TextView) rowView.findViewById(R.id.distance);
     				
     		id.setText(stations.get(position).getN_estacio() + " · ");		
     		name.setText(myMap.get(stations.get(position).getN_estacio()));
     		bikes.setText(context.getString(R.string.bikes) + ": " + stations.get(position).getBusy_slots());
     		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
+    		
+    		dist_f = stations.get(position).getDistance();
+    		if (dist_f < 1000) {
+    			distance.setText(String.valueOf(dist_f.intValue()) + "m");
+    		} else {
+    			distance.setText(Parser.parseDistance(dist_f/1000, context) + "km");
+    		}
     		
     		return rowView;
     	}
@@ -158,5 +168,12 @@ public class StationList extends ListView {
 			}
 			
 		});
+	}
+	
+	public void refresh() {
+		for (Station station : stations)
+			station.updateDistance();
+		adapter.sort();
+		self.setAdapter(adapter);
 	}
 }

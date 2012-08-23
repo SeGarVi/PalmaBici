@@ -15,16 +15,24 @@
  *    
  */
 
-package com.poguico.palmabici;
+package com.poguico.palmabici.parsers;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class JSONParser {
+import com.poguico.palmabici.NetworkInformation;
+import com.poguico.palmabici.Station;
+
+import android.content.Context;
+import android.content.res.Configuration;
+
+public class Parser {
 	
-	public static ArrayList <Station> parse (String data) {
+	public static ArrayList <Station> parseNetworkJSON (String data) {
 		ArrayList <Station> stations = new ArrayList<Station>();
 		JSONArray json_array;
 		JSONObject json_object;
@@ -34,6 +42,8 @@ public class JSONParser {
 			
 			for (int i = 0; i < json_array.length(); i++) {
 				json_object = json_array.getJSONObject(i);
+				
+				
 				
 				stations.add(new Station(json_object.getInt("id"),
 										 json_object.getString("name").substring(1, 3),
@@ -49,5 +59,13 @@ public class JSONParser {
 		}
 		
 		return stations;
+	}
+	
+	public static String parseDistance(Float distance, Context context) {
+		Locale current_local = context.getResources().getConfiguration().locale;
+		NumberFormat format = NumberFormat.getNumberInstance(current_local);
+		
+		format.setMaximumFractionDigits(2);
+		return format.format(distance);
 	}
 }

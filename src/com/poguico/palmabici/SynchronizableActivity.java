@@ -20,6 +20,7 @@ package com.poguico.palmabici;
 import android.app.Activity;
 
 public abstract class SynchronizableActivity extends Activity {
-	public abstract void successfulSynchronization();
-	public abstract void unsuccessfulSynchronization();
+	public abstract void onSuccessfulNetworkSynchronization();
+	public abstract void onUnsuccessfulNetworkSynchronization();
+	public abstract void onLocationSynchronization();
 }

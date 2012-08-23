@@ -17,10 +17,16 @@
 
 package com.poguico.palmabici;
 
+import com.poguico.palmabici.syncronizers.LocationSynchronizer;
+
+import android.location.Location;
+import android.location.LocationManager;
+
 public class Station implements Comparable <Station> {
 	private int id, free_slots, busy_slots;
 	private String n_estacio, name;
-	private long station_long, station_lat;
+	private Location location;
+	private Float distance;
 	private boolean favourite;
 	
 	public Station(int id, String n_estacio, String name, long station_long, long station_lat,
@@ -30,9 +36,13 @@ public class Station implements Comparable <Station> {
 		this.free_slots = free_slots;
 		this.busy_slots = busy_slots;
 		this.name = name;
-		this.station_long = station_long;
-		this.station_lat  = station_lat;
 		this.favourite = favourite;
+		
+		location = new Location(LocationManager.NETWORK_PROVIDER);
+		location.setLatitude((double)station_lat / 1e6);
+		location.setLongitude((double)station_long / 1e6);
+		
+		distance = location.distanceTo(LocationSynchronizer.getLocation());
 	}
 
 	public int getId() {
@@ -75,22 +85,10 @@ public class Station implements Comparable <Station> {
 		this.name = name;
 	}
 
-	public long getStation_long() {
-		return station_long;
+	public Float getDistance () {
+		return distance;
 	}
-
-	public void setStation_long(long station_long) {
-		this.station_long = station_long;
-	}
-
-	public long getStation_lat() {
-		return station_lat;
-	}
-
-	public void setStation_lat(long station_lat) {
-		this.station_lat = station_lat;
-	}
-
+	
 	public boolean isFavourite() {
 		return favourite;
 	}
@@ -104,18 +102,24 @@ public class Station implements Comparable <Station> {
 			NetworkInformation.unSetFavourite(n_estacio);
 	}
 	
+	public void updateDistance() {
+		distance = location.distanceTo(LocationSynchronizer.getLocation());
+	}
+	
 	@Override
 	public int compareTo(Station altra) {
 		int res;
 		
-		Integer inter_n = Integer.valueOf(this.n_estacio);
-		Integer exter_n = Integer.valueOf(altra.n_estacio);
+		/*Integer inter_n = Integer.valueOf(this.n_estacio);
+		Integer exter_n = Integer.valueOf(altra.n_estacio);*/
+		Float inter_d = this.distance;
+		Float exter_d = altra.distance;
 		Boolean inter_f = this.favourite;
 		Boolean exter_f = altra.favourite;
 		
 		if ((this.favourite && altra.favourite) ||
 			(!this.favourite && !altra.favourite))
-			res = inter_n.compareTo(exter_n);
+			res = inter_d.compareTo(exter_d);
 		else
 			res = exter_f.compareTo(inter_f);
 		

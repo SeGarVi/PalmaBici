@@ -19,6 +19,9 @@ package com.poguico.palmabici;
 
 import java.util.Calendar;
 
+import com.poguico.palmabici.syncronizers.LocationSynchronizer;
+import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,8 +37,9 @@ import android.widget.Toast;
 public class StationListActivity extends ActionBarActivity {
 	private static final long update_time = 600000;
 	
-	ProgressDialog dialog;
-	Synchronizer synchronizer;
+	private ProgressDialog dialog;
+	private NetworkSynchronizer synchronizer;
+	private StationList station_list;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,8 +47,9 @@ public class StationListActivity extends ActionBarActivity {
         
         setContentView(R.layout.main);
         
-        synchronizer = Synchronizer.getInstance();
-        StationList station_list = new StationList(this, NetworkInformation.getNetwork());        
+        LocationSynchronizer.addSynchronizableActivity(this);
+        synchronizer = NetworkSynchronizer.getInstance();
+        station_list = new StationList(this, NetworkInformation.getNetwork());        
         LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
         main_layout_panel.addView(station_list);
     }
@@ -112,7 +117,7 @@ public class StationListActivity extends ActionBarActivity {
 	}
 	
 	@Override
-	public void successfulSynchronization() {
+	public void onSuccessfulNetworkSynchronization() {
 		if (dialog != null)
     		dialog.hide();
     	
@@ -123,7 +128,12 @@ public class StationListActivity extends ActionBarActivity {
 	}
 
 	@Override
-	public void unsuccessfulSynchronization() {
+	public void onUnsuccessfulNetworkSynchronization() {
 		Toast.makeText(this, R.string.connectivity_error, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onLocationSynchronization() {
+		station_list.refresh();
 	}
 }

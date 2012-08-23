@@ -17,13 +17,15 @@
 
 package com.poguico.palmabici;
 
+import com.poguico.palmabici.syncronizers.*;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
 public class PalmaBiciActivity extends SynchronizableActivity {
 
-	Synchronizer synchronizer;	
+	NetworkSynchronizer synchronizer;	
 	String stations;
 	
     /** Called when the activity is first created. */
@@ -32,7 +34,8 @@ public class PalmaBiciActivity extends SynchronizableActivity {
         super.onCreate(savedInstanceState);
         
         DatabaseManager.initDB(this);
-        synchronizer = Synchronizer.getInstance();
+        LocationSynchronizer.init(this);
+        synchronizer = NetworkSynchronizer.getInstance();
         
         setContentView(R.layout.welcome);
         synchronizer.new SynchronizeTask(this).execute((Void [])null);
@@ -46,7 +49,7 @@ public class PalmaBiciActivity extends SynchronizableActivity {
     }
     
 	@Override
-	public void successfulSynchronization() {
+	public void onSuccessfulNetworkSynchronization() {
 		TextView text = (TextView)findViewById(R.id.textView1);
     	text.setText(R.string.refresh_succesful);
 		Intent next_activity = new Intent(this, StationListActivity.class);
@@ -54,8 +57,14 @@ public class PalmaBiciActivity extends SynchronizableActivity {
 	}
 
 	@Override
-	public void unsuccessfulSynchronization() {
+	public void onUnsuccessfulNetworkSynchronization() {
 		TextView text = (TextView)findViewById(R.id.textView1);
     	text.setText(R.string.connectivity_error);
+	}
+
+	@Override
+	public void onLocationSynchronization() {
+		// TODO Auto-generated method stub
+		
 	}
 }
