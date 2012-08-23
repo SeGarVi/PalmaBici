@@ -17,7 +17,6 @@
 
 package com.poguico.palmabici;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.ProgressDialog;
@@ -33,6 +32,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class StationListActivity extends ActionBarActivity {
+	private static final long update_time = 600000;
+	
 	ProgressDialog dialog;
 	Synchronizer synchronizer;
 	
@@ -96,7 +97,9 @@ public class StationListActivity extends ActionBarActivity {
 
 		long now = Calendar.getInstance().getTimeInMillis();
 		
-		if (conf.getBoolean("autoupdate", true) && (now - synchronizer.getLastUpdate()) > 60000) {
+		if (conf.getBoolean("autoupdate", true) &&
+				(now - synchronizer.getLastUpdate()) > update_time) {
+			dialog = ProgressDialog.show(this, "",getString(R.string.refresh_ongoing), true);
 			synchronizer.new SynchronizeTask(this).execute((Void [])null);
 		}
 	}
