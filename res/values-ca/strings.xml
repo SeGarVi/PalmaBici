@@ -38,6 +38,10 @@
     <string name="close">Tanca</string>
     <string name="preferences_autoupdate">Auto actualitzar</string>
     <string name="preferences_autoupdate_tip">Actualitzar l\'estat de les estacions automàticament</string>
+    <string name="preferences_sort">Ordre de la llista d'estacions</string>
+    <string name="preferences_sort_tip">Criteri per l'ordenació de les estacions</string>
+    <string name="preferences_sort_favourites">Favorites primer</string>
+    <string name="preferences_sort_distance">Més properes primer</string>
     <string name="connectivity_error">No disposes de connexió a internet!</string>
     <string name="bikes">Bicis</string>
     <string name="free_slots">Anclatges lliures</string>

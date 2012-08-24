@@ -38,6 +38,10 @@
     <string name="close">Cerrar</string>
     <string name="preferences_autoupdate">Auto actualizar</string>
     <string name="preferences_autoupdate_tip">Actualizar el estado de las estaciones automáticamente</string>
+    <string name="preferences_sort">Orden de la lista de estaciones</string>
+    <string name="preferences_sort_tip">Criterio para la ordenación de las estaciones</string>
+    <string name="preferences_sort_favourites">Favoritas primero</string>
+    <string name="preferences_sort_distance">Más cercanas primero</string>
     <string name="connectivity_error">¡No dispones de conexión a internet!</string>
     <string name="bikes">Bicis</string>
     <string name="free_slots">Anclajes libres</string>

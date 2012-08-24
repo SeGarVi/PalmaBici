@@ -104,7 +104,8 @@ public class Station implements Comparable <Station> {
 	}
 	
 	public void updateDistance() {
-		distance = location.distanceTo(LocationSynchronizer.getLocation());
+		distance = (LocationSynchronizer.getLocation() != null)?				
+				location.distanceTo(LocationSynchronizer.getLocation()) : -1;
 	}
 	
 	@Override

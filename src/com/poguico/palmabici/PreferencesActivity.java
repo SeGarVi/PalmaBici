@@ -17,8 +17,6 @@
 
 package com.poguico.palmabici;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

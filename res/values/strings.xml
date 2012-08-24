@@ -38,6 +38,10 @@
     <string name="close">Close</string>
     <string name="preferences_autoupdate">Auto update</string>
     <string name="preferences_autoupdate_tip">Automatically update the stations\' state</string>
+    <string name="preferences_sort">Stations list order</string>
+    <string name="preferences_sort_tip">Criteria for station list ordering</string>
+    <string name="preferences_sort_favourites">Favorites first</string>
+    <string name="preferences_sort_distance">Closests first</string>
     <string name="connectivity_error">You don\'t have internet connection!</string>
     <string name="bikes">Bikes</string>
     <string name="free_slots">Free slots</string>    

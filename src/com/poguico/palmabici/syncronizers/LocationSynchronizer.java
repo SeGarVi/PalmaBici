@@ -38,12 +38,15 @@ public class LocationSynchronizer {
 			public void onProviderDisabled(String provider) {}
 		};
 		
-		//manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000L, 0, listener);
-		manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+		//if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+			manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000L, 0, listener);
+		//else if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+			manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000L, 0, listener);
 		
 		location =  manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		if (location == null)
 			location =  manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		
 		synchronizable_activities = new ArrayList<SynchronizableActivity>();
 	}
 	

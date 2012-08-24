@@ -39,7 +39,6 @@ public class StationList extends ListView {
 	private StationAdapter adapter;
 	private final Context context;
 	private final ArrayList<Station> stations;
-	private final ListView self = this;
 		
 	/*
 	 * Ugly solution to keep nice names
@@ -93,7 +92,6 @@ public class StationList extends ListView {
     	
     	@Override
     	public View getView(int position, View convertView, ViewGroup parent) {
-    		String  dist_s;
     		Float dist_f;
     		LayoutInflater inflater = (LayoutInflater) context
     				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
