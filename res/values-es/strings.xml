@@ -39,7 +39,7 @@
     <string name="preferences_autoupdate">Auto actualizar</string>
     <string name="preferences_autoupdate_tip">Actualizar el estado de las estaciones automáticamente</string>
     <string name="connectivity_error">¡No dispones de conexión a internet!</string>
-    <string name="bikes">Bicicletas</string>
+    <string name="bikes">Bicis</string>
     <string name="free_slots">Anclajes libres</string>
     <string name="add_to_favorites">Añadir a favoritos</string>
     <string name="remove_from_favorites">Eliminar de favoritos</string>

@@ -122,10 +122,6 @@ public class StationList extends ListView {
     		
     		return rowView;
     	}
-
-    	public void sort() {
-    		Collections.sort(stations);
-    	}
     }
     
 	public StationList(Context c, ArrayList<Station> s) {
@@ -159,8 +155,8 @@ public class StationList extends ListView {
         		builder.setItems(item, new DialogInterface.OnClickListener() {
         		    public void onClick(DialogInterface dialog, int item) {
         		        station.changeFavouriteState();
-        		        adapter.sort();
-        		        self.setAdapter(adapter);
+        		        Collections.sort(stations);
+        		        adapter.notifyDataSetChanged();
         		    }
         		});
         		builder.show();
@@ -173,7 +169,7 @@ public class StationList extends ListView {
 	public void refresh() {
 		for (Station station : stations)
 			station.updateDistance();
-		adapter.sort();
-		self.setAdapter(adapter);
+		Collections.sort(stations);
+		adapter.notifyDataSetChanged();	
 	}
 }
