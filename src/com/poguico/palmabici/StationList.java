@@ -112,13 +112,12 @@ public class StationList extends ListView {
     		name.setText(myMap.get(stations.get(position).getN_estacio()));
     		bikes.setText(context.getString(R.string.bikes) + ": " + stations.get(position).getBusy_slots());
     		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
-    		
-    		dist_f = stations.get(position).getDistance();
-    		if (dist_f < 1000) {
+    		    		
+    		dist_f = stations.get(position).getDistance();    		
+    		if (dist_f >= 0 && dist_f < 1000)
     			distance.setText(String.valueOf(dist_f.intValue()) + "m");
-    		} else {
+    		else if (dist_f >= 0)
     			distance.setText(Parser.parseDistance(dist_f/1000, context) + "km");
-    		}
     		
     		return rowView;
     	}

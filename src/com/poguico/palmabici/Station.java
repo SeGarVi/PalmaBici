@@ -42,7 +42,8 @@ public class Station implements Comparable <Station> {
 		location.setLatitude((double)station_lat / 1e6);
 		location.setLongitude((double)station_long / 1e6);
 		
-		distance = location.distanceTo(LocationSynchronizer.getLocation());
+		distance = (LocationSynchronizer.getLocation() != null)?				
+			location.distanceTo(LocationSynchronizer.getLocation()) : -1;
 	}
 
 	public int getId() {
@@ -110,8 +111,8 @@ public class Station implements Comparable <Station> {
 	public int compareTo(Station altra) {
 		int res;
 		
-		/*Integer inter_n = Integer.valueOf(this.n_estacio);
-		Integer exter_n = Integer.valueOf(altra.n_estacio);*/
+		Integer inter_n = Integer.valueOf(this.n_estacio);
+		Integer exter_n = Integer.valueOf(altra.n_estacio);
 		Float inter_d = this.distance;
 		Float exter_d = altra.distance;
 		Boolean inter_f = this.favourite;
@@ -119,7 +120,10 @@ public class Station implements Comparable <Station> {
 		
 		if ((this.favourite && altra.favourite) ||
 			(!this.favourite && !altra.favourite))
-			res = inter_d.compareTo(exter_d);
+			if (distance >= 0)
+				res = inter_d.compareTo(exter_d);
+			else
+				res = inter_n.compareTo(exter_n);
 		else
 			res = exter_f.compareTo(inter_f);
 		
