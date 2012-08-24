@@ -32,7 +32,8 @@ import android.content.res.Configuration;
 
 public class Parser {
 	
-	public static ArrayList <Station> parseNetworkJSON (String data) {
+	public static ArrayList <Station> parseNetworkJSON (Context context,
+														String  data)	{
 		ArrayList <Station> stations = new ArrayList<Station>();
 		JSONArray json_array;
 		JSONObject json_object;
@@ -45,7 +46,8 @@ public class Parser {
 				
 				
 				
-				stations.add(new Station(json_object.getInt("id"),
+				stations.add(new Station(context,
+										 json_object.getInt("id"),
 										 json_object.getString("name").substring(1, 3),
 										 json_object.getString("name").substring(5),
 										 json_object.getLong("lng"),

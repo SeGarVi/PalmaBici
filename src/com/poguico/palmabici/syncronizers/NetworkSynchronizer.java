@@ -62,7 +62,7 @@ public class NetworkSynchronizer {
     		if (i == null || !i.isAvailable() || !i.isConnected())
     			connectivity = false;    			
     		else
-    			NetworkInformation.setNetwork(synchronizer.getNetworkInfo());
+    			NetworkInformation.setNetwork(activity, synchronizer.getNetworkInfo());
     		
             return null;
         }

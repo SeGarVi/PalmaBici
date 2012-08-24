@@ -36,9 +36,11 @@
     <string name="credits_citybik">La información sobre el estado de las estaciones se obtiene utilizando la API de City Bikes (http://www.citybik.es/), bajo licencia LGPL.</string>
     <string name="credits_collaborate">Eres libre de descargarte y modificar el código fuente de esta app, así como de redistribuirla con o sin modificaciones con la misma licencia. Si quieres participar en el desarrollo no dudes en contactarme :)</string>
     <string name="close">Cerrar</string>
+    <string name="preferences_synchronization">Sincronización</string>
     <string name="preferences_autoupdate">Auto actualizar</string>
     <string name="preferences_autoupdate_tip">Actualizar el estado de las estaciones automáticamente</string>
-    <string name="preferences_sort">Orden de la lista de estaciones</string>
+    <string name="preferences_list">Lista de estaciones</string>
+    <string name="preferences_sort">Orden de la lista</string>
     <string name="preferences_sort_tip">Criterio para la ordenación de las estaciones</string>
     <string name="preferences_sort_favourites">Favoritas primero</string>
     <string name="preferences_sort_distance">Más cercanas primero</string>

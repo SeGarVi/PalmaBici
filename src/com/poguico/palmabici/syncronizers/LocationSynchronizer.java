@@ -35,13 +35,19 @@ public class LocationSynchronizer {
 			public void onProviderEnabled(String provider) {}
 			
 			@Override
-			public void onProviderDisabled(String provider) {}
+			public void onProviderDisabled(String provider) {
+				if ((provider.equals(LocationManager.GPS_PROVIDER) &&
+						!manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) ||
+					(provider.equals(LocationManager.NETWORK_PROVIDER) &&
+						!manager.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
+					location = null;
+					updateViews();
+				}					
+			}
 		};
 		
-		//if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-			manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000L, 0, listener);
-		//else if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
-			manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000L, 0, listener);
+		manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000L, 0, listener);
+		manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000L, 0, listener);
 		
 		location =  manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		if (location == null)

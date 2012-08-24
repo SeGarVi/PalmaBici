@@ -21,11 +21,23 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/menu_preferences">
 
-    <CheckBoxPreference
-        android:key="autoupdate"
-        android:defaultValue="true"
-        android:summary="@string/preferences_autoupdate_tip"
-        android:title="@string/preferences_autoupdate">        
-    </CheckBoxPreference>
+    <PreferenceCategory android:title="@string/preferences_synchronization" />
+    
+	    <CheckBoxPreference
+	        android:key="autoupdate"
+	        android:defaultValue="true"
+	        android:summary="@string/preferences_autoupdate_tip"
+	        android:title="@string/preferences_autoupdate">        
+	    </CheckBoxPreference>
+    
+    <PreferenceCategory android:title="@string/preferences_list" />
+        <ListPreference 
+            android:title="@string/preferences_sort"
+            android:entryValues="@array/preferences_sort_values"
+            android:summary="@string/preferences_sort_tip"
+            android:entries="@array/preferences_sort_options"
+            android:key="list_order"/>
+    
+    
 
 </PreferenceScreen>

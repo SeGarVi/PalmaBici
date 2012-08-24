@@ -19,18 +19,23 @@ package com.poguico.palmabici;
 
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
+import android.preference.PreferenceManager;
 
 public class Station implements Comparable <Station> {
+	private Context context;
 	private int id, free_slots, busy_slots;
 	private String n_estacio, name;
 	private Location location;
 	private Float distance;
 	private boolean favourite;
 	
-	public Station(int id, String n_estacio, String name, long station_long, long station_lat,
+	public Station(Context context, int id, String n_estacio, String name, long station_long, long station_lat,
 				   int free_slots, int busy_slots, boolean favourite) {
+		this.context = context;
 		this.id = id;
 		this.n_estacio = n_estacio;
 		this.free_slots = free_slots;
@@ -112,6 +117,9 @@ public class Station implements Comparable <Station> {
 	public int compareTo(Station altra) {
 		int res;
 		
+		SharedPreferences conf=PreferenceManager
+				.getDefaultSharedPreferences(context);
+		
 		Integer inter_n = Integer.valueOf(this.n_estacio);
 		Integer exter_n = Integer.valueOf(altra.n_estacio);
 		Float inter_d = this.distance;
@@ -119,7 +127,8 @@ public class Station implements Comparable <Station> {
 		Boolean inter_f = this.favourite;
 		Boolean exter_f = altra.favourite;
 		
-		if ((this.favourite && altra.favourite) ||
+		if (conf.getString("list_order", "distance").equals("distance") ||
+			(this.favourite && altra.favourite) ||
 			(!this.favourite && !altra.favourite))
 			if (distance >= 0)
 				res = inter_d.compareTo(exter_d);

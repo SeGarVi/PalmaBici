@@ -40,6 +40,7 @@ public class StationListActivity extends ActionBarActivity {
 	private ProgressDialog dialog;
 	private NetworkSynchronizer synchronizer;
 	private StationList station_list;
+	private String list_ordering;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,11 +48,15 @@ public class StationListActivity extends ActionBarActivity {
         
         setContentView(R.layout.main);
         
+        SharedPreferences conf=PreferenceManager
+				.getDefaultSharedPreferences(this);
+        
         LocationSynchronizer.addSynchronizableActivity(this);
         synchronizer = NetworkSynchronizer.getInstance();
         station_list = new StationList(this, NetworkInformation.getNetwork());        
         LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
         main_layout_panel.addView(station_list);
+        list_ordering = conf.getString("list_order", "distance");
     }
     
     @Override
@@ -106,6 +111,11 @@ public class StationListActivity extends ActionBarActivity {
 				(now - synchronizer.getLastUpdate()) > update_time) {
 			dialog = ProgressDialog.show(this, "",getString(R.string.refresh_ongoing), true);
 			synchronizer.new SynchronizeTask(this).execute((Void [])null);
+		}
+		
+		if (!conf.getString("list_order", "distance").equals(list_ordering)) {
+			list_ordering = conf.getString("list_order", "distance");
+			station_list.refresh();
 		}
 	}
 

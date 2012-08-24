@@ -19,17 +19,19 @@ package com.poguico.palmabici;
 
 import java.util.ArrayList;
 
+import android.content.Context;
+
 import com.poguico.palmabici.parsers.Parser;
 
 public class NetworkInformation {
 	private static ArrayList <Station> network;
 	private static ArrayList <String>  favourites = null;
 	
-	public static void setNetwork(String stations) {
+	public static void setNetwork(Context context, String stations) {
 		if (favourites == null)
 			favourites = DatabaseManager.getFavouriteStations();
 		
-		network = Parser.parseNetworkJSON(stations);
+		network = Parser.parseNetworkJSON(context, stations);
 	}
 	
 	public static ArrayList <Station> getNetwork() {
