@@ -25,15 +25,19 @@ import java.util.Map;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.poguico.palmabici.parsers.*;
+import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
 
 public class StationList extends ListView {
 	private StationAdapter adapter;
@@ -93,6 +97,7 @@ public class StationList extends ListView {
     	@Override
     	public View getView(int position, View convertView, ViewGroup parent) {
     		Float dist_f;
+    		Matrix rotate_matrix;
     		LayoutInflater inflater = (LayoutInflater) context
     				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		View rowView   = inflater.inflate(R.layout.main_list_item_layout, parent, false);
@@ -100,24 +105,51 @@ public class StationList extends ListView {
     		if (stations.get(position).isFavourite())
     			rowView.setBackgroundColor(context.getResources().getColor(R.color.list_favourite_item));
     				
-    		TextView id       = (TextView) rowView.findViewById(R.id.id);
-    		TextView name     = (TextView) rowView.findViewById(R.id.name);
-    		TextView bikes    = (TextView) rowView.findViewById(R.id.bikes);
-    		TextView holes    = (TextView) rowView.findViewById(R.id.holes);
-    		TextView distance = (TextView) rowView.findViewById(R.id.distance);
+    		TextView id       = (TextView)  rowView.findViewById(R.id.id);
+    		TextView name     = (TextView)  rowView.findViewById(R.id.name);
+    		TextView bikes    = (TextView)  rowView.findViewById(R.id.bikes);
+    		TextView holes    = (TextView)  rowView.findViewById(R.id.holes);
+    		TextView distance = (TextView)  rowView.findViewById(R.id.distance);
+    		ImageView compass = (ImageView) rowView.findViewById(R.id.compass);
     				
     		id.setText(stations.get(position).getN_estacio() + " · ");		
     		name.setText(myMap.get(stations.get(position).getN_estacio()));
     		bikes.setText(context.getString(R.string.bikes) + ": " + stations.get(position).getBusy_slots());
     		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
     		    		
-    		dist_f = stations.get(position).getDistance();    		
-    		if (dist_f >= 0 && dist_f < 1000)
-    			distance.setText(String.valueOf(dist_f.intValue()) + "m");
-    		else if (dist_f >= 0)
-    			distance.setText(Parser.parseDistance(dist_f/1000, context) + "km");
+    		dist_f = stations.get(position).getDistance();
+    		if (dist_f >= 0) {
+    			
+    			float rotation = (stations.get(position).getBearing() -
+    							  OrientationSynchronizer.getOrientation()) %
+    							  360;
+    			
+    			rotate_matrix = new Matrix();
+    			rotate_matrix.setRotate(rotation,
+    					compass.getDrawable().getIntrinsicWidth() / (float)2,
+    					compass.getDrawable().getIntrinsicHeight() / (float)2);
+    			compass.setImageMatrix(rotate_matrix);
+    			
+	    		if (dist_f >= 0 && dist_f < 1000)
+	    			distance.setText(String.valueOf(dist_f.intValue()) + "m");
+	    		else if (dist_f >= 0)
+	    			distance.setText(Parser.parseDistance(dist_f/1000, context) + "km");
+    		} else {
+    			compass.setVisibility(INVISIBLE);
+    		}
+    			
     		
     		return rowView;
+    	}
+    	
+    	private void rotateCompass (ImageView compass, float angle) {
+    		Matrix rotate_matrix;
+    		    		
+			rotate_matrix = new Matrix();
+			rotate_matrix.setRotate(angle,
+					compass.getDrawable().getIntrinsicWidth() / (float)2,
+					compass.getDrawable().getIntrinsicHeight() / (float)2);
+			compass.setImageMatrix(rotate_matrix);
     	}
     }
     
@@ -165,7 +197,7 @@ public class StationList extends ListView {
 	
 	public void refresh() {
 		for (Station station : stations)
-			station.updateDistance();
+			station.updatePosition();
 		Collections.sort(stations);
 		adapter.notifyDataSetChanged();	
 	}

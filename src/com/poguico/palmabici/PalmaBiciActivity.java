@@ -35,6 +35,7 @@ public class PalmaBiciActivity extends SynchronizableActivity {
         
         DatabaseManager.initDB(this);
         LocationSynchronizer.init(this);
+        OrientationSynchronizer.init(this);
         synchronizer = NetworkSynchronizer.getInstance();
         
         setContentView(R.layout.welcome);

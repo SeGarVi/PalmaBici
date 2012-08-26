@@ -32,6 +32,7 @@ public class Station implements Comparable <Station> {
 	private Location location;
 	private Float distance;
 	private boolean favourite;
+	private float bearing;
 	
 	public Station(Context context, int id, String n_estacio, String name, long station_long, long station_lat,
 				   int free_slots, int busy_slots, boolean favourite) {
@@ -47,8 +48,12 @@ public class Station implements Comparable <Station> {
 		location.setLatitude((double)station_lat / 1e6);
 		location.setLongitude((double)station_long / 1e6);
 		
-		distance = (LocationSynchronizer.getLocation() != null)?				
-			location.distanceTo(LocationSynchronizer.getLocation()) : -1;
+		if (LocationSynchronizer.getLocation() != null) {
+			distance = location.distanceTo(LocationSynchronizer.getLocation());
+			bearing  = LocationSynchronizer.getLocation().bearingTo(location);
+		} else {
+			distance = (float)-1;
+		}
 	}
 
 	public int getId() {
@@ -95,6 +100,10 @@ public class Station implements Comparable <Station> {
 		return distance;
 	}
 	
+	public float getBearing () {
+		return bearing;
+	}
+	
 	public boolean isFavourite() {
 		return favourite;
 	}
@@ -108,9 +117,13 @@ public class Station implements Comparable <Station> {
 			NetworkInformation.unSetFavourite(n_estacio);
 	}
 	
-	public void updateDistance() {
-		distance = (LocationSynchronizer.getLocation() != null)?				
-				location.distanceTo(LocationSynchronizer.getLocation()) : -1;
+	public void updatePosition() {
+		if (LocationSynchronizer.getLocation() != null) {
+			distance = location.distanceTo(LocationSynchronizer.getLocation());
+			bearing  = LocationSynchronizer.getLocation().bearingTo(location);
+		} else {
+			distance = (float)-1;
+		}
 	}
 	
 	@Override

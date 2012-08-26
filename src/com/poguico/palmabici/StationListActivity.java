@@ -21,6 +21,7 @@ import java.util.Calendar;
 
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
+import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -52,6 +53,8 @@ public class StationListActivity extends ActionBarActivity {
 				.getDefaultSharedPreferences(this);
         
         LocationSynchronizer.addSynchronizableActivity(this);
+        OrientationSynchronizer.addSynchronizableActivity(this);
+        
         synchronizer = NetworkSynchronizer.getInstance();
         station_list = new StationList(this, NetworkInformation.getNetwork());        
         LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
