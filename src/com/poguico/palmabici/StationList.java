@@ -26,13 +26,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Matrix;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +43,8 @@ import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
 public class StationList extends ListView {
 	private StationAdapter adapter;
 	private final Context context;
+	private final WindowManager mWindowManager;
+	private final Display mDisplay;
 	private final ArrayList<Station> stations;
 		
 	/*
@@ -121,9 +124,10 @@ public class StationList extends ListView {
     		if (dist_f >= 0) {
     			
     			float rotation = (stations.get(position).getBearing() -
-    							  OrientationSynchronizer.getOrientation()) %
+    							  OrientationSynchronizer.getOrientation()
+    							  - (90 * mDisplay.getOrientation())) %
     							  360;
-    			
+    			    			
     			rotate_matrix = new Matrix();
     			rotate_matrix.setRotate(rotation,
     					compass.getDrawable().getIntrinsicWidth() / (float)2,
@@ -141,22 +145,15 @@ public class StationList extends ListView {
     		
     		return rowView;
     	}
-    	
-    	private void rotateCompass (ImageView compass, float angle) {
-    		Matrix rotate_matrix;
-    		    		
-			rotate_matrix = new Matrix();
-			rotate_matrix.setRotate(angle,
-					compass.getDrawable().getIntrinsicWidth() / (float)2,
-					compass.getDrawable().getIntrinsicHeight() / (float)2);
-			compass.setImageMatrix(rotate_matrix);
-    	}
     }
     
 	public StationList(Context c, ArrayList<Station> s) {
 		super(c);
 		
-		this.context = c;
+		this.context   = c;
+		mWindowManager =  (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+	    mDisplay 	   = mWindowManager.getDefaultDisplay();
+				
 		this.stations = s;
 		
 		adapter = new StationAdapter(this.context, this.stations);
