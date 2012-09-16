@@ -19,13 +19,13 @@ package com.poguico.palmabici;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.app.AlertDialog;
+import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Matrix;
+import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,50 +40,13 @@ import android.widget.TextView;
 import com.poguico.palmabici.parsers.*;
 import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
 
-public class StationList extends ListView {
+public class StationListFragment extends ListFragment {
 	private StationAdapter adapter;
-	private final Context context;
-	private final WindowManager mWindowManager;
-	private final Display mDisplay;
-	private final ArrayList<Station> stations;
-		
-	/*
-	 * Ugly solution to keep nice names
-	 */
-	private static final Map<String, String> myMap;
-    static {
-    	Map<String, String> aMap = new HashMap<String, String>();
-        aMap.put("01", "Parc de ses Veles");
-        aMap.put("06", "Manacor - Manuel Azaña");
-        aMap.put("07", "Aragó - Nuredduna");
-        aMap.put("09", "F. Manuel de los Herreros");
-        aMap.put("13", "Parc de les Estacions");
-        aMap.put("15", "J. Verdaguer - J. Balmes");
-        aMap.put("16", "Parc de sa Riera");
-        aMap.put("17", "Aragó - J. Balmes");
-        aMap.put("21", "Pl. Alexander Flemimg");
-        aMap.put("24", "Blanquerna - C. de Sallent");
-        aMap.put("25", "Blanquerna - Bartolomé");
-        aMap.put("27", "Pl. París");
-        aMap.put("29", "Institut Balear");
-        aMap.put("31", "Pl. Madrid");
-        aMap.put("37", "Av. Argentina");
-        aMap.put("41", "Fàbrica");
-        aMap.put("45", "Jaume III");
-        aMap.put("46", "Pl. Rei Joan Carles I");
-        aMap.put("47", "Pl. Porta de Santa Catalina");
-        aMap.put("49", "Pl. de la Reina");
-        aMap.put("51", "Via Roma");
-        aMap.put("52", "Cecili Metel");
-        aMap.put("55", "Pl. Santa Eulàlia");
-        aMap.put("56", "Pl. del Mercat");
-        aMap.put("59", "Mateu Enric Lladó");
-        aMap.put("60", "Travessera Ballester");
-        aMap.put("63", "Pl. d'Espanya");
-        aMap.put("65", "Pl. Alexandre Jaume");
-        myMap = Collections.unmodifiableMap(aMap);
-    }
-
+	private Context context;
+	private WindowManager mWindowManager;
+	private Display mDisplay;
+	private ArrayList<Station> stations;
+	
     private class StationAdapter extends ArrayAdapter<Station> {    	
     	private final Context context;
     	private final ArrayList<Station> stations;
@@ -116,7 +79,7 @@ public class StationList extends ListView {
     		ImageView compass = (ImageView) rowView.findViewById(R.id.compass);
     				
     		id.setText(stations.get(position).getN_estacio() + " · ");		
-    		name.setText(myMap.get(stations.get(position).getN_estacio()));
+    		name.setText(stations.get(position).getName());
     		bikes.setText(context.getString(R.string.bikes) + ": " + stations.get(position).getBusy_slots());
     		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
     		    		
@@ -125,7 +88,7 @@ public class StationList extends ListView {
     			
     			float rotation = (stations.get(position).getBearing() -
     							  OrientationSynchronizer.getOrientation()
-    							  - (90 * mDisplay.getOrientation())) %
+    							  - (90 * getResources().getConfiguration().orientation)) %
     							  360;
     			    			
     			rotate_matrix = new Matrix();
@@ -139,27 +102,26 @@ public class StationList extends ListView {
 	    		else if (dist_f >= 0)
 	    			distance.setText(Parser.parseDistance(dist_f/1000, context) + "km");
     		} else {
-    			compass.setVisibility(INVISIBLE);
+    			compass.setVisibility(ListView.INVISIBLE);
     		}
     			
     		
     		return rowView;
     	}
     }
-    
-	public StationList(Context c, ArrayList<Station> s) {
-		super(c);
-		
-		this.context   = c;
-		mWindowManager =  (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-	    mDisplay 	   = mWindowManager.getDefaultDisplay();
-				
-		this.stations = s;
-		
-		adapter = new StationAdapter(this.context, this.stations);
-		this.setAdapter(adapter);
-		
-		this.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        
+        context = this.getActivity();
+        stations = NetworkInformation.getNetwork();
+
+        adapter = new StationAdapter(this.getActivity(),
+        							 NetworkInformation.getNetwork());
+        setListAdapter(adapter);
+        
+        /*((ListView)getView()).setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position,
@@ -177,7 +139,7 @@ public class StationList extends ListView {
         		final CharSequence[] item = {message.subSequence(0, message.length())};
         		
         		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        		builder.setTitle(myMap.get(station.getN_estacio()));
+        		builder.setTitle(stations.get(position).getName());
         		builder.setItems(item, new DialogInterface.OnClickListener() {
         		    public void onClick(DialogInterface dialog, int item) {
         		        station.changeFavouriteState();
@@ -189,9 +151,36 @@ public class StationList extends ListView {
         		return true;
 			}
 			
+		});*/
+    }
+    
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+    	super.onListItemClick(l, v, position, id);
+    	
+    	final Station station = adapter.getItem(position);
+		String message;	
+		
+		if (station.isFavourite()) {
+			message = new String(context.getString(R.string.remove_from_favorites));
+		} else {
+			message = new String(context.getString(R.string.add_to_favorites));
+		}
+
+		final CharSequence[] item = {message.subSequence(0, message.length())};
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(stations.get(position).getName());
+		builder.setItems(item, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		        station.changeFavouriteState();
+		        Collections.sort(stations);
+		        adapter.notifyDataSetChanged();
+		    }
 		});
-	}
-	
+		builder.show();
+    }
+    	
 	public void refresh() {
 		for (Station station : stations)
 			station.updatePosition();

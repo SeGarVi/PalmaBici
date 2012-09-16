@@ -17,9 +17,9 @@
 
 package com.poguico.palmabici;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 
-public abstract class SynchronizableActivity extends Activity {
+public abstract class SynchronizableActivity extends FragmentActivity {
 	public abstract void onSuccessfulNetworkSynchronization();
 	public abstract void onUnsuccessfulNetworkSynchronization();
 	public abstract void onLocationSynchronization();

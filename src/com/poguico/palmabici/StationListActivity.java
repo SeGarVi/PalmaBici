@@ -29,9 +29,12 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -40,7 +43,7 @@ public class StationListActivity extends ActionBarActivity {
 	
 	private ProgressDialog dialog;
 	private NetworkSynchronizer synchronizer;
-	private StationList station_list;
+	private StationListFragment station_list;
 	private String list_ordering;
 	
     @Override
@@ -49,6 +52,12 @@ public class StationListActivity extends ActionBarActivity {
         
         setContentView(R.layout.main);
         
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        		station_list = new StationListFragment();
+        		fragmentTransaction.add(R.id.frame_layout, station_list);
+        		fragmentTransaction.commit();
+                
         SharedPreferences conf=PreferenceManager
 				.getDefaultSharedPreferences(this);
         
@@ -56,9 +65,9 @@ public class StationListActivity extends ActionBarActivity {
         OrientationSynchronizer.addSynchronizableActivity(this);
         
         synchronizer = NetworkSynchronizer.getInstance();
-        station_list = new StationList(this, NetworkInformation.getNetwork());        
-        LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
-        main_layout_panel.addView(station_list);
+        //station_list = new StationListFragment(this, NetworkInformation.getNetwork());        
+        //LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
+        //main_layout_panel.addView(station_list);
         list_ordering = conf.getString("list_order", "distance");
     }
     
@@ -135,9 +144,9 @@ public class StationListActivity extends ActionBarActivity {
     		dialog.hide();
     	
     	Toast.makeText(this, R.string.refresh_succesful, Toast.LENGTH_SHORT).show();
-    	StationList station_list = new StationList(this, NetworkInformation.getNetwork());        
-    	LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
-        main_layout_panel.addView(station_list);
+    	//StationListFragment station_list = new StationListFragment(this, NetworkInformation.getNetwork());        
+    	//LinearLayout main_layout_panel = (LinearLayout) findViewById(R.id.main_layout_panel);        
+        //main_layout_panel.addView(station_list);
 	}
 
 	@Override

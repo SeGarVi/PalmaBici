@@ -17,6 +17,10 @@
 
 package com.poguico.palmabici;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 
 import android.content.Context;
@@ -34,6 +38,43 @@ public class Station implements Comparable <Station> {
 	private boolean favourite;
 	private float bearing;
 	
+	/*
+	 * Ugly solution to keep nice names
+	 */
+	private static final Map<String, String> myMap;
+    static {
+    	Map<String, String> aMap = new HashMap<String, String>();
+        aMap.put("01", "Parc de ses Veles");
+        aMap.put("06", "Manacor - Manuel Azaña");
+        aMap.put("07", "Aragó - Nuredduna");
+        aMap.put("09", "F. Manuel de los Herreros");
+        aMap.put("13", "Parc de les Estacions");
+        aMap.put("15", "J. Verdaguer - J. Balmes");
+        aMap.put("16", "Parc de sa Riera");
+        aMap.put("17", "Aragó - J. Balmes");
+        aMap.put("21", "Pl. Alexander Flemimg");
+        aMap.put("24", "Blanquerna - C. de Sallent");
+        aMap.put("25", "Blanquerna - Bartolomé");
+        aMap.put("27", "Pl. París");
+        aMap.put("29", "Institut Balear");
+        aMap.put("31", "Pl. Madrid");
+        aMap.put("37", "Av. Argentina");
+        aMap.put("41", "Fàbrica");
+        aMap.put("45", "Jaume III");
+        aMap.put("46", "Pl. Rei Joan Carles I");
+        aMap.put("47", "Pl. Porta de Santa Catalina");
+        aMap.put("49", "Pl. de la Reina");
+        aMap.put("51", "Via Roma");
+        aMap.put("52", "Cecili Metel");
+        aMap.put("55", "Pl. Santa Eulàlia");
+        aMap.put("56", "Pl. del Mercat");
+        aMap.put("59", "Mateu Enric Lladó");
+        aMap.put("60", "Travessera Ballester");
+        aMap.put("63", "Pl. d'Espanya");
+        aMap.put("65", "Pl. Alexandre Jaume");
+        myMap = Collections.unmodifiableMap(aMap);
+    }
+	
 	public Station(Context context, int id, String n_estacio, String name, long station_long, long station_lat,
 				   int free_slots, int busy_slots, boolean favourite) {
 		this.context = context;
@@ -41,7 +82,7 @@ public class Station implements Comparable <Station> {
 		this.n_estacio = n_estacio;
 		this.free_slots = free_slots;
 		this.busy_slots = busy_slots;
-		this.name = name;
+		this.name = myMap.get(n_estacio);
 		this.favourite = favourite;
 		
 		location = new Location(LocationManager.NETWORK_PROVIDER);
