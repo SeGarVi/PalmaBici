@@ -24,11 +24,12 @@ import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.poguico.palmabici.NetworkInformation;
-import com.poguico.palmabici.Station;
+import com.poguico.palmabici.util.NetworkInformation;
+import com.poguico.palmabici.util.Station;
+
+
 
 import android.content.Context;
-import android.content.res.Configuration;
 
 public class Parser {
 	
@@ -43,8 +44,6 @@ public class Parser {
 			
 			for (int i = 0; i < json_array.length(); i++) {
 				json_object = json_array.getJSONObject(i);
-				
-				
 				
 				stations.add(new Station(context,
 										 json_object.getInt("id"),

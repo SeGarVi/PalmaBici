@@ -20,6 +20,7 @@ package com.poguico.palmabici.syncronizers;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.apache.http.HttpEntity;
@@ -29,8 +30,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.poguico.palmabici.NetworkInformation;
+
 import com.poguico.palmabici.SynchronizableActivity;
+import com.poguico.palmabici.util.NetworkInformation;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -41,6 +43,7 @@ import android.util.Log;
 public class NetworkSynchronizer {
 	
 	private static NetworkSynchronizer instance = null;
+	private ArrayList<SynchronizableActivity> synchronizable_activities;
 	
 	private static final String URL = "http://api.citybik.es/palma.json";
 	private Long last_update = Calendar.getInstance().getTimeInMillis();
@@ -56,13 +59,13 @@ public class NetworkSynchronizer {
 		}
 		
     	protected Void doInBackground(Void... params) {    		
-    		ConnectivityManager conMgr =  (ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+    		ConnectivityManager conMgr = (ConnectivityManager)activity.getSynchronizableActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
     		NetworkInfo i = conMgr.getActiveNetworkInfo();
     		if (i == null || !i.isAvailable() || !i.isConnected())
     			connectivity = false;    			
     		else
-    			NetworkInformation.setNetwork(activity, synchronizer.getNetworkInfo());
+    			NetworkInformation.setNetwork(activity.getSynchronizableActivity(), synchronizer.getNetworkInfo());
     		
             return null;
         }
@@ -70,12 +73,16 @@ public class NetworkSynchronizer {
         protected void onPostExecute(Void params) {
         	if (connectivity) {
 	        	synchronizer.last_update = Calendar.getInstance().getTimeInMillis();
-	        	activity.onSuccessfulNetworkSynchronization();
+	        	successfulNetworkSynchronization();
         	} else {
-        		activity.onUnsuccessfulNetworkSynchronization();
+        		unSuccessfulNetworkSynchronization();
         	}
         }
     }
+	
+	private NetworkSynchronizer() {
+		synchronizable_activities = new ArrayList<SynchronizableActivity>();
+	}
 	
 	public static NetworkSynchronizer getInstance () {
 		if (instance == null)
@@ -109,6 +116,24 @@ public class NetworkSynchronizer {
 			e.printStackTrace();
 		}		
 		return builder.toString();
+	}
+	
+	private void successfulNetworkSynchronization () {
+		for (SynchronizableActivity activity : synchronizable_activities)
+			activity.onSuccessfulNetworkSynchronization();
+	}
+	
+	private void unSuccessfulNetworkSynchronization () {
+		for (SynchronizableActivity activity : synchronizable_activities)
+			activity.onUnsuccessfulNetworkSynchronization();
+	}
+	
+	public void addSynchronizableActivity(SynchronizableActivity activity) {
+		synchronizable_activities.add(activity);
+	}
+	
+	public void detachSynchronizableActivity(SynchronizableActivity activity) {
+		synchronizable_activities.remove(activity);
 	}
 	
 	public Long getLastUpdate () {

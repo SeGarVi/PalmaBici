@@ -19,6 +19,9 @@ package com.poguico.palmabici;
 
 import java.util.ArrayList;
 
+import com.poguico.palmabici.util.Station;
+
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

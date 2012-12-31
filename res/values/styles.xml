@@ -16,12 +16,12 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="WelcomeTheme" parent="android:style/Theme.Light.NoTitleBar">
+    <style name="WelcomeTheme" parent="Theme.Sherlock.Light">
         <item name="android:background">#00599e</item>
         <item name="android:textColor" >#ffffff</item>
     </style>
     
-    <style name="AppTheme" parent="android:style/Theme.Light">
+    <style name="AppTheme" parent="Theme.Sherlock.Light">
         <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
         <item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
@@ -33,6 +33,15 @@
         <item name="actionbarCompatProgressIndicatorStyle">@style/ActionBarCompatProgressIndicator</item>
     </style>
 
+    <style name="Theme.Styled" parent="Theme.Sherlock.Light.DarkActionBar">
+	    <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+	    <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+	</style>
+	
+	<style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+	    <item name="android:background">#ffffff</item>
+	</style>
+    
     <style name="ActionBarCompat">
         <item name="android:background">#00599e</item>
         <item name="android:paddingLeft">6dp</item>
@@ -74,6 +83,9 @@
     </style>
     
     <style name="TitleBarButton" parent="style/ActionBarCompatHomeItem">
+    </style>
+    
+    <style name="tab" parent="style/ActionBarCompatHomeItem">
     </style>
     
 </resources>

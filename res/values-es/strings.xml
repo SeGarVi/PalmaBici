@@ -32,7 +32,7 @@
     <string name="view_agpl_license">Licencia AGPL v.3</string>
     <string name="view_apache_license">Licencia Apache v.2</string>
     <string name="credits_author">© 2012 Sergio García Villalonga (yayalose@gmail.com)</string>
-    <string name="credits_license">Esta aplicación es software libre, distribuida bajo la licencia AGPL v.3. (contiene código de Google bajo licencia Apache v.2). Abajo puedes acceder al texto completo de las licencias.</string>
+    <string name="credits_license">Esta aplicación es software libre, distribuida bajo la licencia AGPL v.3. Se utiliza la librería ActionBarSherlock (http://actionbarsherlock.com/, bajo licencia Apache v2.0). Abajo puedes acceder al texto completo de las licencias.</string>
     <string name="credits_citybik">La información sobre el estado de las estaciones se obtiene utilizando la API de City Bikes (http://www.citybik.es/), bajo licencia LGPL.</string>
     <string name="credits_collaborate">Eres libre de descargarte y modificar el código fuente de esta app, así como de redistribuirla con o sin modificaciones con la misma licencia. Si quieres participar en el desarrollo no dudes en contactarme :)</string>
     <string name="close">Cerrar</string>

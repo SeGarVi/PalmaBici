@@ -20,31 +20,28 @@ package com.poguico.palmabici;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 import android.app.AlertDialog;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.poguico.palmabici.parsers.*;
 import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
+import com.poguico.palmabici.util.NetworkInformation;
+import com.poguico.palmabici.util.Station;
 
 public class StationListFragment extends ListFragment {
 	private StationAdapter adapter;
 	private Context context;
-	private WindowManager mWindowManager;
-	private Display mDisplay;
 	private ArrayList<Station> stations;
 	
     private class StationAdapter extends ArrayAdapter<Station> {    	
@@ -76,7 +73,7 @@ public class StationListFragment extends ListFragment {
     		TextView bikes    = (TextView)  rowView.findViewById(R.id.bikes);
     		TextView holes    = (TextView)  rowView.findViewById(R.id.holes);
     		TextView distance = (TextView)  rowView.findViewById(R.id.distance);
-    		ImageView compass = (ImageView) rowView.findViewById(R.id.compass);
+    		//ImageView compass = (ImageView) rowView.findViewById(R.id.compass);
     				
     		id.setText(stations.get(position).getN_estacio() + " · ");		
     		name.setText(stations.get(position).getName());
@@ -92,17 +89,17 @@ public class StationListFragment extends ListFragment {
     							  360;
     			    			
     			rotate_matrix = new Matrix();
-    			rotate_matrix.setRotate(rotation,
-    					compass.getDrawable().getIntrinsicWidth() / (float)2,
+    			/*rotate_matrix.setRotate(rotation,
+    					compass.getDrawable().getIntrinsicWidth() / (float)2,mTabs.get(0).
     					compass.getDrawable().getIntrinsicHeight() / (float)2);
-    			compass.setImageMatrix(rotate_matrix);
+    			compass.setImageMatrix(rotate_matrix);*/
     			
 	    		if (dist_f >= 0 && dist_f < 1000)
 	    			distance.setText(String.valueOf(dist_f.intValue()) + "m");
 	    		else if (dist_f >= 0)
 	    			distance.setText(Parser.parseDistance(dist_f/1000, context) + "km");
     		} else {
-    			compass.setVisibility(ListView.INVISIBLE);
+    			/*compass.setVisibility(ListView.INVISIBLE);*/
     		}
     			
     		
@@ -186,5 +183,5 @@ public class StationListFragment extends ListFragment {
 			station.updatePosition();
 		Collections.sort(stations);
 		adapter.notifyDataSetChanged();	
-	}
+	}	
 }

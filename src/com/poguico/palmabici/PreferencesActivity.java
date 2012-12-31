@@ -17,50 +17,23 @@
 
 package com.poguico.palmabici;
 
-import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.ImageButton;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 
-public class PreferencesActivity extends PreferenceActivity {
+import android.os.Bundle;
+
+public class PreferencesActivity extends SherlockPreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-			super.onCreate(savedInstanceState);
-	        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.preferences_titlebar);
-	        
-			addPreferencesFromResource(R.xml.peferences_layout);
-			
-			ImageButton back = (ImageButton) findViewById(R.id.preferences_back_button);
-			back.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					finish();
-				}
-			});
-        } else {
-        	super.onCreate(savedInstanceState);
-        	addPreferencesFromResource(R.xml.peferences_layout);
-        }
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.peferences_layout);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case android.R.id.home:
-	        	finish();
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		finish();
+		return true;
 	}
 }
