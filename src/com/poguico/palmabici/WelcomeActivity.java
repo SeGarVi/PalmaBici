@@ -17,6 +17,7 @@
 
 package com.poguico.palmabici;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.poguico.palmabici.syncronizers.*;
 
@@ -35,7 +36,9 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        getSupportActionBar().hide();
+        ActionBar action_bar = getSupportActionBar();
+        if (action_bar != null)
+        	action_bar.hide();
         
         DatabaseManager.initDB(this);
         LocationSynchronizer.init(this);
