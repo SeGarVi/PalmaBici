@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
 import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
+import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
 
@@ -127,86 +128,96 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 
 	private void updateStations() {		
 		float percentatge;
+		float[] distance = new float[1];
+		String formatted_distance;
+		Location my_location = LocationSynchronizer.getLocation();
+		
 		for (Station station : NetworkInformation.getNetwork()) {
 			percentatge = station.getBusy_slots()*100 / station.getSlots();
+			Location.distanceBetween(station.getLat(),
+									 station.getLong(),
+									 my_location.getLatitude(),
+									 my_location.getLongitude(), distance);
+			formatted_distance = Formatter.formatDistance(distance[0], this.getActivity());
 			
-			if (percentatge > 95)			
+			if (percentatge > 95) {
 				map.addMarker(new MarkerOptions()
 					.position(new LatLng(station.getLat(), station.getLong()))
-					.title(station.getName())
+					.title(station.getName() + " (" + formatted_distance + ")")
 					.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 		    		.icon(marker100));
-			else if (percentatge > 85)
+			} else if (percentatge > 85) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker90));
-			else if (percentatge > 75)
+			} else if (percentatge > 75) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker80));
-			else if (percentatge > 65)
+			} else if (percentatge > 65) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker70));
-			else if (percentatge > 55)
+			} else if (percentatge > 55) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker60));
-			else if (percentatge > 45)
+			} else if (percentatge > 45) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker50));
-			else if (percentatge > 35)
+			} else if (percentatge > 35) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker40));
-			else if (percentatge > 25)
+			} else if (percentatge > 25) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker30));
-			else if (percentatge > 15)
+			} else if (percentatge > 15) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker20));
-			else if (percentatge > 5)
+			} else if (percentatge > 5) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker10));
-			else
+			} else {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName())
+				.title(station.getName() + " (" + formatted_distance + ")")
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker0));
+			} 
 		}
 	}
 

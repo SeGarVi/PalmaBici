@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.poguico.palmabici.parsers.*;
 import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
+import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
 
@@ -94,14 +95,10 @@ public class StationListFragment extends ListFragment {
     					compass.getDrawable().getIntrinsicHeight() / (float)2);
     			compass.setImageMatrix(rotate_matrix);*/
     			
-	    		if (dist_f >= 0 && dist_f < 1000)
-	    			distance.setText(String.valueOf(dist_f.intValue()) + "m");
-	    		else if (dist_f >= 0)
-	    			distance.setText(Parser.parseDistance(dist_f/1000, context) + "km");
+    			distance.setText(Formatter.formatDistance(dist_f/1000, context));
     		} else {
     			/*compass.setVisibility(ListView.INVISIBLE);*/
     		}
-    			
     		
     		return rowView;
     	}

@@ -67,12 +67,4 @@ public class Parser {
 		
 		return stations;
 	}
-	
-	public static String parseDistance(Float distance, Context context) {
-		Locale current_local = context.getResources().getConfiguration().locale;
-		NumberFormat format = NumberFormat.getNumberInstance(current_local);
-		
-		format.setMaximumFractionDigits(2);
-		return format.format(distance);
-	}
 }
