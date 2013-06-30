@@ -19,6 +19,7 @@ package com.poguico.palmabici.syncronizers;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.poguico.palmabici.SynchronizableActivity;
 
 import android.content.Context;
@@ -28,8 +29,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 public class LocationSynchronizer {
-
-	private static Location 		location;
+	private static Location 		  location;
 	private static LocationManager  manager;
 	private static LocationListener listener;
 	

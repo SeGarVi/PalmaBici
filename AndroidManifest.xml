@@ -33,7 +33,7 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-
+    
     <permission
         android:name="com.poguico.palmabici.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -46,7 +46,7 @@
         android:theme="@style/Theme.palmabici" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDAgI8oRE4SAJwvNTxD4VbH00azMthxo_I" />
+            android:value="AIzaSyC322OwaiAWlikcffQyLrwa2vyAjoIXiBQ" />
 
         <activity
             android:name="com.poguico.palmabici.WelcomeActivity"

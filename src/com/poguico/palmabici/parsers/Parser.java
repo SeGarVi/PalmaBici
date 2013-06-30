@@ -38,12 +38,16 @@ public class Parser {
 		ArrayList <Station> stations = new ArrayList<Station>();
 		JSONArray json_array;
 		JSONObject json_object;
+		Long lngAcum=0L, latAcum=0L;
 		
 		try {
 			json_array = new JSONArray(data);
 			
 			for (int i = 0; i < json_array.length(); i++) {
 				json_object = json_array.getJSONObject(i);
+				
+				lngAcum += json_object.getLong("lng");
+				latAcum += json_object.getLong("lat");
 				
 				stations.add(new Station(context,
 										 json_object.getInt("id"),
@@ -55,6 +59,8 @@ public class Parser {
 										 json_object.getInt("bikes"),
 										 NetworkInformation.isFavourite(json_object.getString("name").substring(1, 3))));
 			}
+			
+			System.out.println("Center: long " + lngAcum/stations.size() +" - "+ latAcum/stations.size() +" lat");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

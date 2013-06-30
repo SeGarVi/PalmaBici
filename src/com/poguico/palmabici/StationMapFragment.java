@@ -17,8 +17,10 @@
 
 package com.poguico.palmabici;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -36,55 +38,81 @@ import android.support.v4.app.FragmentActivity;
 
 public class StationMapFragment extends SupportMapFragment implements SynchronizableActivity {
 
-	private BitmapDescriptor marker100;
-	private BitmapDescriptor marker90;
-	private BitmapDescriptor marker80;
-	private BitmapDescriptor marker70;
-	private BitmapDescriptor marker60;
-	private BitmapDescriptor marker50;
-	private BitmapDescriptor marker40;
-	private BitmapDescriptor marker30;
-	private BitmapDescriptor marker20;
-	private BitmapDescriptor marker10;
-	private BitmapDescriptor marker0;
+	private BitmapDescriptor marker100 = null;
+	private BitmapDescriptor marker90  = null;
+	private BitmapDescriptor marker80  = null;
+	private BitmapDescriptor marker70  = null;
+	private BitmapDescriptor marker60  = null;
+	private BitmapDescriptor marker50  = null;
+	private BitmapDescriptor marker40  = null;
+	private BitmapDescriptor marker30  = null;
+	private BitmapDescriptor marker20  = null;
+	private BitmapDescriptor marker10  = null;
+	private BitmapDescriptor marker0   = null;
 	
 	private GoogleMap map;
 	
 	@Override
 	public void onCreate(Bundle arg0) {
-		// TODO Auto-generated method stub
 		super.onCreate(arg0);
-		
-		marker100 = BitmapDescriptorFactory.fromResource(R.drawable.marker100);
-		marker90  = BitmapDescriptorFactory.fromResource(R.drawable.marker90);
-		marker80  = BitmapDescriptorFactory.fromResource(R.drawable.marker80);
-		marker70  = BitmapDescriptorFactory.fromResource(R.drawable.marker70);
-		marker60  = BitmapDescriptorFactory.fromResource(R.drawable.marker60);
-		marker50  = BitmapDescriptorFactory.fromResource(R.drawable.marker50);
-		marker40  = BitmapDescriptorFactory.fromResource(R.drawable.marker40);
-		marker30  = BitmapDescriptorFactory.fromResource(R.drawable.marker30);
-		marker20  = BitmapDescriptorFactory.fromResource(R.drawable.marker20);
-		marker10  = BitmapDescriptorFactory.fromResource(R.drawable.marker10);
-		marker0   = BitmapDescriptorFactory.fromResource(R.drawable.marker0);
 				
+		try {
+			MapsInitializer.initialize(this.getActivity());
+		} catch (GooglePlayServicesNotAvailableException e) {
+			// TODO Auto-generated catch block
+			System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.err.println("Problem with maps");
+			System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			e.printStackTrace();
+		}
+		
 		LocationSynchronizer.addSynchronizableActivity(this);
 		NetworkSynchronizer.getInstance().addSynchronizableActivity(this);
         OrientationSynchronizer.addSynchronizableActivity(this);
+	}
+	
+	public void init () {
+		if (marker100 == null) {
+			marker100 = BitmapDescriptorFactory.fromResource(R.drawable.marker100);
+			marker90  = BitmapDescriptorFactory.fromResource(R.drawable.marker90);
+			marker80  = BitmapDescriptorFactory.fromResource(R.drawable.marker80);
+			marker70  = BitmapDescriptorFactory.fromResource(R.drawable.marker70);
+			marker60  = BitmapDescriptorFactory.fromResource(R.drawable.marker60);
+			marker50  = BitmapDescriptorFactory.fromResource(R.drawable.marker50);
+			marker40  = BitmapDescriptorFactory.fromResource(R.drawable.marker40);
+			marker30  = BitmapDescriptorFactory.fromResource(R.drawable.marker30);
+			marker20  = BitmapDescriptorFactory.fromResource(R.drawable.marker20);
+			marker10  = BitmapDescriptorFactory.fromResource(R.drawable.marker10);
+			marker0   = BitmapDescriptorFactory.fromResource(R.drawable.marker0);
+		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		
+		init();
+		
 		map = this.getMap();		
 		
 		updateStations();
 		
 		map.setMyLocationEnabled(true);		
-		Location my_location = LocationSynchronizer.getLocation();		
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(my_location.getLatitude(),
-																	my_location.getLongitude()),
-																	(float)15.0));
+		Location my_location = LocationSynchronizer.getLocation();
+		
+		float[] distance = new float[1];
+		Location.distanceBetween(NetworkInformation.getNetworkCenter().latitude,
+									 NetworkInformation.getNetworkCenter().longitude,
+									 my_location.getLatitude(),
+									 my_location.getLongitude(), distance);
+		
+		if (distance[0] > 10000) {
+			this.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(39.574689, 2.651332) , 15.0f));
+		} else {
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(my_location.getLatitude(),
+																		my_location.getLongitude()),
+																		(float)15.0));
+		}
 	}
 	
 	private void updateStations() {		
@@ -174,8 +202,9 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 
 	@Override
 	public void onSuccessfulNetworkSynchronization() {
-		if (map != null)
+		if (map != null) {
 			updateStations();
+		}
 	}
 
 	@Override

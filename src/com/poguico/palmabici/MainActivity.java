@@ -39,7 +39,6 @@ import android.support.v4.view.ViewPager;
 
 import android.widget.Toast;
 
-//public class StationListActivity extends ActionBarActivity {
 public class MainActivity extends SherlockFragmentActivity implements SynchronizableActivity {
 	private static final long update_time = 600000;
 	
