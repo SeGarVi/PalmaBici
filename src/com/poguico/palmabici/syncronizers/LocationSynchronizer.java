@@ -84,6 +84,10 @@ public class LocationSynchronizer {
 		synchronizable_activities.add(activity);
 	}
 	
+	public static void detachSynchronizableActivity(SynchronizableActivity activity) {
+		synchronizable_activities.remove(activity);
+	}
+	
 	public static Location getLocation () {
 		return location;
 	}

@@ -115,6 +115,16 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 		}
 	}
 	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		LocationSynchronizer.detachSynchronizableActivity(this);
+		NetworkSynchronizer.getInstance().detachSynchronizableActivity(this);
+        OrientationSynchronizer.detachSynchronizableActivity(this);
+		
+		super.onDestroy();
+	}
+
 	private void updateStations() {		
 		float percentatge;
 		for (Station station : NetworkInformation.getNetwork()) {

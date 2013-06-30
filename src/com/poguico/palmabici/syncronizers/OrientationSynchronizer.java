@@ -67,6 +67,10 @@ public class OrientationSynchronizer {
 		synchronizable_activities.add(activity);
 	}
 	
+	public static void detachSynchronizableActivity(SynchronizableActivity activity) {
+		synchronizable_activities.remove(activity);
+	}	
+	
 	public static float getOrientation () {
 		return orientation;
 	}
