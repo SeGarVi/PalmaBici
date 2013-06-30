@@ -26,9 +26,11 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
 import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
+import com.poguico.palmabici.util.BikeLane;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
@@ -70,6 +72,7 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 		LocationSynchronizer.addSynchronizableActivity(this);
 		NetworkSynchronizer.getInstance().addSynchronizableActivity(this);
         OrientationSynchronizer.addSynchronizableActivity(this);
+        BikeLane.init(this.getActivity());
 	}
 	
 	public void init () {
@@ -114,6 +117,8 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 																		my_location.getLongitude()),
 																		(float)15.0));
 		}
+		
+		drawBikeLane();
 	}
 	
 	@Override
@@ -237,5 +242,11 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 	@Override
 	public FragmentActivity getSynchronizableActivity() {
 		return getActivity();
-	} 
+	}
+	
+	private void drawBikeLane () {
+		for (PolylineOptions path : BikeLane.getPaths()) {
+			this.getMap().addPolyline(path);
+		}
+	}
 }

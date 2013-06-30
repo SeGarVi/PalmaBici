@@ -25,6 +25,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
 import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
+import com.poguico.palmabici.util.BikeLane;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
 
