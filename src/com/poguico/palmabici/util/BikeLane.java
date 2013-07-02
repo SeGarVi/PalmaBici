@@ -40,7 +40,7 @@ public class BikeLane {
 					   for (String coordinate : text.split("\n")) {
 						   String[] coord_elements = coordinate.split(",");
 						   path.color(color.bike_lane);
-						   path.width(3);
+						   path.width(7);
 						   path.add(new LatLng(Double.valueOf(coord_elements[1]),
 								               Double.valueOf(coord_elements[0])));
 					   }

@@ -1,0 +1,11 @@
+/bin
+/libs
+/out
+/lint.xml
+/PalmaBici.iml
+/proguard.cfg
+/AndroidManifest.out.xml
+/gen
+/assets
+/.idea
+*.directory
