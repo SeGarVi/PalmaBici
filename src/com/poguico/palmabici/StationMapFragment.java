@@ -35,8 +35,10 @@ import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 
 public class StationMapFragment extends SupportMapFragment implements SynchronizableActivity {
@@ -97,7 +99,16 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 		
 		init();
 		
+		SharedPreferences conf=PreferenceManager
+				.getDefaultSharedPreferences(this.getActivity());
+		
 		map = this.getMap();		
+		
+		if (conf.getBoolean("show_bike_lane", true)) {
+			drawBikeLane();
+		} else {
+			map.clear();
+		}
 		
 		updateStations();
 		
@@ -117,8 +128,6 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 																		my_location.getLongitude()),
 																		(float)15.0));
 		}
-		
-		drawBikeLane();
 	}
 	
 	@Override

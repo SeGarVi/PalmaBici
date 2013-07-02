@@ -44,6 +44,9 @@
     <string name="preferences_sort_tip">Criteri per l\'ordenació de les estacions</string>
     <string name="preferences_sort_favourites">Favorites primer</string>
     <string name="preferences_sort_distance">Més properes primer</string>
+    <string name="preferences_show_bike_lane">Mostrar carril bici</string>
+    <string name="preferences_map">Mapa</string>
+    <string name="preferences_show_bike_lane_tip">Mostrar carrils bici i ciclocarrers al mapa</string>
     <string name="connectivity_error">No disposes de connexió a internet!</string>
     <string name="bikes">Bicis</string>
     <string name="free_slots">Anclatges lliures</string>

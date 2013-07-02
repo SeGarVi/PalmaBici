@@ -30,6 +30,15 @@
 	    </CheckBoxPreference>
     </PreferenceCategory>
     
+    <PreferenceCategory android:title="@string/preferences_map" >
+        <CheckBoxPreference
+	        android:key="show_bike_lane"
+	        android:defaultValue="true"
+	        android:summary="@string/preferences_show_bike_lane_tip"
+	        android:title="@string/preferences_show_bike_lane">        
+	    </CheckBoxPreference>
+    </PreferenceCategory>
+    
     <!-- <PreferenceCategory android:title="@string/preferences_list" />
         <ListPreference 
             android:title="@string/preferences_sort"

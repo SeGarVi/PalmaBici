@@ -44,6 +44,9 @@
     <string name="preferences_sort_tip">Criterio para la ordenación de las estaciones</string>
     <string name="preferences_sort_favourites">Favoritas primero</string>
     <string name="preferences_sort_distance">Más cercanas primero</string>
+    <string name="preferences_show_bike_lane">Mostrar carril bici</string>
+    <string name="preferences_map">Mapa</string>
+    <string name="preferences_show_bike_lane_tip">Mostrar carriles bici y ciclocalles en el mapa</string>
     <string name="connectivity_error">¡No dispones de conexión a internet!</string>
     <string name="bikes">Bicis</string>
     <string name="free_slots">Anclajes libres</string>
