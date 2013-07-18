@@ -1,3 +1,20 @@
+/*
+ * Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
+ *
+ * This file is part of PalmaBici.
+ *
+ *    PalmaBici is free software: you can redistribute it and/or modify
+ *    it under the terms of the Affero GNU General Public License version 3
+ *    as published by the Free Software Foundation.
+ *
+ *    PalmaBici is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *    Affero GNU General Public License for more details
+ *    (https://www.gnu.org/licenses/agpl-3.0.html).
+ *    
+ */
+
 package com.poguico.palmabici.util;
 
 import java.io.IOException;
@@ -6,7 +23,6 @@ import java.util.ArrayList;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.poguico.palmabici.R;
-import com.poguico.palmabici.R.color;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -14,7 +30,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-
+import android.graphics.Color;
 
 public class BikeLane {
 	private static ArrayList<PolylineOptions> paths;
@@ -39,7 +55,8 @@ public class BikeLane {
 					   PolylineOptions path = new PolylineOptions();
 					   for (String coordinate : text.split("\n")) {
 						   String[] coord_elements = coordinate.split(",");
-						   path.color(color.bike_lane);
+						   //path.color(color.bike_lane);
+						   path.color(Color.parseColor("#ffa0a0ff"));
 						   path.width(4);
 						   path.add(new LatLng(Double.valueOf(coord_elements[1]),
 								               Double.valueOf(coord_elements[0])));

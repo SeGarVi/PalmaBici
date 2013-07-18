@@ -19,7 +19,6 @@ package com.poguico.palmabici.syncronizers;
 
 import java.util.ArrayList;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.poguico.palmabici.SynchronizableActivity;
 
 import android.content.Context;

@@ -25,7 +25,6 @@ import android.app.AlertDialog;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +33,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.poguico.palmabici.parsers.*;
-import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
@@ -61,7 +58,6 @@ public class StationListFragment extends ListFragment {
     	@Override
     	public View getView(int position, View convertView, ViewGroup parent) {
     		Float dist_f;
-    		Matrix rotate_matrix;
     		LayoutInflater inflater = (LayoutInflater) context
     				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		View rowView   = inflater.inflate(R.layout.main_list_item_layout, parent, false);
@@ -83,21 +79,7 @@ public class StationListFragment extends ListFragment {
     		    		
     		dist_f = stations.get(position).getDistance();
     		if (dist_f >= 0) {
-    			
-    			float rotation = (stations.get(position).getBearing() -
-    							  OrientationSynchronizer.getOrientation()
-    							  - (90 * getResources().getConfiguration().orientation)) %
-    							  360;
-    			    			
-    			rotate_matrix = new Matrix();
-    			/*rotate_matrix.setRotate(rotation,
-    					compass.getDrawable().getIntrinsicWidth() / (float)2,mTabs.get(0).
-    					compass.getDrawable().getIntrinsicHeight() / (float)2);
-    			compass.setImageMatrix(rotate_matrix);*/
-    			
     			distance.setText(Formatter.formatDistance(dist_f/1000, context));
-    		} else {
-    			/*compass.setVisibility(ListView.INVISIBLE);*/
     		}
     		
     		return rowView;

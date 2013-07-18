@@ -17,18 +17,21 @@
   (https://www.gnu.org/licenses/agpl-3.0.html).
     
 -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:gravity="center_vertical|right"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.33"
         android:gravity="center_vertical|left"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="match_parent"

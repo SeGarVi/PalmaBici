@@ -18,8 +18,6 @@
 package com.poguico.palmabici.widgets;
 
 import com.poguico.palmabici.R;
-import com.poguico.palmabici.R.id;
-import com.poguico.palmabici.R.layout;
 
 import android.app.Dialog;
 import android.content.Context;
