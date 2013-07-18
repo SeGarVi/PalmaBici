@@ -46,7 +46,7 @@
         android:theme="@style/Theme.palmabici" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyC322OwaiAWlikcffQyLrwa2vyAjoIXiBQ" />
+            android:value="AIzaSyCgRJcKHcPVR3nz43ngnO4BmWRKTBObjbE" />
 
         <activity
             android:name="com.poguico.palmabici.WelcomeActivity"

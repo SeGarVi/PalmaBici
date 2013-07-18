@@ -9,17 +9,14 @@ public class Formatter {
 	public static String formatDistance (float meters, Context context) {
 		String ret = "";
 		
-		if (meters < 1000) {
-			ret += String.valueOf(meters) + "m";
-		} else {
-			Locale current_local = context.getResources().getConfiguration().locale;
-			NumberFormat format = NumberFormat.getNumberInstance(current_local);
-			
-			format.setMaximumFractionDigits(2);
-			
-			ret += format.format(meters/1000) + "km";
-		}
+		Locale current_local = context.getResources().getConfiguration().locale;
+		NumberFormat format  = NumberFormat.getNumberInstance(current_local);
 		
+		format.setMaximumFractionDigits(2);
+		
+		ret += (meters < 1000)? format.format(meters) + "m" :
+			                    format.format(meters/1000) + "km";
+				
 		return ret;
 	}
 }
