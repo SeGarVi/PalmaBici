@@ -64,6 +64,7 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 		Intent next_activity = new Intent(this, MainActivity.class);
 		synchronizer.detachSynchronizableActivity(this);
     	this.startActivity(next_activity);
+    	this.finish();
 	}
 
 	@Override
