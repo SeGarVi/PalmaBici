@@ -20,7 +20,6 @@ package com.poguico.palmabici;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 import android.app.AlertDialog;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
@@ -33,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
@@ -158,9 +158,9 @@ public class StationListFragment extends ListFragment {
     }
     	
 	public void refresh() {
-		for (Station station : stations)
-			station.updatePosition();
+		/*for (Station station : stations)
+			station.updatePosition(LocationSynchronizer.getInstance(this));
 		Collections.sort(stations);
-		adapter.notifyDataSetChanged();	
+		adapter.notifyDataSetChanged();	*/
 	}	
 }

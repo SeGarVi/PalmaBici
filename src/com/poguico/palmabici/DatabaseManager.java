@@ -57,11 +57,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 	}
 
-	public static void initDB(Context context) {
-		instance = new DatabaseManager(context);
+	public static DatabaseManager getInstance(Context context) {
+		if (instance == null) {
+			instance = new DatabaseManager(context);
+		}
+		
+		return instance;
 	}
 	
-	public static ArrayList<String> getFavouriteStations () {
+	public ArrayList<String> getFavouriteStations () {
 		SQLiteDatabase db;
 		Cursor c;
 		int n_estacio_col;
@@ -84,7 +88,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		return res;
 	}
 	
-	public static void saveFavouriteStations (ArrayList <Station> stations) {
+	public void saveFavouriteStations (ArrayList <Station> stations) {
 		SQLiteDatabase db;
 		ContentValues values = new ContentValues(2);
 		

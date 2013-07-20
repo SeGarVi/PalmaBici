@@ -23,7 +23,6 @@ import java.util.Map;
 
 
 import com.google.android.gms.maps.model.LatLng;
-import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -112,12 +111,12 @@ public class Station implements Comparable <Station> {
 			location.setLongitude((double)station_long / 1e6);
 		}
 		
-		if (LocationSynchronizer.getLocation() != null) {
-			distance = location.distanceTo(LocationSynchronizer.getLocation());
-			bearing  = LocationSynchronizer.getLocation().bearingTo(location);
+		/*if (userLocation != null) {
+			distance = location.distanceTo(userLocation);
+			bearing  = userLocation.bearingTo(location);
 		} else {
 			distance = (float)-1;
-		}
+		}*/
 	}
 
 	public int getId() {
@@ -193,10 +192,10 @@ public class Station implements Comparable <Station> {
 		return location.getLongitude();
 	}
 	
-	public void updatePosition() {
-		if (LocationSynchronizer.getLocation() != null) {
-			distance = location.distanceTo(LocationSynchronizer.getLocation());
-			bearing  = LocationSynchronizer.getLocation().bearingTo(location);
+	public void updatePosition(Location userLocation) {
+		if (userLocation != null) {
+			distance = location.distanceTo(userLocation);
+			bearing  = userLocation.bearingTo(location);
 		} else {
 			distance = (float)-1;
 		}

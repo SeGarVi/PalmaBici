@@ -26,21 +26,34 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 public class LocationSynchronizer {
-	private static Location 		  location;
-	private static LocationManager  manager;
-	private static LocationListener listener;
+	private static LocationSynchronizer instance = null;
+	
+	private Location 	     location;
+	private LocationManager  manager;
+	private LocationListener listener;
 	
 	private static ArrayList<SynchronizableActivity> synchronizable_activities;
 	
-	public static void init(Context context) {
+	public static LocationSynchronizer getInstance (SynchronizableActivity activity) {
+		if (instance == null) {
+			instance = new LocationSynchronizer(activity.getSynchronizableActivity());
+		}
+		
+		instance.addSynchronizableActivity(activity);
+		
+		return instance;
+	}
+	
+	public LocationSynchronizer (FragmentActivity context) {		
 		manager  = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		listener = new LocationListener() {
 
 			@Override
-			public void onLocationChanged(Location location) {
-				LocationSynchronizer.location = location;
+			public void onLocationChanged(Location l) {
+				location = l;
 				updateViews();
 			}
 			
@@ -74,20 +87,20 @@ public class LocationSynchronizer {
 		synchronizable_activities = new ArrayList<SynchronizableActivity>();
 	}
 	
-	private static void updateViews () {
+	private void updateViews () {
 		for (SynchronizableActivity activity : synchronizable_activities)
 			activity.onLocationSynchronization();
 	}
 	
-	public static void addSynchronizableActivity(SynchronizableActivity activity) {
+	public void addSynchronizableActivity(SynchronizableActivity activity) {
 		synchronizable_activities.add(activity);
 	}
 	
-	public static void detachSynchronizableActivity(SynchronizableActivity activity) {
+	public void detachSynchronizableActivity(SynchronizableActivity activity) {
 		synchronizable_activities.remove(activity);
 	}
 	
-	public static Location getLocation () {
+	public Location getLocation () {
 		return location;
 	}
 }

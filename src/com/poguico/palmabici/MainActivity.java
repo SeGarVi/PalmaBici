@@ -22,7 +22,6 @@ import java.util.Calendar;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
@@ -44,24 +43,17 @@ public class MainActivity extends SherlockFragmentActivity implements Synchroniz
 	ViewPager  mViewPager;
 	
 	private ProgressDialog dialog;
-	private NetworkSynchronizer synchronizer;
-	private StationListFragment station_list;
-	private String list_ordering;
+	
+	SharedPreferences conf = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+
+    	conf = PreferenceManager.getDefaultSharedPreferences(this);
+    	checkUpdate();
+    		
     	setContentView(R.layout.main);
-                
-        SharedPreferences conf=PreferenceManager
-				.getDefaultSharedPreferences(this);
-        
-        synchronizer = NetworkSynchronizer.getInstance();
-        
-        synchronizer.addSynchronizableActivity(this);
-        LocationSynchronizer.addSynchronizableActivity(this);
-        
-        list_ordering = conf.getString("list_order", "distance");
     }
     
     @Override
@@ -78,7 +70,8 @@ public class MainActivity extends SherlockFragmentActivity implements Synchroniz
 
             case R.id.menu_refresh:
             	dialog = ProgressDialog.show(this, "", getString(R.string.refresh_ongoing), true);
-            	synchronizer.new SynchronizeTask(this).execute((Void [])null);
+            	NetworkSynchronizer synchronizer = NetworkSynchronizer.getInstance(this);
+            	synchronizer.synchronize(this);
                 break;
 
             case R.id.menu_credits:
@@ -99,31 +92,24 @@ public class MainActivity extends SherlockFragmentActivity implements Synchroniz
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+	protected void onResume() {
+		super.onResume();
+		
+		checkUpdate();
+	}
+    
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 		
-		SharedPreferences conf=PreferenceManager
-				.getDefaultSharedPreferences(this);
-
-		long now = Calendar.getInstance().getTimeInMillis();
-		
-		if (conf.getBoolean("autoupdate", true) &&
-				(now - synchronizer.getLastUpdate()) > update_time) {
-			dialog = ProgressDialog.show(this, "",getString(R.string.refresh_ongoing), true);
-			synchronizer.new SynchronizeTask(this).execute((Void [])null);
-		}
-		
-		if (!conf.getString("list_order", "distance").equals(list_ordering)) {
-			list_ordering = conf.getString("list_order", "distance");
-			station_list.refresh();
-		}
+		checkUpdate();
 	}
 		
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		DatabaseManager.saveFavouriteStations(NetworkInformation.getNetwork());
+		DatabaseManager.getInstance(this).saveFavouriteStations(NetworkInformation.getNetwork());
 	}
 	
 	@Override
@@ -136,6 +122,9 @@ public class MainActivity extends SherlockFragmentActivity implements Synchroniz
 
 	@Override
 	public void onUnsuccessfulNetworkSynchronization() {
+		if (dialog != null)
+    		dialog.hide();
+		
 		Toast.makeText(this, R.string.connectivity_error, Toast.LENGTH_SHORT).show();
 	}
 
@@ -145,5 +134,23 @@ public class MainActivity extends SherlockFragmentActivity implements Synchroniz
 	@Override
 	public FragmentActivity getSynchronizableActivity() {
 		return this;
-	} 
+	}
+	
+	private void checkUpdate() {
+		NetworkSynchronizer synchronizer = NetworkSynchronizer.getInstance(this);
+		
+		long now = Calendar.getInstance().getTimeInMillis();
+		
+		if (NetworkInformation.getNetwork() == null ||
+				(conf.getBoolean("autoupdate", true) &&
+				(now - synchronizer.getLastUpdate()) > update_time)) {
+			dialog = ProgressDialog.show(this, "",getString(R.string.refresh_ongoing), true);
+			synchronizer.synchronize(this);
+		}
+		
+		/*if (!conf.getString("list_order", "distance").equals(list_ordering)) {
+			list_ordering = conf.getString("list_order", "distance");
+			station_list.refresh();
+		}*/
+	}
 }

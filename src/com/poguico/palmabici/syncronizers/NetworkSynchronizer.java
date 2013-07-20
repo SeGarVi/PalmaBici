@@ -30,7 +30,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-
 import com.poguico.palmabici.SynchronizableActivity;
 import com.poguico.palmabici.util.NetworkInformation;
 
@@ -52,10 +51,11 @@ public class NetworkSynchronizer {
         
 		SynchronizableActivity activity;
 		boolean connectivity = true;
-		NetworkSynchronizer synchronizer = NetworkSynchronizer.getInstance();
+		NetworkSynchronizer synchronizer;
 		
 		public SynchronizeTask (SynchronizableActivity activity) {
 			this.activity = activity;
+			this.synchronizer = NetworkSynchronizer.getInstance(activity);
 		}
 		
     	protected Void doInBackground(Void... params) {    		
@@ -84,9 +84,11 @@ public class NetworkSynchronizer {
 		synchronizable_activities = new ArrayList<SynchronizableActivity>();
 	}
 	
-	public static NetworkSynchronizer getInstance () {
+	public static NetworkSynchronizer getInstance (SynchronizableActivity activity) {
 		if (instance == null)
 			instance = new NetworkSynchronizer();
+		
+		instance.addSynchronizableActivity(activity);
 		
 		return instance;
 	}
@@ -129,7 +131,8 @@ public class NetworkSynchronizer {
 	}
 	
 	public void addSynchronizableActivity(SynchronizableActivity activity) {
-		synchronizable_activities.add(activity);
+		if (!synchronizable_activities.contains(activity))
+			synchronizable_activities.add(activity);
 	}
 	
 	public void detachSynchronizableActivity(SynchronizableActivity activity) {
@@ -138,5 +141,9 @@ public class NetworkSynchronizer {
 	
 	public Long getLastUpdate () {
 		return last_update;
+	}
+	
+	public void synchronize(SynchronizableActivity activity) {
+		new SynchronizeTask(activity).execute((Void [])null);
 	}
 }

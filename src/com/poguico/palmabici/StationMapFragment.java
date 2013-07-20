@@ -70,8 +70,7 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 			e.printStackTrace();
 		}
 		
-		LocationSynchronizer.addSynchronizableActivity(this);
-		NetworkSynchronizer.getInstance().addSynchronizableActivity(this);
+		NetworkSynchronizer.getInstance(this);
         BikeLane.init(this.getActivity());
 	}
 	
@@ -92,7 +91,7 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 	}
 
 	@Override
-	public void onResume() {
+	public void onStart() {
 		super.onResume();
 		
 		init();
@@ -111,7 +110,7 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 		updateStations();
 		
 		map.setMyLocationEnabled(true);		
-		Location my_location = LocationSynchronizer.getLocation();
+		Location my_location = LocationSynchronizer.getInstance(this).getLocation();
 		
 		float[] distance = new float[1];
 		Location.distanceBetween(NetworkInformation.getNetworkCenter().latitude,
@@ -131,8 +130,8 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		LocationSynchronizer.detachSynchronizableActivity(this);
-		NetworkSynchronizer.getInstance().detachSynchronizableActivity(this);
+		LocationSynchronizer.getInstance(this).detachSynchronizableActivity(this);
+		NetworkSynchronizer.getInstance(this).detachSynchronizableActivity(this);
 		
 		super.onDestroy();
 	}
@@ -141,7 +140,7 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 		float percentatge;
 		float[] distance = new float[1];
 		String formatted_distance;
-		Location my_location = LocationSynchronizer.getLocation();
+		Location my_location = LocationSynchronizer.getInstance(this).getLocation();
 		
 		for (Station station : NetworkInformation.getNetwork()) {
 			percentatge = station.getBusy_slots()*100 / station.getSlots();

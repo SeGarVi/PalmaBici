@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 public class WelcomeActivity extends SherlockFragmentActivity implements SynchronizableActivity  {
 
-	NetworkSynchronizer synchronizer;	
+	NetworkSynchronizer synchronizer;
 	String stations;
 	
     /** Called when the activity is first created. */
@@ -39,23 +39,18 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
         ActionBar action_bar = getSupportActionBar();
         if (action_bar != null)
         	action_bar.hide();
-        
-        DatabaseManager.initDB(this);
-        LocationSynchronizer.init(this);
-        synchronizer = NetworkSynchronizer.getInstance();
-        synchronizer.addSynchronizableActivity(this);
-        
-        setContentView(R.layout.welcome);
-        synchronizer.new SynchronizeTask(this).execute((Void [])null);
-    }
-
-    @Override
-    public void onRestart() {
-        super.onRestart();
-        setContentView(R.layout.welcome);
-        synchronizer.new SynchronizeTask(this).execute((Void [])null);
     }
     
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		setContentView(R.layout.welcome);
+		
+		synchronizer = NetworkSynchronizer.getInstance(this);
+		synchronizer.synchronize(this);
+	}
+
 	@Override
 	public void onSuccessfulNetworkSynchronization() {
 		TextView text = (TextView)findViewById(R.id.textView1);
