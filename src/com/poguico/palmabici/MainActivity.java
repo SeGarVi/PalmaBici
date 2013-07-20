@@ -24,7 +24,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
-import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
 
@@ -61,7 +60,6 @@ public class MainActivity extends SherlockFragmentActivity implements Synchroniz
         
         synchronizer.addSynchronizableActivity(this);
         LocationSynchronizer.addSynchronizableActivity(this);
-        OrientationSynchronizer.addSynchronizableActivity(this);
         
         list_ordering = conf.getString("list_order", "distance");
     }

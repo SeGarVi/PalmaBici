@@ -42,7 +42,6 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
         
         DatabaseManager.initDB(this);
         LocationSynchronizer.init(this);
-        OrientationSynchronizer.init(this);
         synchronizer = NetworkSynchronizer.getInstance();
         synchronizer.addSynchronizableActivity(this);
         

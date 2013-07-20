@@ -29,7 +29,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
-import com.poguico.palmabici.syncronizers.OrientationSynchronizer;
 import com.poguico.palmabici.util.BikeLane;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
@@ -73,7 +72,6 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 		
 		LocationSynchronizer.addSynchronizableActivity(this);
 		NetworkSynchronizer.getInstance().addSynchronizableActivity(this);
-        OrientationSynchronizer.addSynchronizableActivity(this);
         BikeLane.init(this.getActivity());
 	}
 	
@@ -135,7 +133,6 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 		// TODO Auto-generated method stub
 		LocationSynchronizer.detachSynchronizableActivity(this);
 		NetworkSynchronizer.getInstance().detachSynchronizableActivity(this);
-        OrientationSynchronizer.detachSynchronizableActivity(this);
 		
 		super.onDestroy();
 	}
