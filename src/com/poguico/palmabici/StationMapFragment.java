@@ -74,7 +74,7 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
         BikeLane.init(this.getActivity());
 	}
 	
-	public void init () {
+	public void initMarkers () {
 		if (marker100 == null) {
 			marker100 = BitmapDescriptorFactory.fromResource(R.drawable.marker100);
 			marker90  = BitmapDescriptorFactory.fromResource(R.drawable.marker90);
@@ -94,7 +94,7 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 	public void onStart() {
 		super.onResume();
 		
-		init();
+		initMarkers();
 		
 		SharedPreferences conf=PreferenceManager
 				.getDefaultSharedPreferences(this.getActivity());
