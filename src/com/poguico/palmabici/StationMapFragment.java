@@ -92,7 +92,7 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 
 	@Override
 	public void onStart() {
-		super.onResume();
+		super.onStart();
 		
 		initMarkers();
 		

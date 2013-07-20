@@ -98,13 +98,6 @@ public class MainActivity extends SherlockFragmentActivity implements Synchroniz
 		
 		checkUpdate();
 	}
-    
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		
-		checkUpdate();
-	}
 		
 	@Override
 	protected void onDestroy() {
