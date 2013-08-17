@@ -56,6 +56,7 @@ public class StationMapFragment extends    SupportMapFragment
 	private BitmapDescriptor marker0   = null;
 	
 	private GoogleMap map;
+	private SharedPreferences conf;
 	
 	@Override
 	public void onCreate(Bundle arg0) {
@@ -64,13 +65,11 @@ public class StationMapFragment extends    SupportMapFragment
 		try {
 			MapsInitializer.initialize(this.getActivity());
 		} catch (GooglePlayServicesNotAvailableException e) {
-			// TODO Auto-generated catch block
-			System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			System.err.println("Problem with maps");
-			System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			e.printStackTrace();
 		}
 		
+		conf=PreferenceManager
+				.getDefaultSharedPreferences(this.getActivity());
 		NetworkSynchronizer.getInstance(this);
         BikeLane.init(this.getActivity());
 	}
@@ -112,15 +111,11 @@ public class StationMapFragment extends    SupportMapFragment
 		float[] distance = null;
 		initMarkers();
 		
-		SharedPreferences conf=PreferenceManager
-				.getDefaultSharedPreferences(this.getActivity());
-		
 		map = this.getMap();		
 		
+		map.clear();
 		if (conf.getBoolean("show_bike_lane", true)) {
 			drawBikeLane();
-		} else {
-			map.clear();
 		}
 		
 		map.setMyLocationEnabled(true);		
@@ -246,6 +241,10 @@ public class StationMapFragment extends    SupportMapFragment
 	@Override
 	public void onSuccessfulNetworkSynchronization() {
 		if (map != null) {
+			map.clear();
+			if (conf.getBoolean("show_bike_lane", true)) {
+				drawBikeLane();
+			}
 			updateStations();
 		}
 	}

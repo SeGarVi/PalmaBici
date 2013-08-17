@@ -133,7 +133,6 @@ public class MainActivity extends    SherlockFragmentActivity
 		if (NetworkInformation.getNetwork() == null ||
 				(conf.getBoolean("autoupdate", true) &&
 				(now - synchronizer.getLastUpdate()) > update_time)) {
-			Log.i("140", "Actualizando...");
 			dialog = ProgressDialog.show(this, "",getString(R.string.refresh_ongoing), true);
 			synchronizer.synchronize(this);
 		}
