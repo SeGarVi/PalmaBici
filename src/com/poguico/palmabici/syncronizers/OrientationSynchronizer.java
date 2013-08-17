@@ -29,8 +29,8 @@ import android.hardware.SensorManager;
 
 public class OrientationSynchronizer {
 
-	private static Sensor 		  	   sensor;
-	private static SensorManager 	   manager;
+	private static Sensor              sensor;
+	private static SensorManager 	     manager;
 	private static SensorEventListener listener;
 	
 	private static float orientation;
@@ -59,8 +59,9 @@ public class OrientationSynchronizer {
 	}
 	
 	private static void updateViews () {
-		for (SynchronizableActivity activity : synchronizable_activities)
+		for (SynchronizableActivity activity : synchronizable_activities) {
 			activity.onLocationSynchronization();
+		}
 	}
 	
 	public static void addSynchronizableActivity(SynchronizableActivity activity) {

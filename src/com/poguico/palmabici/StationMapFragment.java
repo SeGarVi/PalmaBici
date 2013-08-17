@@ -40,7 +40,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 
-public class StationMapFragment extends SupportMapFragment implements SynchronizableActivity {
+public class StationMapFragment extends    SupportMapFragment
+                                implements SynchronizableActivity {
 
 	private BitmapDescriptor marker100 = null;
 	private BitmapDescriptor marker90  = null;
@@ -93,7 +94,22 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 	@Override
 	public void onStart() {
 		super.onStart();
+        initMap();
+        if (NetworkInformation.getNetwork() != null) {
+        	updateStations();
+        }
+	}
+	
+	@Override
+	public void onDestroy() {
+		LocationSynchronizer.getInstance(this).detachSynchronizableActivity(this);
+		NetworkSynchronizer.getInstance(this).detachSynchronizableActivity(this);
 		
+		super.onDestroy();
+	}
+	
+	private void initMap() {
+		float[] distance = null;
 		initMarkers();
 		
 		SharedPreferences conf=PreferenceManager
@@ -107,18 +123,18 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 			map.clear();
 		}
 		
-		updateStations();
-		
 		map.setMyLocationEnabled(true);		
 		Location my_location = LocationSynchronizer.getInstance(this).getLocation();
 		
-		float[] distance = new float[1];
-		Location.distanceBetween(NetworkInformation.getNetworkCenter().latitude,
-									 NetworkInformation.getNetworkCenter().longitude,
-									 my_location.getLatitude(),
-									 my_location.getLongitude(), distance);
+		if (my_location != null) {
+			distance = new float[1];
+			Location.distanceBetween(NetworkInformation.getNetworkCenter().latitude,
+										 NetworkInformation.getNetworkCenter().longitude,
+										 my_location.getLatitude(),
+										 my_location.getLongitude(), distance);
+		}
 		
-		if (distance[0] > 10000) {
+		if (distance == null || distance[0] > 10000) {
 			this.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(39.574689, 2.651332) , 15.0f));
 		} else {
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(my_location.getLatitude(),
@@ -126,104 +142,100 @@ public class StationMapFragment extends SupportMapFragment implements Synchroniz
 																		(float)15.0));
 		}
 	}
-	
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		LocationSynchronizer.getInstance(this).detachSynchronizableActivity(this);
-		NetworkSynchronizer.getInstance(this).detachSynchronizableActivity(this);
-		
-		super.onDestroy();
-	}
 
 	private void updateStations() {		
 		float percentatge;
 		float[] distance = new float[1];
-		String formatted_distance;
+		String formatted_distance = "";
 		Location my_location = LocationSynchronizer.getInstance(this).getLocation();
 		
 		for (Station station : NetworkInformation.getNetwork()) {
 			percentatge = station.getBusy_slots()*100 / station.getSlots();
-			Location.distanceBetween(station.getLat(),
-									 station.getLong(),
-									 my_location.getLatitude(),
-									 my_location.getLongitude(), distance);
-			formatted_distance = Formatter.formatDistance(distance[0], this.getActivity());
+			
+			if (my_location != null) {
+				Location.distanceBetween(station.getLat(),
+										 station.getLong(),
+										 my_location.getLatitude(),
+										 my_location.getLongitude(), distance);
+				formatted_distance = " (" + 
+										 Formatter.formatDistance(distance[0], this.getActivity()) +
+										 ")";
+			}
 			
 			if (percentatge > 95) {
 				map.addMarker(new MarkerOptions()
 					.position(new LatLng(station.getLat(), station.getLong()))
-					.title(station.getName() + " (" + formatted_distance + ")")
+					.title(station.getName() + formatted_distance)
 					.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 		    		.icon(marker100));
 			} else if (percentatge > 85) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker90));
 			} else if (percentatge > 75) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker80));
 			} else if (percentatge > 65) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker70));
 			} else if (percentatge > 55) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker60));
 			} else if (percentatge > 45) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker50));
 			} else if (percentatge > 35) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker40));
 			} else if (percentatge > 25) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker30));
 			} else if (percentatge > 15) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker20));
 			} else if (percentatge > 5) {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker10));
 			} else {
 				map.addMarker(new MarkerOptions()
 				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + " (" + formatted_distance + ")")
+				.title(station.getName() + formatted_distance)
 				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
 							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
 	    		.icon(marker0));

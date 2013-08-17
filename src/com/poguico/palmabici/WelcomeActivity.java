@@ -17,11 +17,20 @@
 
 package com.poguico.palmabici;
 
+import java.util.Calendar;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.google.android.gms.internal.ac;
 import com.poguico.palmabici.syncronizers.*;
+import com.poguico.palmabici.util.NetworkInformation;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
@@ -29,7 +38,7 @@ import android.widget.TextView;
 public class WelcomeActivity extends SherlockFragmentActivity implements SynchronizableActivity  {
 
 	NetworkSynchronizer synchronizer;
-	String stations;
+	String              stations;
 	
     /** Called when the activity is first created. */
     @Override
@@ -65,6 +74,7 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 	public void onUnsuccessfulNetworkSynchronization() {
 		TextView text = (TextView)findViewById(R.id.textView1);
     	text.setText(R.string.connectivity_error);
+    	(new DeferredFinalizationClass(3000)).execute((Void [])null);
 	}
 
 	@Override
@@ -74,4 +84,25 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 	public FragmentActivity getSynchronizableActivity() {
 		return this;
 	}
+	
+	private class DeferredFinalizationClass extends AsyncTask <Void, Void, Void> {
+		long timeToDie;
+		
+		public DeferredFinalizationClass (long timeToDie) {
+			this.timeToDie = timeToDie;
+		}
+		
+    	protected Void doInBackground(Void... params) {    		
+    		try {
+				Thread.sleep(timeToDie);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+            return null;
+        }
+
+        protected void onPostExecute(Void params) {
+        	System.exit(-1);
+        }
+    }
 }

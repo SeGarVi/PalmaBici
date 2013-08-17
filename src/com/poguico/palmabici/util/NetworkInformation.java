@@ -26,14 +26,14 @@ import com.poguico.palmabici.DatabaseManager;
 import com.poguico.palmabici.parsers.Parser;
 
 public class NetworkInformation {
-	private static LatLng			     center;
+	private static LatLng			     center     = new LatLng(39.574689, 2.651332);
 	private static ArrayList <Station> network    = null;
 	private static ArrayList <String>  favourites = null;
 	
 	public static void setNetwork(Context context, String stations) {
-		center   = new LatLng(39.574689, 2.651332);
-		if (favourites == null)
+		if (favourites == null) {
 			favourites = DatabaseManager.getInstance(context).getFavouriteStations();
+		}
 		
 		network = Parser.parseNetworkJSON(context, stations);
 	}

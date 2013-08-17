@@ -31,7 +31,7 @@ import android.support.v4.app.FragmentActivity;
 public class LocationSynchronizer {
 	private static LocationSynchronizer instance = null;
 	
-	private Location 	     location;
+	private Location 	      location = null;
 	private LocationManager  manager;
 	private LocationListener listener;
 	
@@ -40,8 +40,7 @@ public class LocationSynchronizer {
 	public static LocationSynchronizer getInstance (SynchronizableActivity activity) {
 		if (instance == null) {
 			instance = new LocationSynchronizer(activity.getSynchronizableActivity());
-		}
-		
+		}		
 		instance.addSynchronizableActivity(activity);
 		
 		return instance;

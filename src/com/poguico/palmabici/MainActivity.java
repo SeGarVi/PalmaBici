@@ -19,7 +19,6 @@ package com.poguico.palmabici;
 
 import java.util.Calendar;
 
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
@@ -34,24 +33,21 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-
+import android.util.Log;
 import android.widget.Toast;
 
-public class MainActivity extends SherlockFragmentActivity implements SynchronizableActivity {
+public class MainActivity extends    SherlockFragmentActivity
+                          implements SynchronizableActivity {
 	private static final long update_time = 600000;
 	
-	ViewPager  mViewPager;
-	
-	private ProgressDialog dialog;
-	
-	SharedPreferences conf = null;
+	private ProgressDialog    dialog;	
+	private SharedPreferences conf = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
 
     	conf = PreferenceManager.getDefaultSharedPreferences(this);
-    	checkUpdate();
     		
     	setContentView(R.layout.main);
     }
@@ -137,6 +133,7 @@ public class MainActivity extends SherlockFragmentActivity implements Synchroniz
 		if (NetworkInformation.getNetwork() == null ||
 				(conf.getBoolean("autoupdate", true) &&
 				(now - synchronizer.getLastUpdate()) > update_time)) {
+			Log.i("140", "Actualizando...");
 			dialog = ProgressDialog.show(this, "",getString(R.string.refresh_ongoing), true);
 			synchronizer.synchronize(this);
 		}

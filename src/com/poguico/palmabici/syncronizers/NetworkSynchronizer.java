@@ -47,25 +47,27 @@ public class NetworkSynchronizer {
 	private static final String URL = "http://api.citybik.es/palma.json";
 	private Long last_update = Calendar.getInstance().getTimeInMillis();
 	
-	public class SynchronizeTask extends AsyncTask <Void, Void, Void> {
+	private class SynchronizeTask extends AsyncTask <Void, Void, Void> {
         
 		SynchronizableActivity activity;
+		NetworkSynchronizer    synchronizer;
 		boolean connectivity = true;
-		NetworkSynchronizer synchronizer;
 		
 		public SynchronizeTask (SynchronizableActivity activity) {
-			this.activity = activity;
+			this.activity     = activity;
 			this.synchronizer = NetworkSynchronizer.getInstance(activity);
 		}
 		
     	protected Void doInBackground(Void... params) {    		
-    		ConnectivityManager conMgr = (ConnectivityManager)activity.getSynchronizableActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+    		ConnectivityManager conMgr =
+    				(ConnectivityManager)activity.getSynchronizableActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
     		NetworkInfo i = conMgr.getActiveNetworkInfo();
-    		if (i == null || !i.isAvailable() || !i.isConnected())
+    		if (i == null || !i.isAvailable() || !i.isConnected()) {
     			connectivity = false;    			
-    		else
+    		} else {
     			NetworkInformation.setNetwork(activity.getSynchronizableActivity(), synchronizer.getNetworkInfo());
+    		}
     		
             return null;
         }
@@ -85,9 +87,9 @@ public class NetworkSynchronizer {
 	}
 	
 	public static NetworkSynchronizer getInstance (SynchronizableActivity activity) {
-		if (instance == null)
+		if (instance == null) {
 			instance = new NetworkSynchronizer();
-		
+		}		
 		instance.addSynchronizableActivity(activity);
 		
 		return instance;
@@ -112,7 +114,8 @@ public class NetworkSynchronizer {
 					builder.append(line);
 				}
 			} else {
-				Log.e(NetworkSynchronizer.class.toString(), "Failed to download file");
+				Log.e(NetworkSynchronizer.class.toString(),
+						"Failed to download file");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -121,18 +124,21 @@ public class NetworkSynchronizer {
 	}
 	
 	private void successfulNetworkSynchronization () {
-		for (SynchronizableActivity activity : synchronizable_activities)
+		for (SynchronizableActivity activity : synchronizable_activities) {
 			activity.onSuccessfulNetworkSynchronization();
+		}
 	}
 	
 	private void unSuccessfulNetworkSynchronization () {
-		for (SynchronizableActivity activity : synchronizable_activities)
+		for (SynchronizableActivity activity : synchronizable_activities) {
 			activity.onUnsuccessfulNetworkSynchronization();
+		}
 	}
 	
 	public void addSynchronizableActivity(SynchronizableActivity activity) {
-		if (!synchronizable_activities.contains(activity))
+		if (!synchronizable_activities.contains(activity)) { 
 			synchronizable_activities.add(activity);
+		}
 	}
 	
 	public void detachSynchronizableActivity(SynchronizableActivity activity) {
