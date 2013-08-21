@@ -22,6 +22,7 @@ import java.util.Calendar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
+import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
 
@@ -32,8 +33,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends    SherlockFragmentActivity
@@ -42,11 +42,12 @@ public class MainActivity extends    SherlockFragmentActivity
 	
 	private ProgressDialog    dialog;	
 	private SharedPreferences conf = null;
+	NetworkSynchronizer synchronizer;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-
+    	synchronizer = NetworkSynchronizer.getInstance(this);
     	conf = PreferenceManager.getDefaultSharedPreferences(this);
     		
     	setContentView(R.layout.main);
@@ -93,6 +94,8 @@ public class MainActivity extends    SherlockFragmentActivity
 		super.onResume();
 		
 		checkUpdate();
+		TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
+		updateTime.setText(Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this));
 	}
 		
 	@Override
@@ -107,6 +110,8 @@ public class MainActivity extends    SherlockFragmentActivity
     		dialog.hide();
     	
     	Toast.makeText(this, R.string.refresh_succesful, Toast.LENGTH_SHORT).show();
+    	TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
+    	updateTime.setText(Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this));
 	}
 
 	@Override
@@ -125,9 +130,7 @@ public class MainActivity extends    SherlockFragmentActivity
 		return this;
 	}
 	
-	private void checkUpdate() {
-		NetworkSynchronizer synchronizer = NetworkSynchronizer.getInstance(this);
-		
+	private void checkUpdate() {		
 		long now = Calendar.getInstance().getTimeInMillis();
 		
 		if (NetworkInformation.getNetwork() == null ||

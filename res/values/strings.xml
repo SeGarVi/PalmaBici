@@ -71,5 +71,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_station_list_activity_test">StationListActivityTest</string>
+    <string name="last_updated">Updated</string>
+    <string name="ago">ago</string>
+    <string name="more_than">more than</string>
 
 </resources>

@@ -17,15 +17,27 @@
   (https://www.gnu.org/licenses/agpl-3.0.html).
     
 -->
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/frame_layout"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
     <fragment
         android:id="@+id/map_fragment"
         android:name="com.poguico.palmabici.StationMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/lastUpdatedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:alpha="0.75"
+        android:background="@color/actionbar_title_color"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="Actualizado hace más de 24 h" />
 	    
 </FrameLayout>

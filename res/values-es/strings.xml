@@ -52,5 +52,8 @@
     <string name="free_slots">Anclajes libres</string>
     <string name="add_to_favorites">Añadir a favoritos</string>
     <string name="remove_from_favorites">Eliminar de favoritos</string>
+    <string name="last_updated">Actualizado hace</string>
+    <string name="ago"></string>
+    <string name="more_than">más de</string>
 
 </resources>

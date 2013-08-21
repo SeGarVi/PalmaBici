@@ -52,5 +52,8 @@
     <string name="free_slots">Anclatges lliures</string>
     <string name="add_to_favorites">Afegir a favorits</string>
     <string name="remove_from_favorites">Eliminar de favorits</string>
+    <string name="last_updated">Actualitzat fa</string>
+    <string name="ago"/>
+    <string name="more_than">més de</string>
 
 </resources>
