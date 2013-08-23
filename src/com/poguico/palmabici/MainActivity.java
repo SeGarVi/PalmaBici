@@ -42,7 +42,7 @@ public class MainActivity extends    SherlockFragmentActivity
 	
 	private ProgressDialog    dialog;	
 	private SharedPreferences conf = null;
-	NetworkSynchronizer synchronizer;
+	private NetworkSynchronizer synchronizer;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,8 +100,9 @@ public class MainActivity extends    SherlockFragmentActivity
 		
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		DatabaseManager.getInstance(this).saveFavouriteStations(NetworkInformation.getNetwork());
+		synchronizer.detachSynchronizableActivity(this);		
+		super.onDestroy();
 	}
 	
 	@Override

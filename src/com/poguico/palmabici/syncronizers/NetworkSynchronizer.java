@@ -49,8 +49,8 @@ public class NetworkSynchronizer {
 	
 	private class SynchronizeTask extends AsyncTask <Void, Void, Void> {
         
-		SynchronizableActivity activity;
-		NetworkSynchronizer    synchronizer;
+		private SynchronizableActivity activity;
+		private NetworkSynchronizer    synchronizer;
 		boolean connectivity = true;
 		
 		public SynchronizeTask (SynchronizableActivity activity) {
@@ -86,7 +86,7 @@ public class NetworkSynchronizer {
 		synchronizable_activities = new ArrayList<SynchronizableActivity>();
 	}
 	
-	public static NetworkSynchronizer getInstance (SynchronizableActivity activity) {
+	public synchronized static NetworkSynchronizer getInstance (SynchronizableActivity activity) {
 		if (instance == null) {
 			instance = new NetworkSynchronizer();
 		}		
@@ -123,25 +123,25 @@ public class NetworkSynchronizer {
 		return builder.toString();
 	}
 	
-	private void successfulNetworkSynchronization () {
+	private synchronized void successfulNetworkSynchronization () {
 		for (SynchronizableActivity activity : synchronizable_activities) {
 			activity.onSuccessfulNetworkSynchronization();
 		}
 	}
 	
-	private void unSuccessfulNetworkSynchronization () {
+	private synchronized void unSuccessfulNetworkSynchronization () {
 		for (SynchronizableActivity activity : synchronizable_activities) {
 			activity.onUnsuccessfulNetworkSynchronization();
 		}
 	}
 	
-	public void addSynchronizableActivity(SynchronizableActivity activity) {
+	public synchronized void addSynchronizableActivity(SynchronizableActivity activity) {
 		if (!synchronizable_activities.contains(activity)) { 
 			synchronizable_activities.add(activity);
 		}
 	}
 	
-	public void detachSynchronizableActivity(SynchronizableActivity activity) {
+	public synchronized void detachSynchronizableActivity(SynchronizableActivity activity) {
 		synchronizable_activities.remove(activity);
 	}
 	
@@ -149,7 +149,7 @@ public class NetworkSynchronizer {
 		return last_update;
 	}
 	
-	public void synchronize(SynchronizableActivity activity) {
+	public synchronized void synchronize(SynchronizableActivity activity) {
 		new SynchronizeTask(activity).execute((Void [])null);
 	}
 }

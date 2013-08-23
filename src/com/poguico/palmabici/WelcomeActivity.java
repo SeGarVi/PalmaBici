@@ -37,8 +37,8 @@ import android.widget.TextView;
 
 public class WelcomeActivity extends SherlockFragmentActivity implements SynchronizableActivity  {
 
-	NetworkSynchronizer synchronizer;
-	String              stations;
+	private NetworkSynchronizer synchronizer;
+	private String              stations;
 	
     /** Called when the activity is first created. */
     @Override
@@ -60,6 +60,12 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 		synchronizer.synchronize(this);
 	}
 
+	@Override
+	public void onDestroy() {
+		synchronizer.detachSynchronizableActivity(this);		
+		super.onDestroy();
+	}
+	
 	@Override
 	public void onSuccessfulNetworkSynchronization() {
 		TextView text = (TextView)findViewById(R.id.textView1);
