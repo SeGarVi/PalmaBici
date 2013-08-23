@@ -37,4 +37,5 @@
 
 <resources>
     <color name="pressed_palmabici">#CC8bff16</color>
+    <color name="problem_palmabici">#CCff0000</color>
 </resources>

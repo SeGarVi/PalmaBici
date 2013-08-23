@@ -26,13 +26,22 @@ import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +52,56 @@ public class MainActivity extends    SherlockFragmentActivity
 	private ProgressDialog    dialog;	
 	private SharedPreferences conf = null;
 	private NetworkSynchronizer synchronizer;
+	
+	private class ShowLabelTask extends AsyncTask <Void, Void, Void> {
+        
+		private static final String okColor = "#CC8bff16";
+		private static final String problemColor = "#CCFF0000";		
+		
+		private TextView textView;
+		private String   message;
+		private long    duration;
+		private Activity parent;
+		private Animation showLabel;
+		private Animation hideLabel;
+		
+		public ShowLabelTask (TextView textView,
+                               String   message,
+                               long    duration,
+                               Activity parent,
+                               boolean problem) {
+			this.textView = textView;
+			this.message  = message;
+			this.duration = duration;
+			this.parent   = parent;
+			
+			showLabel = AnimationUtils.loadAnimation(parent, R.anim.push_up_in);
+			hideLabel = AnimationUtils.loadAnimation(parent, R.anim.push_down_out);
+			
+			textView.setText(message);
+
+			textView.setBackgroundResource((problem)?R.color.problem_palmabici:
+                                                     R.color.pressed_palmabici);
+			textView.setTextColor((problem)?0xFFFFFFFF:0xFF000000);
+			textView.setVisibility(View.VISIBLE);
+			textView.startAnimation(showLabel);
+		}
+		
+    	protected Void doInBackground(Void... params) {
+    		try {
+				Thread.sleep(duration);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+        }
+
+        protected void onPostExecute(Void params) {
+        	textView.startAnimation(hideLabel);
+        	textView.setVisibility(View.INVISIBLE);
+        }
+    }
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,8 +125,10 @@ public class MainActivity extends    SherlockFragmentActivity
                 break;
 
             case R.id.menu_refresh:
-            	dialog = ProgressDialog.show(this, "", getString(R.string.refresh_ongoing), true);
-            	NetworkSynchronizer synchronizer = NetworkSynchronizer.getInstance(this);
+            	dialog = ProgressDialog.show(this, "",
+            			getString(R.string.refresh_ongoing), true);
+            	NetworkSynchronizer synchronizer =
+            			NetworkSynchronizer.getInstance(this);
             	synchronizer.synchronize(this);
                 break;
 
@@ -76,7 +137,8 @@ public class MainActivity extends    SherlockFragmentActivity
                 break;
 
             case R.id.menu_preferences:
-            	Intent preferences_activity = new Intent(this, PreferencesActivity.class);
+            	Intent preferences_activity =
+            	new Intent(this, PreferencesActivity.class);
             	this.startActivity(preferences_activity);
                 break;
                 
@@ -94,8 +156,6 @@ public class MainActivity extends    SherlockFragmentActivity
 		super.onResume();
 		
 		checkUpdate();
-		TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
-		updateTime.setText(Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this));
 	}
 		
 	@Override
@@ -107,12 +167,13 @@ public class MainActivity extends    SherlockFragmentActivity
 	
 	@Override
 	public void onSuccessfulNetworkSynchronization() {
-		if (dialog != null)
-    		dialog.hide();
-    	
-    	Toast.makeText(this, R.string.refresh_succesful, Toast.LENGTH_SHORT).show();
     	TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
-    	updateTime.setText(Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this));
+    	
+    	if (dialog != null)
+    		dialog.hide();
+    	(new ShowLabelTask(updateTime,
+    			getString(R.string.refresh_succesful), 3000, this, false))
+    			.execute((Void [])null);
 	}
 
 	@Override
@@ -120,7 +181,10 @@ public class MainActivity extends    SherlockFragmentActivity
 		if (dialog != null)
     		dialog.hide();
 		
-		Toast.makeText(this, R.string.connectivity_error, Toast.LENGTH_SHORT).show();
+		TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
+		(new ShowLabelTask(updateTime,
+				getString(R.string.connectivity_error), 3000, this, true))
+				.execute((Void [])null);
 	}
 
 	@Override
@@ -133,12 +197,20 @@ public class MainActivity extends    SherlockFragmentActivity
 	
 	private void checkUpdate() {		
 		long now = Calendar.getInstance().getTimeInMillis();
+		long lastUpdated = now - synchronizer.getLastUpdate();
 		
 		if (NetworkInformation.getNetwork() == null ||
 				(conf.getBoolean("autoupdate", true) &&
-				(now - synchronizer.getLastUpdate()) > update_time)) {
-			dialog = ProgressDialog.show(this, "",getString(R.string.refresh_ongoing), true);
+				(lastUpdated) > update_time)) {
+			dialog = ProgressDialog.show(this, "",
+					getString(R.string.refresh_ongoing), true);
 			synchronizer.synchronize(this);
+		} else if ((lastUpdated/1000) % 60 > 0) {
+			TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
+			(new ShowLabelTask(updateTime,
+					Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this),
+					3000, this, false))
+					.execute((Void [])null);
 		}
 		
 		/*if (!conf.getString("list_order", "distance").equals(list_ordering)) {

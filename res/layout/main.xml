@@ -30,14 +30,14 @@
 
     <TextView
         android:id="@+id/lastUpdatedLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:alpha="0.75"
-        android:background="@color/actionbar_title_color"
         android:gravity="center"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:text="Actualizado hace más de 24 h" />
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 	    
 </FrameLayout>
