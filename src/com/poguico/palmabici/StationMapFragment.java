@@ -17,6 +17,9 @@
 
 package com.poguico.palmabici;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,7 +28,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.poguico.palmabici.syncronizers.LocationSynchronizer;
 import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
@@ -42,7 +47,6 @@ import android.support.v4.app.FragmentActivity;
 
 public class StationMapFragment extends    SupportMapFragment
                                 implements SynchronizableActivity {
-
 	private BitmapDescriptor marker100 = null;
 	private BitmapDescriptor marker90  = null;
 	private BitmapDescriptor marker80  = null;
@@ -54,9 +58,13 @@ public class StationMapFragment extends    SupportMapFragment
 	private BitmapDescriptor marker20  = null;
 	private BitmapDescriptor marker10  = null;
 	private BitmapDescriptor marker0   = null;
+	private HashMap <String, Marker> mapMarkers = null;
+	private ArrayList<Polyline> bikeLane = null;
 	
 	private GoogleMap map;
 	private SharedPreferences conf;
+	
+	private boolean bikeLaneState;
 	
 	@Override
 	public void onCreate(Bundle arg0) {
@@ -70,6 +78,8 @@ public class StationMapFragment extends    SupportMapFragment
 		
 		conf=PreferenceManager
 				.getDefaultSharedPreferences(this.getActivity());
+		bikeLane      = new ArrayList<Polyline>();
+		bikeLaneState = conf.getBoolean("show_bike_lane", true);
 		NetworkSynchronizer.getInstance(this);
         BikeLane.init(this.getActivity());
 	}
@@ -100,6 +110,16 @@ public class StationMapFragment extends    SupportMapFragment
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+		boolean showBikeLane = conf.getBoolean("show_bike_lane", true);
+		if (showBikeLane != bikeLaneState) {
+			bikeLaneState = showBikeLane;
+			toggleBikeLane(bikeLaneState);
+		}
+	}
+	
+	@Override
 	public void onDestroy() {
 		LocationSynchronizer.getInstance(this).detachSynchronizableActivity(this);
 		NetworkSynchronizer.getInstance(this).detachSynchronizableActivity(this);
@@ -111,22 +131,17 @@ public class StationMapFragment extends    SupportMapFragment
 		float[] distance = null;
 		initMarkers();
 		
-		map = this.getMap();		
-		
-		map.clear();
-		if (conf.getBoolean("show_bike_lane", true)) {
-			drawBikeLane();
-		}
-		
+		map = this.getMap();
 		map.setMyLocationEnabled(true);		
-		Location my_location = LocationSynchronizer.getInstance(this).getLocation();
+		Location my_location =
+				LocationSynchronizer.getInstance(this).getLocation();
 		
 		if (my_location != null) {
 			distance = new float[1];
 			Location.distanceBetween(NetworkInformation.getNetworkCenter().latitude,
-										 NetworkInformation.getNetworkCenter().longitude,
-										 my_location.getLatitude(),
-										 my_location.getLongitude(), distance);
+								     NetworkInformation.getNetworkCenter().longitude,
+									 my_location.getLatitude(),
+                                     my_location.getLongitude(), distance);
 		}
 		
 		if (distance == null || distance[0] > 10000) {
@@ -136,16 +151,29 @@ public class StationMapFragment extends    SupportMapFragment
 																		my_location.getLongitude()),
 																		(float)15.0));
 		}
+		drawBikeLane(bikeLaneState);
+	}
+	
+	private void updateStations() {		
+		if (mapMarkers == null) {
+			mapMarkers = new HashMap<String, Marker>();
+		} else {
+			for (Marker marker : mapMarkers.values()) {
+				marker.remove();
+			}
+		}
+		drawStationMarkers();
 	}
 
-	private void updateStations() {		
-		float percentatge;
-		float[] distance = new float[1];
-		String formatted_distance = "";
-		Location my_location = LocationSynchronizer.getInstance(this).getLocation();
+	private void drawStationMarkers() {		
+		float   percentage;
+		float[] distance           = new float[1];
+		String   formatted_distance = "";
+		Location my_location        = LocationSynchronizer.getInstance(this)
+                                                          .getLocation();
 		
 		for (Station station : NetworkInformation.getNetwork()) {
-			percentatge = station.getBusy_slots()*100 / station.getSlots();
+			percentage = station.getBusy_slots()*100 / station.getSlots();
 			
 			if (my_location != null) {
 				Location.distanceBetween(station.getLat(),
@@ -153,100 +181,127 @@ public class StationMapFragment extends    SupportMapFragment
 										 my_location.getLatitude(),
 										 my_location.getLongitude(), distance);
 				formatted_distance = " (" + 
-										 Formatter.formatDistance(distance[0], this.getActivity()) +
-										 ")";
+									 Formatter.formatDistance(distance[0], this.getActivity()) +
+									 ")";
 			}
 			
-			if (percentatge > 95) {
-				map.addMarker(new MarkerOptions()
-					.position(new LatLng(station.getLat(), station.getLong()))
-					.title(station.getName() + formatted_distance)
-					.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-		    		.icon(marker100));
-			} else if (percentatge > 85) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker90));
-			} else if (percentatge > 75) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker80));
-			} else if (percentatge > 65) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker70));
-			} else if (percentatge > 55) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker60));
-			} else if (percentatge > 45) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker50));
-			} else if (percentatge > 35) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker40));
-			} else if (percentatge > 25) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker30));
-			} else if (percentatge > 15) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker20));
-			} else if (percentatge > 5) {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker10));
+			if (percentage > 95) {
+				mapMarkers.put(station.getN_estacio(),
+					map.addMarker(new MarkerOptions()
+					   .position(new LatLng(station.getLat(), station.getLong()))
+					   .title(station.getName() + formatted_distance)
+					   .snippet(getString(R.string.free_slots) + ": "  +
+                                station.getFree_slots()        + " - " +
+							    getString(R.string.bikes)      + ": "  +
+					            station.getBusy_slots())
+		    		   .icon(marker100)));
+			} else if (percentage > 85) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker90)));
+			} else if (percentage > 75) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker80)));
+			} else if (percentage > 65) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker70)));
+			} else if (percentage > 55) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker60)));
+			} else if (percentage > 45) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker50)));
+			} else if (percentage > 35) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker40)));
+			} else if (percentage > 25) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker30)));
+			} else if (percentage > 15) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker20)));
+			} else if (percentage > 5) {
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker10)));
 			} else {
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(station.getLat(), station.getLong()))
-				.title(station.getName() + formatted_distance)
-				.snippet(getString(R.string.free_slots) + ": " + station.getFree_slots() +
-							   " - " + getString(R.string.bikes) + ": " + station.getBusy_slots())
-	    		.icon(marker0));
+				mapMarkers.put(station.getN_estacio(),
+						map.addMarker(new MarkerOptions()
+						   .position(new LatLng(station.getLat(), station.getLong()))
+						   .title(station.getName() + formatted_distance)
+						   .snippet(getString(R.string.free_slots) + ": "  +
+                                    station.getFree_slots()        + " - " +
+                                    getString(R.string.bikes)      + ": "  +
+                                    station.getBusy_slots())
+			    		   .icon(marker0)));
 			} 
 		}
 	}
-
+	
 	@Override
 	public void onSuccessfulNetworkSynchronization() {
-		if (map != null) {
-			map.clear();
-			if (conf.getBoolean("show_bike_lane", true)) {
-				drawBikeLane();
-			}
-			updateStations();
-		}
+		updateStations();
 	}
 
 	@Override
@@ -260,9 +315,18 @@ public class StationMapFragment extends    SupportMapFragment
 		return getActivity();
 	}
 	
-	private void drawBikeLane () {
+	private void drawBikeLane (boolean visible) {
+		Polyline polyline;
 		for (PolylineOptions path : BikeLane.getPaths()) {
-			this.getMap().addPolyline(path);
+			polyline = this.getMap().addPolyline(path);
+			polyline.setVisible(visible);
+			bikeLane.add(polyline);
+		}
+	}
+	
+	private void toggleBikeLane(boolean visible) {
+		for (Polyline polyline : bikeLane) {
+			polyline.setVisible(visible);
 		}
 	}
 }
