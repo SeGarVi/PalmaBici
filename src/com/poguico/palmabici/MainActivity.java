@@ -21,7 +21,8 @@ import java.util.Calendar;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.poguico.palmabici.syncronizers.NetworkSynchronizer;
+import com.poguico.palmabici.notification.NotificationManager;
+import com.poguico.palmabici.synchronizers.NetworkSynchronizer;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
@@ -52,57 +53,7 @@ public class MainActivity extends    SherlockFragmentActivity
 	private ProgressDialog    dialog;	
 	private SharedPreferences conf = null;
 	private NetworkSynchronizer synchronizer;
-	
-	private class ShowLabelTask extends AsyncTask <Void, Void, Void> {
-        
-		private static final String okColor = "#CC8bff16";
-		private static final String problemColor = "#CCFF0000";		
 		
-		private TextView textView;
-		private String   message;
-		private long    duration;
-		private Activity parent;
-		private Animation showLabel;
-		private Animation hideLabel;
-		
-		public ShowLabelTask (TextView textView,
-                               String   message,
-                               long    duration,
-                               Activity parent,
-                               boolean problem) {
-			this.textView = textView;
-			this.message  = message;
-			this.duration = duration;
-			this.parent   = parent;
-			
-			showLabel = AnimationUtils.loadAnimation(parent, R.anim.push_up_in);
-			hideLabel = AnimationUtils.loadAnimation(parent, R.anim.push_down_out);
-			
-			textView.setText(message);
-
-			textView.setBackgroundResource((problem)?R.color.problem_palmabici:
-                                                     R.color.pressed_palmabici);
-			textView.setTextColor((problem)?0xFFFFFFFF:0xFF000000);
-			textView.setVisibility(View.VISIBLE);
-			textView.startAnimation(showLabel);
-		}
-		
-    	protected Void doInBackground(Void... params) {
-    		try {
-				Thread.sleep(duration);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-        }
-
-        protected void onPostExecute(Void params) {
-        	textView.startAnimation(hideLabel);
-        	textView.setVisibility(View.INVISIBLE);
-        }
-    }
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -171,9 +122,11 @@ public class MainActivity extends    SherlockFragmentActivity
     	
     	if (dialog != null)
     		dialog.hide();
-    	(new ShowLabelTask(updateTime,
-    			getString(R.string.refresh_succesful), 3000, this, false))
-    			.execute((Void [])null);
+    	NotificationManager.showMessage(updateTime,
+    			 getString(R.string.refresh_succesful),
+				 3000,
+				 this,
+				 false);
 	}
 
 	@Override
@@ -182,9 +135,16 @@ public class MainActivity extends    SherlockFragmentActivity
     		dialog.hide();
 		
 		TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
-		(new ShowLabelTask(updateTime,
-				getString(R.string.connectivity_error), 3000, this, true))
-				.execute((Void [])null);
+		NotificationManager.showMessage(updateTime,
+										 getString(R.string.connectivity_error),
+										 3000,
+										 this,
+										 true);
+		NotificationManager.showMessage(updateTime,
+				 Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this),
+				 3000,
+				 this,
+				 false);
 	}
 
 	@Override
@@ -207,10 +167,11 @@ public class MainActivity extends    SherlockFragmentActivity
 			synchronizer.synchronize(this);
 		} else if ((lastUpdated/1000) % 60 > 0) {
 			TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
-			(new ShowLabelTask(updateTime,
-					Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this),
-					3000, this, false))
-					.execute((Void [])null);
+			NotificationManager.showMessage(updateTime,
+					 Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this),
+					 3000,
+					 this,
+					 false);
 		}
 		
 		/*if (!conf.getString("list_order", "distance").equals(list_ordering)) {

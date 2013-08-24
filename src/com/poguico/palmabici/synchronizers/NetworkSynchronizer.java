@@ -15,7 +15,7 @@
  *    
  */
 
-package com.poguico.palmabici.syncronizers;
+package com.poguico.palmabici.synchronizers;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

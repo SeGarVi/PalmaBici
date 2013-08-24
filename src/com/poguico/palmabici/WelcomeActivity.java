@@ -22,7 +22,7 @@ import java.util.Calendar;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.android.gms.internal.ac;
-import com.poguico.palmabici.syncronizers.*;
+import com.poguico.palmabici.synchronizers.*;
 import com.poguico.palmabici.util.NetworkInformation;
 
 import android.app.Activity;
