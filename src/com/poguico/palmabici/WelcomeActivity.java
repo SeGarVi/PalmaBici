@@ -31,6 +31,7 @@ import android.widget.TextView;
 public class WelcomeActivity extends SherlockFragmentActivity implements SynchronizableActivity  {
 
 	private NetworkSynchronizer synchronizer;
+	private Intent              next_activity = null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -62,10 +63,7 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 	public void onSuccessfulNetworkSynchronization() {
 		TextView text = (TextView)findViewById(R.id.textView1);
     	text.setText(R.string.refresh_succesful);
-		Intent next_activity = new Intent(this, MainActivity.class);
-		synchronizer.detachSynchronizableActivity(this);
-    	this.startActivity(next_activity);
-    	this.finish();
+    	instantiateMainActivity();
 	}
 
 	@Override
@@ -83,11 +81,20 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 		return this;
 	}
 	
+	public synchronized void instantiateMainActivity () {
+		if (next_activity == null) {
+			next_activity = new Intent(this, MainActivity.class);
+			synchronizer.detachSynchronizableActivity((SynchronizableActivity)this);
+			this.startActivity(next_activity);
+			this.finish();
+		}
+	}
+	
 	private class DeferredFinalizationClass extends AsyncTask <Void, Void, Void> {
-		Activity activity;
-		long    timeToDie;
+		WelcomeActivity activity;
+		long           timeToDie;
 		
-		public DeferredFinalizationClass (Activity activity, long timeToDie) {
+		public DeferredFinalizationClass (WelcomeActivity activity, long timeToDie) {
 			this.activity  = activity;
 			this.timeToDie = timeToDie;
 		}
@@ -102,10 +109,7 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
         }
 
         protected void onPostExecute(Void params) {
-        	Intent next_activity = new Intent(activity, MainActivity.class);
-    		synchronizer.detachSynchronizableActivity((SynchronizableActivity)activity);
-    		activity.startActivity(next_activity);
-    		activity.finish();
+        	activity.instantiateMainActivity();
         }
     }
 }
