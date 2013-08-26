@@ -51,8 +51,8 @@ public class Parser {
 										 json_object.getInt("id"),
 										 json_object.getString("name").substring(1, 3),
 										 json_object.getString("name").substring(5),
-										 json_object.getLong("lng"),
-										 json_object.getLong("lat"),
+										 json_object.getDouble("lng") / 1e6,
+										 json_object.getDouble("lat") / 1e6,
 										 json_object.getInt("free"),
 										 json_object.getInt("bikes"),
 										 NetworkInformation.isFavourite(json_object.getString("name").substring(1, 3))));

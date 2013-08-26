@@ -90,7 +90,7 @@ public class Station implements Comparable <Station> {
         correct_locations = Collections.unmodifiableMap(aMap);
     }
     
-	public Station(Context context, int id, String n_estacio, String name, long station_long, long station_lat,
+	public Station(Context context, int id, String n_estacio, String name, double station_long, double station_lat,
 				   int free_slots, int busy_slots, boolean favourite) {
 		this.context = context;
 		this.id = id;
@@ -107,8 +107,8 @@ public class Station implements Comparable <Station> {
 			location.setLatitude(correct_locations.get(n_estacio).latitude);
 			location.setLongitude(correct_locations.get(n_estacio).longitude);
 		} else {
-			location.setLatitude((double)station_lat / 1e6);
-			location.setLongitude((double)station_long / 1e6);
+			location.setLatitude(station_lat);
+			location.setLongitude(station_long);
 		}
 		
 		/*if (userLocation != null) {

@@ -45,7 +45,6 @@ public class NetworkSynchronizer {
 	private ArrayList<SynchronizableActivity> synchronizable_activities;
 	
 	private static final String URL = "http://api.citybik.es/palma.json";
-	private Long last_update = Calendar.getInstance().getTimeInMillis();
 	
 	private class SynchronizeTask extends AsyncTask <Void, Void, Void> {
         
@@ -64,9 +63,15 @@ public class NetworkSynchronizer {
 
     		NetworkInfo i = conMgr.getActiveNetworkInfo();
     		if (i == null || !i.isAvailable() || !i.isConnected()) {
-    			connectivity = false;    			
+    			connectivity = false;
+    			if (NetworkInformation.getNetwork() == null) {
+    				NetworkInformation.loadFromDB((Context)activity);
+    			}
     		} else {
-    			NetworkInformation.setNetwork(activity.getSynchronizableActivity(), synchronizer.getNetworkInfo());
+    			NetworkInformation.setNetwork(
+    					activity.getSynchronizableActivity(), 
+    					synchronizer.getNetworkInfo(),
+    					Calendar.getInstance().getTimeInMillis());
     		}
     		
             return null;
@@ -74,7 +79,6 @@ public class NetworkSynchronizer {
 
         protected void onPostExecute(Void params) {
         	if (connectivity) {
-	        	synchronizer.last_update = Calendar.getInstance().getTimeInMillis();
 	        	successfulNetworkSynchronization();
         	} else {
         		unSuccessfulNetworkSynchronization();
@@ -143,10 +147,6 @@ public class NetworkSynchronizer {
 	
 	public synchronized void detachSynchronizableActivity(SynchronizableActivity activity) {
 		synchronizable_activities.remove(activity);
-	}
-	
-	public Long getLastUpdate () {
-		return last_update;
 	}
 	
 	public synchronized void synchronize(SynchronizableActivity activity) {

@@ -17,19 +17,12 @@
 
 package com.poguico.palmabici;
 
-import java.util.Calendar;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.google.android.gms.internal.ac;
 import com.poguico.palmabici.synchronizers.*;
-import com.poguico.palmabici.util.NetworkInformation;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -38,7 +31,6 @@ import android.widget.TextView;
 public class WelcomeActivity extends SherlockFragmentActivity implements SynchronizableActivity  {
 
 	private NetworkSynchronizer synchronizer;
-	private String              stations;
 	
     /** Called when the activity is first created. */
     @Override
@@ -80,7 +72,7 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 	public void onUnsuccessfulNetworkSynchronization() {
 		TextView text = (TextView)findViewById(R.id.textView1);
     	text.setText(R.string.connectivity_error);
-    	(new DeferredFinalizationClass(3000)).execute((Void [])null);
+    	(new DeferredFinalizationClass(this, 1500)).execute((Void [])null);;
 	}
 
 	@Override
@@ -92,9 +84,11 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 	}
 	
 	private class DeferredFinalizationClass extends AsyncTask <Void, Void, Void> {
-		long timeToDie;
+		Activity activity;
+		long    timeToDie;
 		
-		public DeferredFinalizationClass (long timeToDie) {
+		public DeferredFinalizationClass (Activity activity, long timeToDie) {
+			this.activity  = activity;
 			this.timeToDie = timeToDie;
 		}
 		
@@ -108,7 +102,10 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
         }
 
         protected void onPostExecute(Void params) {
-        	System.exit(-1);
+        	Intent next_activity = new Intent(activity, MainActivity.class);
+    		synchronizer.detachSynchronizableActivity((SynchronizableActivity)activity);
+    		activity.startActivity(next_activity);
+    		activity.finish();
         }
     }
 }

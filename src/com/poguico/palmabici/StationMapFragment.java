@@ -305,7 +305,9 @@ public class StationMapFragment extends    SupportMapFragment
 	}
 
 	@Override
-	public void onUnsuccessfulNetworkSynchronization() {}
+	public void onUnsuccessfulNetworkSynchronization() {
+		updateStations();
+	}
 
 	@Override
 	public void onLocationSynchronization() {}

@@ -27,31 +27,21 @@ import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends    SherlockFragmentActivity
                           implements SynchronizableActivity {
 	private static final long update_time = 600000;
 	
-	private ProgressDialog    dialog;	
-	private SharedPreferences conf = null;
+	private ProgressDialog      dialog;	
+	private SharedPreferences   conf = null;
 	private NetworkSynchronizer synchronizer;
 		
     @Override
@@ -111,7 +101,7 @@ public class MainActivity extends    SherlockFragmentActivity
 		
 	@Override
 	protected void onDestroy() {
-		DatabaseManager.getInstance(this).saveFavouriteStations(NetworkInformation.getNetwork());
+		NetworkInformation.storeToDB(this);
 		synchronizer.detachSynchronizableActivity(this);		
 		super.onDestroy();
 	}
@@ -141,7 +131,7 @@ public class MainActivity extends    SherlockFragmentActivity
 										 this,
 										 true);
 		NotificationManager.showMessage(updateTime,
-				 Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this),
+				 Formatter.formatLastUpdated(NetworkInformation.getLastUpdate(), this),
 				 3000,
 				 this,
 				 false);
@@ -157,7 +147,7 @@ public class MainActivity extends    SherlockFragmentActivity
 	
 	private void checkUpdate() {		
 		long now = Calendar.getInstance().getTimeInMillis();
-		long lastUpdated = now - synchronizer.getLastUpdate();
+		long lastUpdated = now - NetworkInformation.getLastUpdate();
 		
 		if (NetworkInformation.getNetwork() == null ||
 				(conf.getBoolean("autoupdate", true) &&
@@ -168,7 +158,7 @@ public class MainActivity extends    SherlockFragmentActivity
 		} else if ((lastUpdated/1000) % 60 > 0) {
 			TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
 			NotificationManager.showMessage(updateTime,
-					 Formatter.formatLastUpdated(synchronizer.getLastUpdate(), this),
+					 Formatter.formatLastUpdated(NetworkInformation.getLastUpdate(), this),
 					 3000,
 					 this,
 					 false);

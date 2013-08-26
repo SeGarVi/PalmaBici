@@ -29,13 +29,30 @@ public class NetworkInformation {
 	private static LatLng			     center     = new LatLng(39.574689, 2.651332);
 	private static ArrayList <Station> network    = null;
 	private static ArrayList <String>  favourites = null;
+	private static long				 lastUpdateTime;
 	
-	public static void setNetwork(Context context, String stations) {
+	public static void setNetwork(Context context,
+									String  stations,
+									long	lastUpdateTime) {
 		if (favourites == null) {
 			favourites = DatabaseManager.getInstance(context).getFavouriteStations();
 		}
 		
 		network = Parser.parseNetworkJSON(context, stations);
+		NetworkInformation.lastUpdateTime = lastUpdateTime;
+	}
+	
+	public static void loadFromDB(Context context) {
+		DatabaseManager dbManager = DatabaseManager.getInstance(context);
+		network = dbManager.getLastStationNetworkState(context);
+		lastUpdateTime = dbManager.getLastUpdateTime();
+	}
+	
+	public static void storeToDB (Context context) {
+		DatabaseManager dbManager = DatabaseManager.getInstance(context);
+		dbManager.saveLastStationNetworkState(network);
+		dbManager.saveLastUpdateTime(lastUpdateTime);
+		dbManager.saveFavouriteStations(network);
 	}
 	
 	public static ArrayList <Station> getNetwork() {
@@ -56,5 +73,9 @@ public class NetworkInformation {
 	
 	public static LatLng getNetworkCenter() {
 		return center;
+	}
+	
+	public static long getLastUpdate() {
+		return lastUpdateTime;
 	}
 }
