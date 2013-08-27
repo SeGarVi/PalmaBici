@@ -37,8 +37,9 @@ import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
 
 public class StationListFragment extends ListFragment {
-	private StationAdapter adapter;
-	private Context context;
+	private NetworkInformation network;
+	private StationAdapter     adapter;
+	private Context            context;
 	private ArrayList<Station> stations;
 	
     private class StationAdapter extends ArrayAdapter<Station> {    	
@@ -88,12 +89,11 @@ public class StationListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        network  = NetworkInformation.getInstance();        
+        context  = this.getActivity();
+        stations = network.getNetwork();
+        adapter  = new StationAdapter(this.getActivity(), stations);
         
-        context = this.getActivity();
-        stations = NetworkInformation.getNetwork();
-
-        adapter = new StationAdapter(this.getActivity(),
-        							 NetworkInformation.getNetwork());
         setListAdapter(adapter);
         
         /*((ListView)getView()).setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

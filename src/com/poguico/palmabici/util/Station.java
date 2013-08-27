@@ -178,10 +178,10 @@ public class Station implements Comparable <Station> {
 	public void changeFavouriteState() {
 		favourite = !favourite;
 		
-		if (favourite)
+		/*if (favourite)
 			NetworkInformation.setFavourite(n_estacio);
 		else
-			NetworkInformation.unSetFavourite(n_estacio);
+			NetworkInformation.unSetFavourite(n_estacio);*/
 	}
 	
 	public double getLat() {

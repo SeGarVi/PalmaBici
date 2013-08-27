@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
 
 
@@ -55,10 +54,8 @@ public class Parser {
 										 json_object.getDouble("lat") / 1e6,
 										 json_object.getInt("free"),
 										 json_object.getInt("bikes"),
-										 NetworkInformation.isFavourite(json_object.getString("name").substring(1, 3))));
+										 false));
 			}
-			
-			System.out.println("Center: long " + lngAcum/stations.size() +" - "+ latAcum/stations.size() +" lat");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

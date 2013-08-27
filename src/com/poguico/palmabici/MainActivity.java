@@ -38,16 +38,19 @@ import android.widget.TextView;
 
 public class MainActivity extends    SherlockFragmentActivity
                           implements SynchronizableActivity {
-	private static final long update_time = 600000;
+	private static final long UPDATE_TIME = 600000;
+	private static final String REPORT_URL = "https://github.com/SeGarVi/PalmaBici/issues/new";
 	
 	private ProgressDialog      dialog;	
 	private SharedPreferences   conf = null;
 	private NetworkSynchronizer synchronizer;
+	private NetworkInformation  network;
 		
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	synchronizer = NetworkSynchronizer.getInstance(this);
+    	network = NetworkInformation.getInstance();
     	conf = PreferenceManager.getDefaultSharedPreferences(this);
     		
     	setContentView(R.layout.main);
@@ -85,7 +88,7 @@ public class MainActivity extends    SherlockFragmentActivity
                 
             case R.id.menu_report:
                 Intent issue_intent = new Intent(Intent.ACTION_VIEW);
-                issue_intent.setData(Uri.parse("https://github.com/SeGarVi/PalmaBici/issues/new"));
+                issue_intent.setData(Uri.parse(REPORT_URL));
                 startActivity(issue_intent);
                 break;
         }
@@ -101,7 +104,7 @@ public class MainActivity extends    SherlockFragmentActivity
 		
 	@Override
 	protected void onDestroy() {
-		NetworkInformation.storeToDB(this);
+		synchronizer.storeToDB(this);
 		synchronizer.detachSynchronizableActivity(this);		
 		super.onDestroy();
 	}
@@ -131,7 +134,7 @@ public class MainActivity extends    SherlockFragmentActivity
 										 this,
 										 true);
 		NotificationManager.showMessage(updateTime,
-				 Formatter.formatLastUpdated(NetworkInformation.getLastUpdate(), this),
+				 Formatter.formatLastUpdated(network.getLastUpdateTime(), this),
 				 3000,
 				 this,
 				 false);
@@ -147,18 +150,18 @@ public class MainActivity extends    SherlockFragmentActivity
 	
 	private void checkUpdate() {		
 		long now = Calendar.getInstance().getTimeInMillis();
-		long lastUpdated = now - NetworkInformation.getLastUpdate();
+		long lastUpdated = now - network.getLastUpdateTime();
 		
-		if (NetworkInformation.getNetwork() == null ||
+		if (network.getNetwork() == null ||
 				(conf.getBoolean("autoupdate", true) &&
-				(lastUpdated) > update_time)) {
+				(lastUpdated) > UPDATE_TIME)) {
 			dialog = ProgressDialog.show(this, "",
 					getString(R.string.refresh_ongoing), true);
 			synchronizer.synchronize(this);
 		} else if ((lastUpdated/1000) % 60 > 0) {
 			TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
 			NotificationManager.showMessage(updateTime,
-					 Formatter.formatLastUpdated(NetworkInformation.getLastUpdate(), this),
+					 Formatter.formatLastUpdated(network.getLastUpdateTime(), this),
 					 3000,
 					 this,
 					 false);

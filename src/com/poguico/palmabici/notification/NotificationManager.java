@@ -29,6 +29,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 public class NotificationManager {
+	private static final int COLOR_WHITE = 0xFFFFFFFF;
+	private static final int COLOR_BLACK = 0xFF000000;
+	
 	private static ArrayList<Message> msgQueue = new ArrayList<Message>();
 	private static ShowLabelTask      msgDispatcher;
 	
@@ -95,7 +98,7 @@ public class NotificationManager {
 			textView.setText(msg.getMessage());
 			textView.setBackgroundResource((problem)?R.color.problem_palmabici:
                                                      R.color.pressed_palmabici);
-			textView.setTextColor((problem)?0xFFFFFFFF:0xFF000000);
+			textView.setTextColor((problem)?COLOR_WHITE:COLOR_BLACK);
 			textView.setVisibility(View.VISIBLE);
 			textView.startAnimation(showLabel);
 		}

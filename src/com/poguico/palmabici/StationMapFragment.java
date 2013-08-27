@@ -47,6 +47,8 @@ import android.support.v4.app.FragmentActivity;
 
 public class StationMapFragment extends    SupportMapFragment
                                 implements SynchronizableActivity {
+	private static final String BIKE_LANE_OPTION = "show_bike_lane";
+	
 	private BitmapDescriptor marker100 = null;
 	private BitmapDescriptor marker90  = null;
 	private BitmapDescriptor marker80  = null;
@@ -63,6 +65,7 @@ public class StationMapFragment extends    SupportMapFragment
 	
 	private GoogleMap map;
 	private SharedPreferences conf;
+	private NetworkInformation network;
 	
 	private boolean bikeLaneState;
 	
@@ -79,7 +82,8 @@ public class StationMapFragment extends    SupportMapFragment
 		conf=PreferenceManager
 				.getDefaultSharedPreferences(this.getActivity());
 		bikeLane      = new ArrayList<Polyline>();
-		bikeLaneState = conf.getBoolean("show_bike_lane", true);
+		bikeLaneState = conf.getBoolean(BIKE_LANE_OPTION, true);
+		network       = NetworkInformation.getInstance();
 		NetworkSynchronizer.getInstance(this);
         BikeLane.init(this.getActivity());
 	}
@@ -104,7 +108,7 @@ public class StationMapFragment extends    SupportMapFragment
 	public void onStart() {
 		super.onStart();
         initMap();
-        if (NetworkInformation.getNetwork() != null) {
+        if (network.getNetwork() != null) {
         	updateStations();
         }
 	}
@@ -112,7 +116,7 @@ public class StationMapFragment extends    SupportMapFragment
 	@Override
 	public void onResume() {
 		super.onResume();
-		boolean showBikeLane = conf.getBoolean("show_bike_lane", true);
+		boolean showBikeLane = conf.getBoolean(BIKE_LANE_OPTION, true);
 		if (showBikeLane != bikeLaneState) {
 			bikeLaneState = showBikeLane;
 			toggleBikeLane(bikeLaneState);
@@ -138,8 +142,8 @@ public class StationMapFragment extends    SupportMapFragment
 		
 		if (my_location != null) {
 			distance = new float[1];
-			Location.distanceBetween(NetworkInformation.getNetworkCenter().latitude,
-								     NetworkInformation.getNetworkCenter().longitude,
+			Location.distanceBetween(network.getCenter().latitude,
+					                 network.getCenter().longitude,
 									 my_location.getLatitude(),
                                      my_location.getLongitude(), distance);
 		}
@@ -172,7 +176,7 @@ public class StationMapFragment extends    SupportMapFragment
 		Location my_location        = LocationSynchronizer.getInstance(this)
                                                           .getLocation();
 		
-		for (Station station : NetworkInformation.getNetwork()) {
+		for (Station station : network.getNetwork()) {
 			percentage = station.getBusy_slots()*100 / station.getSlots();
 			
 			if (my_location != null) {

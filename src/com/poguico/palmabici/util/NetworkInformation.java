@@ -19,63 +19,76 @@ package com.poguico.palmabici.util;
 
 import java.util.ArrayList;
 
-import android.content.Context;
-
 import com.google.android.gms.maps.model.LatLng;
-import com.poguico.palmabici.DatabaseManager;
-import com.poguico.palmabici.parsers.Parser;
 
 public class NetworkInformation {
-	private static LatLng			     center     = new LatLng(39.574689, 2.651332);
-	private static ArrayList <Station> network    = null;
-	private static ArrayList <String>  favourites = null;
-	private static long				 lastUpdateTime;
+	private static NetworkInformation instance = null;
 	
-	public static void setNetwork(Context context,
-									String  stations,
-									long	lastUpdateTime) {
-		if (favourites == null) {
-			favourites = DatabaseManager.getInstance(context).getFavouriteStations();
+	private LatLng			     center;
+	private ArrayList <Station> network;
+	private ArrayList <String>  favourites;
+	private long				 lastUpdateTime;
+	
+	private NetworkInformation () {
+		center         = new LatLng(39.574689, 2.651332);
+		network        = null;
+		favourites     = null;
+		lastUpdateTime = 0;
+	}
+	
+	public static synchronized NetworkInformation getInstance () {
+		if (instance == null) {
+			instance = new NetworkInformation();
 		}
-		
-		network = Parser.parseNetworkJSON(context, stations);
-		NetworkInformation.lastUpdateTime = lastUpdateTime;
+		return instance;
 	}
 	
-	public static void loadFromDB(Context context) {
-		DatabaseManager dbManager = DatabaseManager.getInstance(context);
-		network = dbManager.getLastStationNetworkState(context);
-		lastUpdateTime = dbManager.getLastUpdateTime();
+	public LatLng getCenter() {
+		return center;
 	}
-	
-	public static void storeToDB (Context context) {
-		DatabaseManager dbManager = DatabaseManager.getInstance(context);
-		dbManager.saveLastStationNetworkState(network);
-		dbManager.saveLastUpdateTime(lastUpdateTime);
-		dbManager.saveFavouriteStations(network);
+
+	public synchronized void setCenter(LatLng center) {
+		this.center = center;
 	}
-	
-	public static ArrayList <Station> getNetwork() {
+
+	public ArrayList<String> getFavourites() {
+		return favourites;
+	}
+
+	public long getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public synchronized void setLastUpdateTime(long lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+
+	public synchronized void setNetwork(ArrayList<Station> network) {
+		this.network = network;
+	}
+
+	public ArrayList <Station> getNetwork() {
 		return network;
 	}
 	
-	public static void setFavourite(String id) {
+	public synchronized void setFavourite(String id) {
 		favourites.add(id);
 	}
 	
-	public static void unSetFavourite(String id) {
+	public synchronized void unSetFavourite(String id) {
 		favourites.remove(id);
 	}
 	
-	public static boolean isFavourite(String id) {
+	public synchronized void setFavourites(ArrayList<String> favourites) {
+		this.favourites = favourites;
+		for (Station station : network) {
+			if (favourites.contains(station.getN_estacio())) {
+				station.changeFavouriteState();
+			}
+		}
+	}
+	
+	public boolean isFavourite(String id) {
 		return favourites.contains(id);
-	}
-	
-	public static LatLng getNetworkCenter() {
-		return center;
-	}
-	
-	public static long getLastUpdate() {
-		return lastUpdateTime;
 	}
 }

@@ -26,7 +26,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.location.Location;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 	
@@ -123,7 +122,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		Cursor c;
 		int id_col, n_estacio_col, name_col, station_long_col,
 			station_lat_col, free_slots_col,  busy_slots_col;
-		ArrayList<String> res = new ArrayList<String>();
 		
 		db = instance.getReadableDatabase();
 		c  = db.rawQuery(GET_STATIONS, null);

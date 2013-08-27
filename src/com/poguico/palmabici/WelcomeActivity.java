@@ -20,8 +20,8 @@ package com.poguico.palmabici;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.poguico.palmabici.synchronizers.*;
+import com.poguico.palmabici.util.NetworkInformation;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +30,8 @@ import android.widget.TextView;
 
 public class WelcomeActivity extends SherlockFragmentActivity implements SynchronizableActivity  {
 
+	private static final int DEFERRED_FINALIZATION_TIME = 2000;
+	
 	private NetworkSynchronizer synchronizer;
 	private Intent              next_activity = null;
 	
@@ -70,7 +72,8 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 	public void onUnsuccessfulNetworkSynchronization() {
 		TextView text = (TextView)findViewById(R.id.textView1);
     	text.setText(R.string.connectivity_error);
-    	(new DeferredFinalizationClass(this, 1500)).execute((Void [])null);;
+    	(new DeferredFinalizationClass(this, DEFERRED_FINALIZATION_TIME))
+    		.execute((Void [])null);;
 	}
 
 	@Override
@@ -82,21 +85,21 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 	}
 	
 	public synchronized void instantiateMainActivity () {
-		if (next_activity == null) {
-			next_activity = new Intent(this, MainActivity.class);
-			synchronizer.detachSynchronizableActivity((SynchronizableActivity)this);
-			this.startActivity(next_activity);
-			this.finish();
-		}
+		next_activity = new Intent(this, MainActivity.class);
+		synchronizer.detachSynchronizableActivity((SynchronizableActivity)this);
+		this.startActivity(next_activity);
+		this.finish();
 	}
 	
 	private class DeferredFinalizationClass extends AsyncTask <Void, Void, Void> {
-		WelcomeActivity activity;
-		long           timeToDie;
+		private WelcomeActivity    activity;
+		private NetworkInformation network;
+		private long              timeToDie;
 		
 		public DeferredFinalizationClass (WelcomeActivity activity, long timeToDie) {
 			this.activity  = activity;
 			this.timeToDie = timeToDie;
+			this.network   = NetworkInformation.getInstance();
 		}
 		
     	protected Void doInBackground(Void... params) {    		
@@ -109,7 +112,11 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
         }
 
         protected void onPostExecute(Void params) {
-        	activity.instantiateMainActivity();
+        	if (network.getLastUpdateTime() > 0) {
+        		activity.instantiateMainActivity();
+        	} else {
+        		System.exit(0);
+        	}
         }
     }
 }
