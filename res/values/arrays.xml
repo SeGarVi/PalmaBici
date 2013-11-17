@@ -24,7 +24,7 @@
 		<item>@string/preferences_sort_favourites</item>
 	</string-array>
 	<string-array name="preferences_sort_values">
-		<item>"distance"</item>
-		<item>"favourites"</item>
+		<item>@string/preferences_sort_distance</item>
+		<item>@string/preferences_sort_favourites</item>
 	</string-array>
 </resources>

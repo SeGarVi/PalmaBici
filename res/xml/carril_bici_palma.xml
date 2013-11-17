@@ -1,55 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
-
-  Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
-  
-  This file is part of PalmaBici.
-  
-  PalmaBici is free software: you can redistribute it and/or modify
-  it under the terms of the Affero GNU General Public License version 3
-  as published by the Free Software Foundation.
-  
-  PalmaBici is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  Affero GNU General Public License for more details
-  (https://www.gnu.org/licenses/agpl-3.0.html).
-    
--->
-
+<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
 <Document>
   <name>Carril Bici Palma</name>
   <description><![CDATA[]]></description>
-  <Style id="style38">
+  <Style id="style40">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style52">
+  <Style id="style56">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style54">
+  <Style id="style58">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style22">
+  <Style id="style24">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style76">
+  <Style id="style82">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
@@ -62,14 +43,14 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style68">
+  <Style id="style74">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style62">
+  <Style id="style67">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
@@ -82,7 +63,7 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style65">
+  <Style id="style71">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
@@ -95,14 +76,14 @@
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style57">
+  <Style id="style62">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style59">
+  <Style id="style64">
     <IconStyle>
       <Icon>
         <href></href>
@@ -115,7 +96,7 @@
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style30">
+  <Style id="style32">
     <IconStyle>
       <Icon>
         <href></href>
@@ -129,53 +110,53 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style32">
+  <Style id="style34">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style58">
+  <Style id="style63">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style75">
+  <Style id="style81">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
       </Icon>
     </IconStyle>
-  </Style>
-  <Style id="style56">
-    <LineStyle>
-      <color>73FF0000</color>
-      <width>5</width>
-    </LineStyle>
   </Style>
   <Style id="style60">
-    <IconStyle>
-      <Icon>
-        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
-      </Icon>
-    </IconStyle>
-  </Style>
-  <Style id="style23">
-    <IconStyle>
-      <Icon>
-        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
-      </Icon>
-    </IconStyle>
-  </Style>
-  <Style id="style80">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style48">
+  <Style id="style65">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style25">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style86">
+    <LineStyle>
+      <color>73FF0000</color>
+      <width>5</width>
+    </LineStyle>
+  </Style>
+  <Style id="style51">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
@@ -189,26 +170,33 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style71">
-    <LineStyle>
-      <color>73FF0000</color>
-      <width>5</width>
-    </LineStyle>
-  </Style>
-  <Style id="style25">
-    <IconStyle>
-      <Icon>
-        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
-      </Icon>
-    </IconStyle>
-  </Style>
   <Style id="style77">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style69">
+  <Style id="style27">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style83">
+    <LineStyle>
+      <color>73FF0000</color>
+      <width>5</width>
+    </LineStyle>
+  </Style>
+  <Style id="style75">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style52">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
@@ -222,100 +210,93 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style46">
-    <IconStyle>
-      <Icon>
-        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
-      </Icon>
-    </IconStyle>
-  </Style>
   <Style id="style12">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style45">
+  <Style id="style47">
     <IconStyle>
       <Icon>
         <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style50">
+  <Style id="style53">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style36">
+  <Style id="style38">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style63">
+  <Style id="style68">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style64">
+  <Style id="style69">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style21">
+  <Style id="style22">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style29">
+  <Style id="style31">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style24">
+  <Style id="style26">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style70">
+  <Style id="style76">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style81">
+  <Style id="style87">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style51">
+  <Style id="style54">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style61">
+  <Style id="style66">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style42">
+  <Style id="style44">
     <IconStyle>
       <Icon>
         <href></href>
@@ -335,7 +316,7 @@
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style55">
+  <Style id="style59">
     <IconStyle>
       <Icon>
         <href></href>
@@ -362,14 +343,14 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style39">
+  <Style id="style41">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style40">
+  <Style id="style42">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
@@ -382,27 +363,27 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style33">
+  <Style id="style35">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style74">
+  <Style id="style80">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style27">
+  <Style id="style29">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style20">
+  <Style id="style21">
     <IconStyle>
       <Icon>
         <href></href>
@@ -422,7 +403,7 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style44">
+  <Style id="style46">
     <IconStyle>
       <Icon>
         <href></href>
@@ -442,47 +423,27 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style35">
-    <IconStyle>
-      <Icon>
-        <href></href>
-      </Icon>
-    </IconStyle>
-  </Style>
   <Style id="style37">
+    <IconStyle>
+      <Icon>
+        <href></href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style39">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style66">
+  <Style id="style72">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style41">
-    <IconStyle>
-      <Icon>
-        <href></href>
-      </Icon>
-    </IconStyle>
-  </Style>
-  <Style id="style26">
-    <LineStyle>
-      <color>73FF0000</color>
-      <width>5</width>
-    </LineStyle>
-  </Style>
-  <Style id="style79">
-    <IconStyle>
-      <Icon>
-        <href></href>
-      </Icon>
-    </IconStyle>
-  </Style>
-  <Style id="style53">
+  <Style id="style43">
     <IconStyle>
       <Icon>
         <href></href>
@@ -495,34 +456,54 @@
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style67">
+  <Style id="style85">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style34">
+  <Style id="style57">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style47">
+  <Style id="style30">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style78">
+  <Style id="style73">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style73">
+  <Style id="style36">
+    <IconStyle>
+      <Icon>
+        <href></href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style50">
+    <LineStyle>
+      <color>73FF0000</color>
+      <width>5</width>
+    </LineStyle>
+  </Style>
+  <Style id="style84">
+    <IconStyle>
+      <Icon>
+        <href></href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style79">
     <IconStyle>
       <Icon>
         <href></href>
@@ -535,7 +516,7 @@
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style31">
+  <Style id="style33">
     <IconStyle>
       <Icon>
         <href></href>
@@ -549,23 +530,63 @@
       </Icon>
     </IconStyle>
   </Style>
-  <Style id="style43">
+  <Style id="style45">
     <LineStyle>
       <color>73FF0000</color>
       <width>5</width>
     </LineStyle>
   </Style>
-  <Style id="style72">
+  <Style id="style78">
     <IconStyle>
       <Icon>
         <href></href>
       </Icon>
     </IconStyle>
   </Style>
+  <Style id="style55">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style23">
+    <LineStyle>
+      <color>73FF0000</color>
+      <width>5</width>
+    </LineStyle>
+  </Style>
+  <Style id="style70">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style61">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style48">
+    <LineStyle>
+      <color>73FF0000</color>
+      <width>5</width>
+    </LineStyle>
+  </Style>
+  <Style id="style20">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
   <Placemark>
     <name>De: Ctra. Valldemossa</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style38</styleUrl>
+    <styleUrl>#style40</styleUrl>
     <Point>
       <coordinates>2.647466,39.594234,0.000000</coordinates>
     </Point>
@@ -573,7 +594,7 @@
   <Placemark>
     <name>Indicaciones de ruta a pie para Ma-19</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style52</styleUrl>
+    <styleUrl>#style56</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -582,7 +603,7 @@
     <LineString>
       <tessellate>1</tessellate>
       <coordinates>
-        2.647466,39.594234,0.000000
+        2.647467,39.594231,0.000000
         2.647823,39.593014,0.000000
         2.647875,39.592972,0.000000
         2.648461,39.591164,0.000000
@@ -606,8 +627,14 @@
         2.649565,39.580235,0.000000
         2.651476,39.577797,0.000000
         2.651476,39.577797,0.000000
-        2.652360,39.577518,0.000000
-        2.652360,39.577518,0.000000
+        2.652093,39.577602,0.000000
+        2.652093,39.577602,0.000000
+        2.652062,39.577545,0.000000
+        2.652156,39.577499,0.000000
+        2.652137,39.577438,0.000000
+        2.652137,39.577438,0.000000
+        2.652362,39.577362,0.000000
+        2.652362,39.577362,0.000000
         2.652333,39.576191,0.000000
         2.652333,39.576191,0.000000
         2.652786,39.575817,0.000000
@@ -616,18 +643,18 @@
         2.653798,39.574928,0.000000
         2.654256,39.574459,0.000000
         2.654256,39.574459,0.000000
-        2.654744,39.573917,0.000000
-        2.654744,39.573917,0.000000
+        2.654714,39.573940,0.000000
+        2.654714,39.573940,0.000000
         2.655345,39.572731,0.000000
         2.655345,39.572731,0.000000
         2.655140,39.572662,0.000000
         2.655140,39.572662,0.000000
         2.654985,39.572620,0.000000
         2.654909,39.572655,0.000000
-        2.654196,39.573677,0.000000
-        2.654196,39.573677,0.000000
-        2.654744,39.573917,0.000000
-        2.654744,39.573917,0.000000
+        2.654158,39.573669,0.000000
+        2.654158,39.573669,0.000000
+        2.654714,39.573940,0.000000
+        2.654714,39.573940,0.000000
         2.655345,39.572731,0.000000
         2.655345,39.572731,0.000000
         2.655617,39.572189,0.000000
@@ -673,7 +700,7 @@
   <Placemark>
     <name>Para: Ma-19</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style54</styleUrl>
+    <styleUrl>#style58</styleUrl>
     <Point>
       <coordinates>2.656438,39.564320,0.000000</coordinates>
     </Point>
@@ -681,7 +708,7 @@
   <Placemark>
     <name>Para: Carretera desconocida</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style22</styleUrl>
+    <styleUrl>#style24</styleUrl>
     <Point>
       <coordinates>2.702594,39.542145,0.000000</coordinates>
     </Point>
@@ -689,7 +716,7 @@
   <Placemark>
     <name>Indicaciones de ruta a pie para Carretera desconocida</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style76</styleUrl>
+    <styleUrl>#style82</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -869,14 +896,14 @@
   </Placemark>
   <Placemark>
     <name>De: Carrer Coronel Beorlegui</name>
-    <styleUrl>#style68</styleUrl>
+    <styleUrl>#style74</styleUrl>
     <Point>
       <coordinates>2.637338,39.600594,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Dionis Bennassar</name>
-    <styleUrl>#style62</styleUrl>
+    <styleUrl>#style67</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -910,7 +937,7 @@
   <Placemark>
     <name>De: Carrer Maria Antònia Salvà</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style65</styleUrl>
+    <styleUrl>#style71</styleUrl>
     <Point>
       <coordinates>2.616117,39.599400,0.000000</coordinates>
     </Point>
@@ -940,12 +967,8 @@
         2.607741,39.598846,0.000000
         2.607353,39.598759,0.000000
         2.607353,39.598759,0.000000
-        2.607269,39.598660,0.000000
-        2.607269,39.598660,0.000000
-        2.607204,39.598682,0.000000
         2.607204,39.598682,0.000000
         2.606713,39.597656,0.000000
-        2.606401,39.596874,0.000000
         2.605095,39.593479,0.000000
         2.604911,39.592834,0.000000
         2.604923,39.592499,0.000000
@@ -990,14 +1013,14 @@
   <Placemark>
     <name>Para: Camí de son Rapinya</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style57</styleUrl>
+    <styleUrl>#style62</styleUrl>
     <Point>
       <coordinates>2.616602,39.582382,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Camí dels Reis</name>
-    <styleUrl>#style59</styleUrl>
+    <styleUrl>#style64</styleUrl>
     <Point>
       <coordinates>2.616666,39.583767,0.000000</coordinates>
     </Point>
@@ -1061,7 +1084,7 @@
   </Placemark>
   <Placemark>
     <name>Para: Camí dels Reis</name>
-    <styleUrl>#style30</styleUrl>
+    <styleUrl>#style32</styleUrl>
     <Point>
       <coordinates>2.601513,39.565845,0.000000</coordinates>
     </Point>
@@ -1077,7 +1100,7 @@
   <Placemark>
     <name>Indicaciones de ruta a pie para PM-20</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style32</styleUrl>
+    <styleUrl>#style34</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1145,17 +1168,16 @@
         2.626125,39.574879,0.000000
         2.625908,39.574593,0.000000
         2.625908,39.574593,0.000000
-        2.625734,39.574398,0.000000
-        2.625158,39.574070,0.000000
-        2.624908,39.573990,0.000000
-        2.624094,39.573898,0.000000
-        2.623762,39.573753,0.000000
-        2.623657,39.573605,0.000000
-        2.623636,39.573463,0.000000
-        2.623659,39.573185,0.000000
-        2.623763,39.572994,0.000000
-        2.623763,39.572994,0.000000
-        2.623671,39.572895,0.000000
+        2.625469,39.574287,0.000000
+        2.625123,39.574127,0.000000
+        2.624867,39.574055,0.000000
+        2.623973,39.573921,0.000000
+        2.623700,39.573788,0.000000
+        2.623601,39.573669,0.000000
+        2.623560,39.573479,0.000000
+        2.623560,39.573257,0.000000
+        2.623696,39.572956,0.000000
+        2.623696,39.572956,0.000000
         2.623648,39.572571,0.000000
         2.623648,39.572571,0.000000
         2.622782,39.572571,0.000000
@@ -1191,7 +1213,7 @@
   <Placemark>
     <name>Para: PM-20</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style58</styleUrl>
+    <styleUrl>#style63</styleUrl>
     <Point>
       <coordinates>2.610128,39.573895,0.000000</coordinates>
     </Point>
@@ -1199,7 +1221,7 @@
   <Placemark>
     <name>De: Carretera desconocida</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style75</styleUrl>
+    <styleUrl>#style81</styleUrl>
     <Point>
       <coordinates>2.626784,39.579369,0.000000</coordinates>
     </Point>
@@ -1207,7 +1229,7 @@
   <Placemark>
     <name>Indicaciones de ruta a pie para Carrer de Jesús</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style56</styleUrl>
+    <styleUrl>#style60</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1262,7 +1284,7 @@
   <Placemark>
     <name>Para: Carrer de Jesús</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style60</styleUrl>
+    <styleUrl>#style65</styleUrl>
     <Point>
       <coordinates>2.640532,39.585155,0.000000</coordinates>
     </Point>
@@ -1270,7 +1292,7 @@
   <Placemark>
     <name>De: Carretera desconocida</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style23</styleUrl>
+    <styleUrl>#style25</styleUrl>
     <Point>
       <coordinates>2.624978,39.588772,0.000000</coordinates>
     </Point>
@@ -1278,7 +1300,7 @@
   <Placemark>
     <name>Indicaciones de ruta a pie para Carretera desconocida</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style80</styleUrl>
+    <styleUrl>#style86</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1309,7 +1331,7 @@
   <Placemark>
     <name>Para: Carretera desconocida</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style48</styleUrl>
+    <styleUrl>#style51</styleUrl>
     <Point>
       <coordinates>2.630959,39.583408,0.000000</coordinates>
     </Point>
@@ -1325,7 +1347,7 @@
   <Placemark>
     <name>Indicaciones de ruta en coche para Camí dels Reis</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style71</styleUrl>
+    <styleUrl>#style77</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1348,7 +1370,7 @@
   <Placemark>
     <name>Para: Camí dels Reis</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style25</styleUrl>
+    <styleUrl>#style27</styleUrl>
     <Point>
       <coordinates>2.616582,39.581997,0.000000</coordinates>
     </Point>
@@ -1356,7 +1378,7 @@
   <Placemark>
     <name>Indicaciones de ruta a pie para Carretera desconocida</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style77</styleUrl>
+    <styleUrl>#style83</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1464,7 +1486,7 @@
   <Placemark>
     <name>Para: Carretera desconocida</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style69</styleUrl>
+    <styleUrl>#style75</styleUrl>
     <Point>
       <coordinates>2.662158,39.562840,0.000000</coordinates>
     </Point>
@@ -1472,7 +1494,7 @@
   <Placemark>
     <name>De: Camí dels Reis</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style49</styleUrl>
+    <styleUrl>#style52</styleUrl>
     <Point>
       <coordinates>2.632742,39.592484,0.000000</coordinates>
     </Point>
@@ -1480,7 +1502,7 @@
   <Placemark>
     <name>De: Archiduque Luis Salvador</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style46</styleUrl>
+    <styleUrl>#style49</styleUrl>
     <Point>
       <coordinates>2.659667,39.588299,0.000000</coordinates>
     </Point>
@@ -1506,21 +1528,21 @@
   <Placemark>
     <name>Para: Archiduque Luis Salvador</name>
     <description><![CDATA[]]></description>
-    <styleUrl>#style45</styleUrl>
+    <styleUrl>#style47</styleUrl>
     <Point>
       <coordinates>2.655353,39.581272,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Camí dels Reis</name>
-    <styleUrl>#style50</styleUrl>
+    <styleUrl>#style53</styleUrl>
     <Point>
       <coordinates>2.599576,39.561153,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta en coche para Carretera desconocida</name>
-    <styleUrl>#style36</styleUrl>
+    <styleUrl>#style38</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1555,21 +1577,21 @@
   </Placemark>
   <Placemark>
     <name>Para: Carretera desconocida</name>
-    <styleUrl>#style63</styleUrl>
+    <styleUrl>#style68</styleUrl>
     <Point>
       <coordinates>2.596647,39.555573,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Av. Joan Miró</name>
-    <styleUrl>#style64</styleUrl>
+    <styleUrl>#style69</styleUrl>
     <Point>
       <coordinates>2.612793,39.552017,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta en coche para Carretera desconocida</name>
-    <styleUrl>#style21</styleUrl>
+    <styleUrl>#style22</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1588,21 +1610,21 @@
   </Placemark>
   <Placemark>
     <name>Para: Carretera desconocida</name>
-    <styleUrl>#style29</styleUrl>
+    <styleUrl>#style31</styleUrl>
     <Point>
       <coordinates>2.615068,39.552315,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Carrer de Sant Miquel</name>
-    <styleUrl>#style24</styleUrl>
+    <styleUrl>#style26</styleUrl>
     <Point>
       <coordinates>2.652349,39.576843,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Av. Gabriel Roca</name>
-    <styleUrl>#style70</styleUrl>
+    <styleUrl>#style76</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1644,21 +1666,21 @@
   </Placemark>
   <Placemark>
     <name>Para: Av. Gabriel Roca</name>
-    <styleUrl>#style81</styleUrl>
+    <styleUrl>#style87</styleUrl>
     <Point>
       <coordinates>2.639454,39.569328,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Plaça Bisbe Berenguer Palau</name>
-    <styleUrl>#style51</styleUrl>
+    <styleUrl>#style54</styleUrl>
     <Point>
       <coordinates>2.649651,39.576294,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Carrer Reina Esclarmunda</name>
-    <styleUrl>#style61</styleUrl>
+    <styleUrl>#style66</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1676,7 +1698,7 @@
   </Placemark>
   <Placemark>
     <name>Para: Carrer Reina Esclarmunda</name>
-    <styleUrl>#style42</styleUrl>
+    <styleUrl>#style44</styleUrl>
     <Point>
       <coordinates>2.652341,39.576412,0.000000</coordinates>
     </Point>
@@ -1704,10 +1726,7 @@
         2.642192,39.580341,0.000000
         2.642121,39.580009,0.000000
         2.642121,39.580009,0.000000
-        2.642085,39.579876,0.000000
-        2.642085,39.579876,0.000000
-        2.641400,39.578358,0.000000
-        2.641067,39.577515,0.000000
+        2.641142,39.577717,0.000000
         2.641043,39.577320,0.000000
         2.641043,39.577320,0.000000
         2.640887,39.576195,0.000000
@@ -1720,7 +1739,7 @@
   </Placemark>
   <Placemark>
     <name>Para: Passeig Mallorca</name>
-    <styleUrl>#style55</styleUrl>
+    <styleUrl>#style59</styleUrl>
     <Point>
       <coordinates>2.641619,39.572666,0.000000</coordinates>
     </Point>
@@ -1745,8 +1764,8 @@
       <coordinates>
         2.642145,39.579979,0.000000
         2.643942,39.577553,0.000000
-        2.644008,39.576099,0.000000
-        2.644008,39.576099,0.000000
+        2.643975,39.576263,0.000000
+        2.643975,39.576263,0.000000
         2.644017,39.575996,0.000000
       </coordinates>
     </LineString>
@@ -1760,14 +1779,14 @@
   </Placemark>
   <Placemark>
     <name>De: Carrer de la Fàbrica</name>
-    <styleUrl>#style39</styleUrl>
+    <styleUrl>#style41</styleUrl>
     <Point>
       <coordinates>2.637605,39.572632,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Carrer de la Fàbrica</name>
-    <styleUrl>#style40</styleUrl>
+    <styleUrl>#style42</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1790,14 +1809,14 @@
   </Placemark>
   <Placemark>
     <name>De: Carretera desconocida</name>
-    <styleUrl>#style33</styleUrl>
+    <styleUrl>#style35</styleUrl>
     <Point>
       <coordinates>2.646577,39.569176,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Carrer Can Cifre</name>
-    <styleUrl>#style74</styleUrl>
+    <styleUrl>#style80</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1813,14 +1832,14 @@
   </Placemark>
   <Placemark>
     <name>Para: Carrer Can Cifre</name>
-    <styleUrl>#style27</styleUrl>
+    <styleUrl>#style29</styleUrl>
     <Point>
       <coordinates>2.646998,39.571014,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Carretera desconocida</name>
-    <styleUrl>#style20</styleUrl>
+    <styleUrl>#style21</styleUrl>
     <Point>
       <coordinates>2.645673,39.567287,0.000000</coordinates>
     </Point>
@@ -1850,7 +1869,7 @@
   </Placemark>
   <Placemark>
     <name>De: Plaça Sant Francesc</name>
-    <styleUrl>#style44</styleUrl>
+    <styleUrl>#style46</styleUrl>
     <Point>
       <coordinates>2.652036,39.568558,0.000000</coordinates>
     </Point>
@@ -1882,14 +1901,14 @@
   </Placemark>
   <Placemark>
     <name>De: Carretera desconocida</name>
-    <styleUrl>#style35</styleUrl>
+    <styleUrl>#style37</styleUrl>
     <Point>
       <coordinates>2.667807,39.585686,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Plaça Espanya</name>
-    <styleUrl>#style37</styleUrl>
+    <styleUrl>#style39</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1932,29 +1951,29 @@
         2.654300,39.575623,0.000000
         2.654300,39.575623,0.000000
         2.654160,39.575523,0.000000
-        2.654389,39.575359,0.000000
-        2.654389,39.575359,0.000000
+        2.654384,39.575363,0.000000
+        2.654384,39.575363,0.000000
         2.653798,39.574928,0.000000
       </coordinates>
     </LineString>
   </Placemark>
   <Placemark>
     <name>Para: Plaça Espanya</name>
-    <styleUrl>#style66</styleUrl>
+    <styleUrl>#style72</styleUrl>
     <Point>
       <coordinates>2.653798,39.574928,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Carrer de l&#39;Argelaga</name>
-    <styleUrl>#style41</styleUrl>
+    <styleUrl>#style43</styleUrl>
     <Point>
       <coordinates>2.665982,39.584332,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Carrer Tomàs Luis de Victòria</name>
-    <styleUrl>#style26</styleUrl>
+    <styleUrl>#style28</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -1974,21 +1993,21 @@
   </Placemark>
   <Placemark>
     <name>Para: Carrer Tomàs Luis de Victòria</name>
-    <styleUrl>#style79</styleUrl>
+    <styleUrl>#style85</styleUrl>
     <Point>
       <coordinates>2.663756,39.586899,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Av. Mèxic</name>
-    <styleUrl>#style53</styleUrl>
+    <styleUrl>#style57</styleUrl>
     <Point>
       <coordinates>2.665565,39.566166,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Av. Mèxic</name>
-    <styleUrl>#style28</styleUrl>
+    <styleUrl>#style30</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -2019,21 +2038,21 @@
   </Placemark>
   <Placemark>
     <name>Para: Av. Mèxic</name>
-    <styleUrl>#style67</styleUrl>
+    <styleUrl>#style73</styleUrl>
     <Point>
       <coordinates>2.670773,39.565613,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Carrer Bogotà</name>
-    <styleUrl>#style34</styleUrl>
+    <styleUrl>#style36</styleUrl>
     <Point>
       <coordinates>2.674254,39.568172,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Carrer Bogotà</name>
-    <styleUrl>#style47</styleUrl>
+    <styleUrl>#style50</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -2051,14 +2070,14 @@
   </Placemark>
   <Placemark>
     <name>Para: Carrer Bogotà</name>
-    <styleUrl>#style78</styleUrl>
+    <styleUrl>#style84</styleUrl>
     <Point>
       <coordinates>2.673670,39.565311,0.000000</coordinates>
     </Point>
   </Placemark>
   <Placemark>
     <name>De: Camí Vell de Sineu</name>
-    <styleUrl>#style73</styleUrl>
+    <styleUrl>#style79</styleUrl>
     <Point>
       <coordinates>2.685967,39.570793,0.000000</coordinates>
     </Point>
@@ -2083,7 +2102,7 @@
   </Placemark>
   <Placemark>
     <name>Para: Camí Vell de Sineu</name>
-    <styleUrl>#style31</styleUrl>
+    <styleUrl>#style33</styleUrl>
     <Point>
       <coordinates>2.685310,39.574005,0.000000</coordinates>
     </Point>
@@ -2097,7 +2116,7 @@
   </Placemark>
   <Placemark>
     <name>Indicaciones de ruta a pie para Calle Enl.VI.Cintura-Viejo</name>
-    <styleUrl>#style43</styleUrl>
+    <styleUrl>#style45</styleUrl>
     <ExtendedData>
       <Data name="_SnapToRoads">
         <value>true</value>
@@ -2122,9 +2141,101 @@
   </Placemark>
   <Placemark>
     <name>Para: Calle Enl.VI.Cintura-Viejo</name>
-    <styleUrl>#style72</styleUrl>
+    <styleUrl>#style78</styleUrl>
     <Point>
       <coordinates>2.686148,39.570110,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>De: Carrer d&#39;Alfons el Magnànim/Ma-11</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style55</styleUrl>
+    <Point>
+      <coordinates>2.654619,39.596500,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Indicaciones de ruta a pie para Carrer de Sant Vicenç de Paul</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style23</styleUrl>
+    <ExtendedData>
+      <Data name="_SnapToRoads">
+        <value>true</value>
+      </Data>
+    </ExtendedData>
+    <LineString>
+      <tessellate>1</tessellate>
+      <coordinates>
+        2.654619,39.596500,0.000000
+        2.654610,39.596359,0.000000
+        2.654610,39.596359,0.000000
+        2.653368,39.596443,0.000000
+        2.653223,39.596401,0.000000
+        2.653053,39.596287,0.000000
+        2.652560,39.596153,0.000000
+        2.652560,39.596153,0.000000
+        2.652739,39.595734,0.000000
+        2.652739,39.595734,0.000000
+        2.652996,39.594734,0.000000
+        2.652996,39.594734,0.000000
+        2.651238,39.594452,0.000000
+        2.651238,39.594452,0.000000
+        2.651432,39.593700,0.000000
+        2.651432,39.593700,0.000000
+        2.647865,39.593117,0.000000
+      </coordinates>
+    </LineString>
+  </Placemark>
+  <Placemark>
+    <name>Para: Carrer de Sant Vicenç de Paul</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style70</styleUrl>
+    <Point>
+      <coordinates>2.647865,39.593117,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>De: Archiduque Luis Salvador</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style61</styleUrl>
+    <Point>
+      <coordinates>2.655353,39.581272,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Indicaciones de ruta a pie para Av. Joan March</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style48</styleUrl>
+    <ExtendedData>
+      <Data name="_SnapToRoads">
+        <value>true</value>
+      </Data>
+    </ExtendedData>
+    <LineString>
+      <tessellate>1</tessellate>
+      <coordinates>
+        2.655353,39.581272,0.000000
+        2.654477,39.579918,0.000000
+        2.654477,39.579918,0.000000
+        2.654560,39.579838,0.000000
+        2.654559,39.579731,0.000000
+        2.654456,39.579643,0.000000
+        2.654316,39.579632,0.000000
+        2.652904,39.577290,0.000000
+        2.652904,39.577290,0.000000
+        2.652706,39.577412,0.000000
+        2.652360,39.577518,0.000000
+        2.652360,39.577518,0.000000
+        2.652362,39.577362,0.000000
+      </coordinates>
+    </LineString>
+  </Placemark>
+  <Placemark>
+    <name>Para: Av. Joan March</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style20</styleUrl>
+    <Point>
+      <coordinates>2.652362,39.577362,0.000000</coordinates>
     </Point>
   </Placemark>
 </Document>
