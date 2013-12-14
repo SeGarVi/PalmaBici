@@ -48,8 +48,10 @@
     <string name="preferences_map">Mapa</string>
     <string name="preferences_show_bike_lane_tip">Mostrar carrils bici i ciclocarrers al mapa</string>
     <string name="connectivity_error">No disposes de connexió a internet!</string>
-    <string name="bikes">Bicis</string>
+    <string name="free_bikes">Bicis lliures</string>
     <string name="free_slots">Anclatges lliures</string>
+    <string name="broken_bikes">Bicis avariades</string>
+    <string name="broken_slots">Anclatges avariats</string>
     <string name="add_to_favorites">Afegir a favorits</string>
     <string name="remove_from_favorites">Eliminar de favorits</string>
     <string name="last_updated">Actualitzat fa</string>

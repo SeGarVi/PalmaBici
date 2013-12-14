@@ -48,8 +48,10 @@
     <string name="preferences_map">Mapa</string>
     <string name="preferences_show_bike_lane_tip">Mostrar carriles bici y ciclocalles en el mapa</string>
     <string name="connectivity_error">¡No dispones de conexión a internet!</string>
-    <string name="bikes">Bicis</string>
+    <string name="free_bikes">Bicis libres</string>
     <string name="free_slots">Anclajes libres</string>
+    <string name="broken_bikes">Bicis averiadas</string>
+    <string name="broken_slots">Anclajes averiados</string>
     <string name="add_to_favorites">Añadir a favoritos</string>
     <string name="remove_from_favorites">Eliminar de favoritos</string>
     <string name="last_updated">Actualizado hace</string>

@@ -64,8 +64,10 @@
     <string name="preferences_map">Map</string>
     <string name="preferences_show_bike_lane_tip">Show bike lane and cycle streets in the map</string>
     <string name="connectivity_error">You don\'t have internet connection!</string>
-    <string name="bikes">Bikes</string>
+    <string name="free_bikes">Free bikes</string>
     <string name="free_slots">Free slots</string>
+    <string name="broken_bikes">Broken bikes</string>
+    <string name="broken_slots">Broken slots</string>
     <string name="add_to_favorites">Add to favorites</string>
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="hello_world">Hello world!</string>

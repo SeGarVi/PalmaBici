@@ -54,6 +54,8 @@ public class Parser {
 										 json_object.getDouble("lat") / 1e6,
 										 json_object.getInt("free"),
 										 json_object.getInt("bikes"),
+										 json_object.getInt("free_fck"),
+										 json_object.getInt("bikes_fck"),
 										 false));
 			}
 		} catch (Exception e) {

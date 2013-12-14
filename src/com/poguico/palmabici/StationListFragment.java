@@ -74,7 +74,7 @@ public class StationListFragment extends ListFragment {
     				
     		id.setText(stations.get(position).getN_estacio() + " · ");		
     		name.setText(stations.get(position).getName());
-    		bikes.setText(context.getString(R.string.bikes) + ": " + stations.get(position).getBusy_slots());
+    		bikes.setText(context.getString(R.string.free_bikes) + ": " + stations.get(position).getBusy_slots());
     		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
     		    		
     		dist_f = stations.get(position).getDistance();

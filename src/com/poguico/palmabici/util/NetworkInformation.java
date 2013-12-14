@@ -18,6 +18,7 @@
 package com.poguico.palmabici.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -26,6 +27,7 @@ public class NetworkInformation {
 	
 	private LatLng			     center;
 	private ArrayList <Station> network;
+	private HashMap<String, Station> mappedNetwork;
 	private ArrayList <String>  favourites;
 	private long				 lastUpdateTime;
 	
@@ -34,6 +36,7 @@ public class NetworkInformation {
 		network        = null;
 		favourites     = null;
 		lastUpdateTime = 0;
+		mappedNetwork  = new HashMap<String, Station>();
 	}
 	
 	public static synchronized NetworkInformation getInstance () {
@@ -65,6 +68,9 @@ public class NetworkInformation {
 
 	public synchronized void setNetwork(ArrayList<Station> network) {
 		this.network = network;
+		for (Station station : network) {
+			mappedNetwork.put(station.getN_estacio(), station);
+		}
 	}
 
 	public ArrayList <Station> getNetwork() {
@@ -90,5 +96,9 @@ public class NetworkInformation {
 	
 	public boolean isFavourite(String id) {
 		return favourites.contains(id);
+	}
+	
+	public Station get(String nEstacio) {
+		return mappedNetwork.get(nEstacio);
 	}
 }

@@ -32,7 +32,7 @@ import android.preference.PreferenceManager;
 
 public class Station implements Comparable <Station> {
 	private Context context;
-	private int id, free_slots, busy_slots, slots;
+	private int id, free_slots, busy_slots, broken_slots, broken_bikes, slots;
 	private String n_estacio, name;
 	private Location location;
 	private Float distance;
@@ -90,14 +90,18 @@ public class Station implements Comparable <Station> {
         correct_locations = Collections.unmodifiableMap(aMap);
     }
     
-	public Station(Context context, int id, String n_estacio, String name, double station_long, double station_lat,
-				   int free_slots, int busy_slots, boolean favourite) {
+	public Station(Context context, int id, String n_estacio,
+					String name, double station_long, double station_lat,
+				    int free_slots, int busy_slots, int broken_slots,
+				    int broken_bikes, boolean favourite) {
 		this.context = context;
 		this.id = id;
 		this.n_estacio = n_estacio;
 		this.free_slots = free_slots;
 		this.busy_slots = busy_slots;
-		this.slots = free_slots + busy_slots;
+		this.broken_slots = broken_slots;
+		this.broken_bikes = broken_bikes;
+		this.slots = free_slots + busy_slots + broken_slots;
 		this.name = nice_names.get(n_estacio);
 		this.favourite = favourite;
 				
@@ -154,13 +158,17 @@ public class Station implements Comparable <Station> {
 	public int getSlots() {
 		return slots;
 	}
+
+	public int getBroken_slots() {
+		return broken_slots;
+	}
 	
-	public String getName() {
-		return name;
+	public int getBroken_bikes() {
+		return broken_bikes;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getName() {
+		return name;
 	}
 
 	public Float getDistance () {

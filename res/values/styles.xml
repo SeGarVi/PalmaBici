@@ -35,11 +35,17 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="WelcomeTheme" parent="Theme.Sherlock.Light">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
         <item name="android:background">#00599e</item>
         <item name="android:textColor" >#ffffff</item>
     </style>
     
     <style name="AppTheme" parent="Theme.Sherlock.Light">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
         <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
         <item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>

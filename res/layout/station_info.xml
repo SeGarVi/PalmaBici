@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+  Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
+  
+  This file is part of PalmaBici.
+  
+  PalmaBici is free software: you can redistribute it and/or modify
+  it under the terms of the Affero GNU General Public License version 3
+  as published by the Free Software Foundation.
+  
+  PalmaBici is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  Affero GNU General Public License for more details
+  (https://www.gnu.org/licenses/agpl-3.0.html).
+    
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+	    android:id="@+id/markerTitle"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:textStyle="bold" />
+    
+    <LinearLayout
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center"
+    	android:orientation="horizontal" >
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/free_slots" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=": " />
+	    
+	    <TextView
+	        android:id="@+id/freeSlots"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=" - " />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/free_bikes" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=": " />
+	    
+	    <TextView
+	        android:id="@+id/freeBikes"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/brokenApparel"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center"
+    	android:orientation="horizontal" >
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/broken_slots" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=": " />
+	    
+	    <TextView
+	        android:id="@+id/brokenSlots"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=" - " />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/broken_bikes" />
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=": " />
+	    
+	    <TextView
+	        android:id="@+id/brokenBikes"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	    
+    </LinearLayout>
+
+</LinearLayout>
