@@ -24,7 +24,7 @@
     android:layout_height="wrap_content"
     android:padding="10dp" >
 
-    <LinearLayout
+   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -51,6 +51,22 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text="@string/credits_citybik"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <TextView
+            android:id="@+id/label_osm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/credits_osm"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <TextView
+            android:id="@+id/label_osm_bonus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/credits_osm_bonus"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -79,11 +95,6 @@
             android:layout_height="wrap_content"
             android:text="@string/view_agpl_license" />
 
-        <Button
-            android:id="@+id/button_apache_license"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/view_apache_license" />
 
         <Button
             android:id="@+id/button_close"

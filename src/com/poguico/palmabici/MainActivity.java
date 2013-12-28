@@ -21,6 +21,7 @@ import java.util.Calendar;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.poguico.palmabici.map.StationMapFragment;
 import com.poguico.palmabici.notification.NotificationManager;
 import com.poguico.palmabici.synchronizers.NetworkSynchronizer;
 import com.poguico.palmabici.util.Formatter;
@@ -34,6 +35,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.widget.TextView;
 
 public class MainActivity extends    SherlockFragmentActivity
@@ -54,6 +56,12 @@ public class MainActivity extends    SherlockFragmentActivity
     	conf = PreferenceManager.getDefaultSharedPreferences(this);
     		
     	setContentView(R.layout.main);
+    	
+    	FragmentManager fm = this.getSupportFragmentManager();
+
+        StationMapFragment mapFragment = new StationMapFragment();
+
+        fm.beginTransaction().add(R.id.map_fragment, mapFragment).commit();
     }
     
     @Override

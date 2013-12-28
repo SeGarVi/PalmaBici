@@ -31,7 +31,7 @@ import android.widget.TextView;
 
 public class CreditsDialog extends Dialog {
 
-	Button close_button, web_button, agpl_button, apache_button, code_button;
+	Button close_button, web_button, agpl_button, code_button;
 	Context context;
 	Dialog self;
 	
@@ -46,7 +46,6 @@ public class CreditsDialog extends Dialog {
 		web_button    = (Button)findViewById(R.id.button_visit_web);
 		code_button   = (Button)findViewById(R.id.button_source_code);
 		agpl_button   = (Button)findViewById(R.id.button_agpl_license);
-		apache_button = (Button)findViewById(R.id.button_apache_license);
 		close_button  = (Button)findViewById(R.id.button_close);
 		
 		web_button.setOnClickListener(new View.OnClickListener() {
@@ -70,13 +69,6 @@ public class CreditsDialog extends Dialog {
 		    }
 		});
 		
-		apache_button.setOnClickListener(new View.OnClickListener() {
-		    public void onClick(View v) {
-		        open_url("https://www.apache.org/licenses/LICENSE-2.0");
-		        self.hide();
-		    }
-		});
-		
 		close_button.setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View v) {
 		    	self.hide();
@@ -85,6 +77,8 @@ public class CreditsDialog extends Dialog {
 		
 		Linkify.addLinks((TextView)findViewById(R.id.label_author), Linkify.EMAIL_ADDRESSES);
 		Linkify.addLinks((TextView)findViewById(R.id.label_citybik), Linkify.WEB_URLS);
+		Linkify.addLinks((TextView)findViewById(R.id.label_osm), Linkify.WEB_URLS);
+		Linkify.addLinks((TextView)findViewById(R.id.label_osm_bonus), Linkify.WEB_URLS);
 	}
 
 	private void open_url(String url) {

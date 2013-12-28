@@ -2,36 +2,29 @@
 
 <!--
 
-  Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
-  
-  This file is part of PalmaBici.
-  
-  PalmaBici is free software: you can redistribute it and/or modify
-  it under the terms of the Affero GNU General Public License version 3
-  as published by the Free Software Foundation.
-  
-  PalmaBici is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  Affero GNU General Public License for more details
-  (https://www.gnu.org/licenses/agpl-3.0.html).
-    
+Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
+This file is part of PalmaBici.
+PalmaBici is free software: you can redistribute it and/or modify
+it under the terms of the Affero GNU General Public License version 3
+as published by the Free Software Foundation.
+PalmaBici is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+Affero GNU General Public License for more details
+(https://www.gnu.org/licenses/agpl-3.0.html).
 -->
 
 <!--
-  Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
-  
-  This file is part of PalmaBici.
-  
-  PalmaBici is free software: you can redistribute it and/or modify
-  it under the terms of the Affero GNU General Public License version 3
-  as published by the Free Software Foundation.
-  
-  PalmaBici is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  Affero GNU General Public License for more details
-  (https://www.gnu.org/licenses/agpl-3.0.html).
+Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
+This file is part of PalmaBici.
+PalmaBici is free software: you can redistribute it and/or modify
+it under the terms of the Affero GNU General Public License version 3
+as published by the Free Software Foundation.
+PalmaBici is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+Affero GNU General Public License for more details
+(https://www.gnu.org/licenses/agpl-3.0.html).
 -->
 
 <resources>
@@ -50,6 +43,8 @@
     <string name="credits_author">© 2012 Sergio García Villalonga (yayalose@gmail.com)</string>
     <string name="credits_license">This application is free/libre software and is distributed under the AGPL v.3 license. The library ActionBarSherlock is used (http://actionbarsherlock.com/, under the Apache v2.0 license). The whole text of both licenses can be accessed below.</string>
     <string name="credits_citybik">The information about the stations\' state is retrieved using the City Bikes API (http://www.citybik.es/), under the LGPL license.</string>
+    <string name="credits_osm">The maps are retrieved using a slightly modified version of the OpenStreetMap API for Android osmdroid (https://code.google.com/p/osmdroid/), under the Apache v2.0 license. The modified code can be found in my GitHub page.</string>
+    <string name="credits_osm_bonus">The station markers in the map have been implemented using a slightly modified version of the OSM Bonus Pack project (http://code.google.com/p/osmbonuspack/), under the LGPL license. The modified code can be found in my GitHub page.</string>
     <string name="credits_collaborate"> You are allowed to download and modify the source code of this app, as well as redistribute it with or without modifications under the same license. If you want to be part of the development, contact me :)</string>
     <string name="close">Close</string>
     <string name="preferences_synchronization">Synchronization</string>
@@ -64,8 +59,10 @@
     <string name="preferences_map">Map</string>
     <string name="preferences_show_bike_lane_tip">Show bike lane and cycle streets in the map</string>
     <string name="connectivity_error">You don\'t have internet connection!</string>
-    <string name="bikes">Bikes</string>
+    <string name="free_bikes">Free bikes</string>
     <string name="free_slots">Free slots</string>
+    <string name="broken_bikes">Broken bikes</string>
+    <string name="broken_slots">Broken slots</string>
     <string name="add_to_favorites">Add to favorites</string>
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="hello_world">Hello world!</string>

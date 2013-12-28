@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+Copyright 2013 Sergio Garcia Villalonga (yayalose@gmail.com)
+This file is part of PalmaBici.
+
+PalmaBici is free software: you can redistribute it and/or modify
+it under the terms of the Affero GNU General Public License version 3
+as published by the Free Software Foundation.
+
+PalmaBici is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+Affero GNU General Public License for more details
+(https://www.gnu.org/licenses/agpl-3.0.html).
+
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/bubble_top_repeat"
+        android:orientation="horizontal" >
+
+        <FrameLayout
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:background="@drawable/bubble_top_left" >
+        </FrameLayout>
+        
+        <FrameLayout
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bubble_top_right" >
+        </FrameLayout>
+        
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal" >
+    
+        <FrameLayout
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bubble_left_repeat" >
+        </FrameLayout>
+        
+        <LinearLayout
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:orientation="vertical"
+            android:background="#ffffff" >
+            
+            <TextView
+		         android:id="@+id/markerTitle"
+		         android:layout_width="match_parent"
+		         android:layout_height="wrap_content"
+		         android:gravity="center"
+		         android:textStyle="bold" />
+		    
+		    <LinearLayout
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center"
+		            android:orientation="horizontal" >
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="@string/free_slots" />
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text=": " />
+		        
+		         <TextView
+		         android:id="@+id/freeSlots"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content" />
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text=" - " />
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="@string/free_bikes" />
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text=": " />
+		        
+		         <TextView
+		         android:id="@+id/freeBikes"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content" />
+		        
+		    </LinearLayout>
+		    
+		    <LinearLayout
+		        android:id="@+id/brokenApparel"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:gravity="center"
+		            android:orientation="horizontal" >
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="@string/broken_slots" />
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text=": " />
+		        
+		         <TextView
+		         android:id="@+id/brokenSlots"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content" />
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text=" - " />
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="@string/broken_bikes" />
+		        
+		         <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text=": " />
+		        
+		         <TextView
+		         android:id="@+id/brokenBikes"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content" />
+		        
+		    </LinearLayout>
+            
+        </LinearLayout>
+        
+        <FrameLayout
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bubble_right_repeat" >
+        </FrameLayout>
+    </LinearLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="19dp"
+        android:background="@drawable/bubble_bottom_repeat"
+        android:orientation="horizontal" >
+
+        <FrameLayout
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:background="@drawable/bubble_bottom_left" >
+        </FrameLayout>
+        
+        <FrameLayout
+            android:layout_width="21dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bubble_tail" >
+        </FrameLayout>
+        
+        <FrameLayout
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bubble_bottom_right" >
+        </FrameLayout>
+        
+    </RelativeLayout>
+
+</LinearLayout>

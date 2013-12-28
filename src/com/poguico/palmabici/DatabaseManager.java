@@ -29,7 +29,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 	
-	private static final int    DB_VERSION = 3;
+	private static final int    DB_VERSION = 4;
 	private static final String DB_NAME    = "palmabici";
 	private static final String STATION_TABLE_NAME     = "station";
 	private static final String LAST_UPDATE_TABLE_NAME = "last_update";
@@ -41,10 +41,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
             		+ "n_estacio    TEXT, "
             		+ "name         TEXT, "
             		+ "station_long DECIMAL(2,6), "
-            		+ "station_lat  DECIMAL(2,6),"
+            		+ "station_lat  DECIMAL(2,6), "
             		+ "free_slots   INTEGER, "
-            		+ "busy_slots   INTEGER"
+            		+ "busy_slots   INTEGER, "
+            		+ "broken_slots INTEGER, "
+            		+ "broken_bikes INTEGER"
             		+ ");";
+	private static final String STATION_TABLE_V4UPDATE =
+            "ALTER TABLE \"" + STATION_TABLE_NAME + "\" "
+            		+ "ADD broken_slots   INTEGER DEFAULT 0, "
+            		+ "ADD broken_bikes   INTEGER DEFAULT 0"
+            		+ ";";
 	private static final String LAST_UPDATE_TABLE_CREATE =
             "CREATE TABLE \"" + LAST_UPDATE_TABLE_NAME + "\" (time INTEGER);";
 	private static final String FAVORITES_TABLE_CREATE =
@@ -82,6 +89,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		if (oldVersion == 2 ) {
 			db.execSQL(STATION_TABLE_CREATE);
 			db.execSQL(LAST_UPDATE_TABLE_CREATE);
+		} else if (oldVersion == 3 ) {
+			db.execSQL(STATION_TABLE_V4UPDATE);
 		}
 	}
 
@@ -120,8 +129,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		ArrayList<Station> stationList = new ArrayList<Station>();
 		SQLiteDatabase db;
 		Cursor c;
-		int id_col, n_estacio_col, name_col, station_long_col,
-			station_lat_col, free_slots_col,  busy_slots_col;
+		int id_col, n_estacio_col, name_col, station_long_col, station_lat_col,
+		    free_slots_col,  busy_slots_col, broken_slots_col, broken_bikes_col;
 		
 		db = instance.getReadableDatabase();
 		c  = db.rawQuery(GET_STATIONS, null);
@@ -133,6 +142,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		station_lat_col  = c.getColumnIndex("station_lat");
 		free_slots_col   = c.getColumnIndex("free_slots");
 		busy_slots_col   = c.getColumnIndex("busy_slots");
+		broken_slots_col = c.getColumnIndex("broken_slots");
+		broken_bikes_col = c.getColumnIndex("broken_bikes");
 		
 		if (c.moveToFirst()) {
 			do {
@@ -144,6 +155,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 											c.getDouble(station_lat_col),
 											c.getInt(free_slots_col),
 											c.getInt(busy_slots_col),
+											c.getInt(broken_slots_col),
+											c.getInt(broken_bikes_col),
 											false));
 			} while(c.moveToNext());
 		}
@@ -170,6 +183,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			values.put("station_lat", station.getLat());
 			values.put("free_slots", station.getFree_slots());
 			values.put("busy_slots", station.getBusy_slots());
+			values.put("broken_slots", station.getBroken_slots());
+			values.put("broken_bikes", station.getBroken_bikes());
 			db.insert(STATION_TABLE_NAME, null, values);
 		}
 		

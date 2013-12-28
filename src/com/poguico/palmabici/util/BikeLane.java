@@ -19,24 +19,31 @@ package com.poguico.palmabici.util;
 
 import java.util.ArrayList;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.poguico.palmabici.R;
 
+import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.PathOverlay;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.graphics.Color;
+import android.util.DisplayMetrics;
 
 public class BikeLane {
-	private static ArrayList<PolylineOptions> paths;
-
-	public static void init (Activity activity) {
-		paths = new ArrayList<PolylineOptions>();
+	private static ArrayList<PathOverlay> osmPaths;
+	
+	public static void osmInit (Activity activity, MapView mapView) {
+		PathOverlay pathOverlay;
+		osmPaths = new ArrayList<PathOverlay>();
 		Resources res = activity.getResources();
 		XmlResourceParser xpp = res.getXml(R.xml.carril_bici_palma);
+		
+		DisplayMetrics dpi = activity.getResources().getDisplayMetrics();
+		float pathWidth = dpi.density*4;
+		
 		try {
 		    xpp.next();
             int eventType = xpp.getEventType();
@@ -49,15 +56,16 @@ public class BikeLane {
             		if(eventType == XmlPullParser.TEXT) {
             			String text = xpp.getText();
 
-            			PolylineOptions path = new PolylineOptions();
+            			ArrayList<IGeoPoint> path = new ArrayList<IGeoPoint>();
             			for (String coordinate : text.split("\n")) {
             				String[] coord_elements = coordinate.split(",");
-            				path.color(Color.parseColor("#ffa0a0ff"));
-            				path.width(4);
-            				path.add(new LatLng(Double.valueOf(coord_elements[1]),
-            						            Double.valueOf(coord_elements[0])));
+            				
+            				path.add(new GeoPoint(Double.valueOf(coord_elements[1]),
+            						Double.valueOf(coord_elements[0])));
             			}
-            			paths.add(path);
+            			pathOverlay = new PathOverlay(0xffa0a0ff, pathWidth, mapView.getResourceProxy());
+            			pathOverlay.addPoints(path);
+            			osmPaths.add(pathOverlay);
             		}
             	} else {
             		eventType = xpp.next();
@@ -68,7 +76,7 @@ public class BikeLane {
 		}
 	}
 	
-	public static ArrayList<PolylineOptions> getPaths() {
-		return paths;
+	public static ArrayList<PathOverlay> getOSMPaths() {
+		return osmPaths;
 	}
 }

@@ -2,20 +2,16 @@
 
 <!--
 
-  Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
-  
-  This file is part of PalmaBici.
-  
-  PalmaBici is free software: you can redistribute it and/or modify
-  it under the terms of the Affero GNU General Public License version 3
-  as published by the Free Software Foundation.
-  
-  PalmaBici is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  Affero GNU General Public License for more details
-  (https://www.gnu.org/licenses/agpl-3.0.html).
-    
+Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
+This file is part of PalmaBici.
+PalmaBici is free software: you can redistribute it and/or modify
+it under the terms of the Affero GNU General Public License version 3
+as published by the Free Software Foundation.
+PalmaBici is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+Affero GNU General Public License for more details
+(https://www.gnu.org/licenses/agpl-3.0.html).
 -->
 
 <resources>
@@ -35,6 +31,8 @@
     <string name="credits_license">Aquesta aplicació és programari lliure, distribuit sota la llicència AGPL v.3. Es fa servir la llibreria ActionBarSherlock (http://actionbarsherlock.com/, sota llicència Apache v2.0). A baix pots accedir al text complet de les llicències.</string>
     <string name="credits_collaborate">Ets lliure de descarregar-te i modificar el codi font d\'aquesta app, així com de redistribuir-la amb o sense modificacions amb la mateixa llicència. Si vols participar en el desenvolupament, envia\'m un correu :)</string>
     <string name="credits_citybik">La informació sobre l\'estat de les estacions s\'obté fent servir l\'API de City Bikes (http://www.citybik.es/), sota llicència LGPL.</string>
+    <string name="credits_osm">Els mapes es descarreguen utilitzant una versió lleugerament modificada de l\'API d\'OpenStreetMap per Android osmdroid (https://code.google.com/p/osmdroid/), sota llicència Apache v2.0. El codi modificat el pots trobar a la meva pàgina de GitHub.</string>
+    <string name="credits_osm_bonus">Els marcadors de les estacions s\'han implementat utilitzant una versió lleugerament modificada del projecte OSM Bonus Pack(http://code.google.com/p/osmbonuspack/), sota llicència LGPL. El codi modificat el pots trobar a la meva pàgina de GitHub.</string>
     <string name="close">Tanca</string>
     <string name="preferences_synchronization">Sincronització</string>
     <string name="preferences_autoupdate">Auto actualitzar</string>
@@ -48,8 +46,10 @@
     <string name="preferences_map">Mapa</string>
     <string name="preferences_show_bike_lane_tip">Mostrar carrils bici i ciclocarrers al mapa</string>
     <string name="connectivity_error">No disposes de connexió a internet!</string>
-    <string name="bikes">Bicis</string>
+    <string name="free_bikes">Bicis lliures</string>
     <string name="free_slots">Anclatges lliures</string>
+    <string name="broken_bikes">Bicis avariades</string>
+    <string name="broken_slots">Anclatges avariats</string>
     <string name="add_to_favorites">Afegir a favorits</string>
     <string name="remove_from_favorites">Eliminar de favorits</string>
     <string name="last_updated">Actualitzat fa</string>

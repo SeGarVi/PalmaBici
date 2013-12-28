@@ -2,20 +2,16 @@
 
 <!--
 
-  Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
-  
-  This file is part of PalmaBici.
-  
-  PalmaBici is free software: you can redistribute it and/or modify
-  it under the terms of the Affero GNU General Public License version 3
-  as published by the Free Software Foundation.
-  
-  PalmaBici is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  Affero GNU General Public License for more details
-  (https://www.gnu.org/licenses/agpl-3.0.html).
-    
+Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
+This file is part of PalmaBici.
+PalmaBici is free software: you can redistribute it and/or modify
+it under the terms of the Affero GNU General Public License version 3
+as published by the Free Software Foundation.
+PalmaBici is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+Affero GNU General Public License for more details
+(https://www.gnu.org/licenses/agpl-3.0.html).
 -->
 
 <resources>
@@ -34,6 +30,8 @@
     <string name="credits_author">© 2012 Sergio García Villalonga (yayalose@gmail.com)</string>
     <string name="credits_license">Esta aplicación es software libre, distribuida bajo la licencia AGPL v.3. Se utiliza la librería ActionBarSherlock (http://actionbarsherlock.com/, bajo licencia Apache v2.0). Abajo puedes acceder al texto completo de las licencias.</string>
     <string name="credits_citybik">La información sobre el estado de las estaciones se obtiene utilizando la API de City Bikes (http://www.citybik.es/), bajo licencia LGPL.</string>
+    <string name="credits_osm">Los mapas se descargan utilizando una versión ligeramente modificada del API de OpenStreetMap para Android osmdroid (https://code.google.com/p/osmdroid/), bajo licencia Apache v2.0. El código modificado lo puedes encontrar en mi página de GitHub.</string>
+    <string name="credits_osm_bonus">Los marcadores de las estaciones se han implementado utilizando una versión ligeramente modificada del proyecto OSM Bonus Pack(http://code.google.com/p/osmbonuspack/), bajo licencia LGPL. El código modificado lo puedes encontrar en mi página de GitHub.</string>
     <string name="credits_collaborate">Eres libre de descargarte y modificar el código fuente de esta app, así como de redistribuirla con o sin modificaciones con la misma licencia. Si quieres participar en el desarrollo no dudes en contactarme :)</string>
     <string name="close">Cerrar</string>
     <string name="preferences_synchronization">Sincronización</string>
@@ -48,8 +46,10 @@
     <string name="preferences_map">Mapa</string>
     <string name="preferences_show_bike_lane_tip">Mostrar carriles bici y ciclocalles en el mapa</string>
     <string name="connectivity_error">¡No dispones de conexión a internet!</string>
-    <string name="bikes">Bicis</string>
+    <string name="free_bikes">Bicis libres</string>
     <string name="free_slots">Anclajes libres</string>
+    <string name="broken_bikes">Bicis averiadas</string>
+    <string name="broken_slots">Anclajes averiados</string>
     <string name="add_to_favorites">Añadir a favoritos</string>
     <string name="remove_from_favorites">Eliminar de favoritos</string>
     <string name="last_updated">Actualizado hace</string>
