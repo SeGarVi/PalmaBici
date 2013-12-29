@@ -77,19 +77,18 @@ public class StationMapFragment extends Fragment implements
     
     private ArrayList<PathOverlay> bikeLane = null;
     private SharedPreferences conf;
-	private NetworkInformation network;
 	
 	private boolean bikeLaneState;
+	
+	ItemizedOverlayWithBubble<OverlayItem> markerOverlay;
     
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		conf=PreferenceManager
 				.getDefaultSharedPreferences(this.getActivity());
 		bikeLaneState = conf.getBoolean(BIKE_LANE_OPTION, true);
-		network       = NetworkInformation.getInstance();
 		NetworkSynchronizer.getInstance(this);
         
 	}
@@ -107,12 +106,13 @@ public class StationMapFragment extends Fragment implements
 	
 	private void drawStationMarkers() {
 		String filename;
-		ItemizedOverlayWithBubble<OverlayItem> overlay;
 		int   percentage;
 		float[] distance           = new float[1];
 		String   formatted_distance = "";
 		Location my_location        = LocationSynchronizer.getInstance(this)
                                                           .getLocation();
+		NetworkInformation network  = NetworkInformation.getInstance();
+		
 		mapMarkers = new HashMap<String, ExtendedOverlayItem>();
 		for (Station station : network.getNetwork()) {
 			percentage = (int)Math.round((station.getBusy_slots()*10 / station.getSlots()));
@@ -141,26 +141,22 @@ public class StationMapFragment extends Fragment implements
 							R.drawable.class.getDeclaredField(filename).getInt(null)));
 					mapMarkers.put(station.getN_estacio(),marker);
 				} catch (NotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (NoSuchFieldException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 		
-		overlay = new ItemizedOverlayWithBubble<OverlayItem>(this.getActivity(), 
+		markerOverlay = new ItemizedOverlayWithBubble<OverlayItem>(this.getActivity(), 
 				getResources().getDrawable(R.drawable.marker0),
 				new ArrayList<OverlayItem>(mapMarkers.values()), mMapView, new StationInfoWidget(mMapView));
 		
-		mMapView.getOverlays().add(overlay);
+		mMapView.getOverlays().add(markerOverlay);
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -172,9 +168,8 @@ public class StationMapFragment extends Fragment implements
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		
+		NetworkInformation network  = NetworkInformation.getInstance();
 		float[] distance = null;
 		final Context context = this.getActivity();
 		final DisplayMetrics dm = context.getResources().getDisplayMetrics();
@@ -224,6 +219,7 @@ public class StationMapFragment extends Fragment implements
 	@Override
 	public void onStart() {
 		super.onStart();
+		NetworkInformation network  = NetworkInformation.getInstance();
 		if (network.getNetwork() != null) {
         	updateStations();
         }
@@ -262,6 +258,8 @@ public class StationMapFragment extends Fragment implements
 	private void updateStations() {		
 		if (mapMarkers == null) {
 			mapMarkers = new HashMap<String, ExtendedOverlayItem>();
+		} else {
+			mMapView.getOverlays().remove(markerOverlay);
 		}
 		drawStationMarkers();
 	}
@@ -278,13 +276,11 @@ public class StationMapFragment extends Fragment implements
 
 	@Override
 	public void onLocationSynchronization() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public FragmentActivity getSynchronizableActivity() {
-		// TODO Auto-generated method stub
 		return this.getActivity();
 	}
 
