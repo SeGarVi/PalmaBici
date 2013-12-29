@@ -83,9 +83,34 @@ public class Station implements Comparable <Station> {
     private static final Map<String, GeoPoint> correct_locations;
     static {
         Map<String, GeoPoint> aMap = new HashMap<String, GeoPoint>();
+        aMap.put("01", new GeoPoint(39.566129, 2.659499));
+	    aMap.put("06", new GeoPoint(39.571255, 2.665796));
+	    aMap.put("07", new GeoPoint(39.572946, 2.657238));
+	    aMap.put("09", new GeoPoint(39.574468, 2.663871));
+	    aMap.put("13", new GeoPoint(39.575682, 2.654789));
+	    aMap.put("15", new GeoPoint(39.580040, 2.660169));
+	    aMap.put("16", new GeoPoint(39.581745, 2.644123));
+	    aMap.put("17", new GeoPoint(39.578755, 2.662571));
+	    aMap.put("21", new GeoPoint(39.581119, 2.655465));
+	    aMap.put("24", new GeoPoint(39.578097, 2.651191));
+	    aMap.put("25", new GeoPoint(39.580656, 2.649190));
 	    aMap.put("27", new GeoPoint(39.584213, 2.649210));
 	    aMap.put("29", new GeoPoint(39.577311, 2.646439));
+	    aMap.put("31", new GeoPoint(39.577507, 2.640839));
+	    aMap.put("37", new GeoPoint(39.574400, 2.640703));
+	    aMap.put("41", new GeoPoint(39.572710, 2.637534));
+	    aMap.put("45", new GeoPoint(39.572505, 2.643112));
+	    aMap.put("46", new GeoPoint(39.571035, 2.647043));
+	    aMap.put("47", new GeoPoint(39.571295, 2.641806));
+	    aMap.put("49", new GeoPoint(39.568560, 2.646257));
 	    aMap.put("51", new GeoPoint(39.575189, 2.647993));
+	    aMap.put("52", new GeoPoint(39.576453, 2.650509));
+	    aMap.put("55", new GeoPoint(39.569171, 2.650747));
+	    aMap.put("56", new GeoPoint(39.571149, 2.648555));
+	    aMap.put("59", new GeoPoint(39.567688, 2.656039));
+	    aMap.put("60", new GeoPoint(39.570273, 2.655827));
+	    aMap.put("63", new GeoPoint(39.575190, 2.654070));
+	    aMap.put("65", new GeoPoint(39.572426, 2.655438));
 	    correct_locations = Collections.unmodifiableMap(aMap);
     }
     
