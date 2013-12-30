@@ -105,10 +105,8 @@ public class StationMapFragment extends Fragment implements
 	}
 	
 	private void drawStationMarkers() {
-		String filename;
-		int   percentage;
-		float[] distance           = new float[1];
-		String   formatted_distance = "";
+		String   filename;
+		int      percentage;
 		Location my_location        = LocationSynchronizer.getInstance(this)
                                                           .getLocation();
 		NetworkInformation network  = NetworkInformation.getInstance();
@@ -118,16 +116,8 @@ public class StationMapFragment extends Fragment implements
 			percentage = (int)Math.round((station.getBusy_slots()*10 / station.getSlots()));
 			
 			if (my_location != null) {
-				Location.distanceBetween(station.getLat(),
-										 station.getLong(),
-										 my_location.getLatitude(),
-										 my_location.getLongitude(), distance);
-				formatted_distance = " (" + 
-									 Formatter.formatDistance(distance[0], this.getActivity()) +
-									 ")";
-				
 				ExtendedOverlayItem marker = new ExtendedOverlayItem(
-						station.getName() + formatted_distance,
+						station.getName(),
 						station.getN_estacio(),
 						new GeoPoint(station.getLat(), station.getLong()),
 						this.getActivity());
@@ -154,7 +144,8 @@ public class StationMapFragment extends Fragment implements
 		
 		markerOverlay = new ItemizedOverlayWithBubble<OverlayItem>(this.getActivity(), 
 				getResources().getDrawable(R.drawable.marker0),
-				new ArrayList<OverlayItem>(mapMarkers.values()), mMapView, new StationInfoWidget(mMapView));
+				new ArrayList<OverlayItem>(mapMarkers.values()), mMapView,
+				new StationInfoWidget(mMapView, this));
 		
 		mMapView.getOverlays().add(markerOverlay);
 	}
@@ -239,6 +230,7 @@ public class StationMapFragment extends Fragment implements
 	
 	@Override
     public void onResume() {
+		int shownBubble;
         super.onResume();
         try {
             mMapView.setTileSource(TileSourceFactory.MAPQUESTOSM);
@@ -253,8 +245,23 @@ public class StationMapFragment extends Fragment implements
 		}
         drawStationMarkers();
         this.mLocationOverlay.enableMyLocation();
+        
+        if ((shownBubble = mPrefs.getInt(PREFS_SHOWN_MARKER, -1)) > 0) {
+        	markerOverlay.showBubbleOnItem(shownBubble, mMapView, true);
+        }
     }
 
+	@Override
+	public void onDestroy() {
+		
+		final SharedPreferences.Editor edit = mPrefs.edit();
+        edit.putInt(PREFS_SHOWN_MARKER, markerOverlay.getBubbledItemId());
+        edit.commit();
+		
+		markerOverlay.hideBubble();
+		super.onDestroy();
+	}
+	
 	private void updateStations() {		
 		if (mapMarkers == null) {
 			mapMarkers = new HashMap<String, ExtendedOverlayItem>();

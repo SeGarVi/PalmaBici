@@ -19,30 +19,37 @@ package com.poguico.palmabici;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.poguico.palmabici.map.OpenStreetMapConstants;
 import com.poguico.palmabici.synchronizers.*;
 import com.poguico.palmabici.util.NetworkInformation;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.DisplayMetrics;
 import android.widget.TextView;
 
-public class WelcomeActivity extends SherlockFragmentActivity implements SynchronizableActivity  {
+public class WelcomeActivity extends    SherlockFragmentActivity
+                             implements SynchronizableActivity,
+                                        OpenStreetMapConstants    {
 
 	private static final int DEFERRED_FINALIZATION_TIME = 2000;
 	
 	private NetworkSynchronizer synchronizer;
-	private Intent              next_activity = null;
+	private Intent              nextActivity = null;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        ActionBar action_bar = getSupportActionBar();
-        if (action_bar != null)
-        	action_bar.hide();
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+        	actionBar.hide();
     }
     
 	@Override
@@ -85,9 +92,9 @@ public class WelcomeActivity extends SherlockFragmentActivity implements Synchro
 	}
 	
 	public synchronized void instantiateMainActivity () {
-		next_activity = new Intent(this, MainActivity.class);
+		nextActivity = new Intent(this, MainActivity.class);
 		synchronizer.detachSynchronizableActivity((SynchronizableActivity)this);
-		this.startActivity(next_activity);
+		this.startActivity(nextActivity);
 		this.finish();
 	}
 	

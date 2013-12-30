@@ -45,6 +45,8 @@ public interface OpenStreetMapConstants {
 	public static final String PREFS_ZOOM_LEVEL = "zoomLevel";
 	public static final String PREFS_SHOW_LOCATION = "showLocation";
 	public static final String PREFS_SHOW_COMPASS = "showCompass";
+	
+	public static final String PREFS_SHOWN_MARKER = "shownMarker";
 
 	// ===========================================================
 	// Methods
