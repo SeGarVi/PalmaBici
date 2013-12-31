@@ -156,7 +156,7 @@ public class MainActivity extends    SherlockFragmentActivity
 		return this;
 	}
 	
-	private void checkUpdate() {		
+	private void checkUpdate() {
 		long now = Calendar.getInstance().getTimeInMillis();
 		long lastUpdated = now - network.getLastUpdateTime();
 		
