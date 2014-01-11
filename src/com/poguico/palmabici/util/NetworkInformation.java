@@ -22,6 +22,10 @@ import java.util.HashMap;
 
 import org.osmdroid.util.GeoPoint;
 
+import android.content.Context;
+
+import com.poguico.palmabici.DatabaseManager;
+
 public class NetworkInformation {
     private static NetworkInformation instance = null;
     
@@ -31,17 +35,19 @@ public class NetworkInformation {
     private ArrayList <String>       favourites;
     private long                     lastUpdateTime;
     
-    private NetworkInformation () {
-        center = new GeoPoint(39.574689, 2.651332);
-        network = null;
-        favourites = null;
-        lastUpdateTime = 0;
-        mappedNetwork = new HashMap<String, Station>();
+    private NetworkInformation (Context context) {
+    	DatabaseManager dbManager = DatabaseManager.getInstance(context);
+    	
+    	center         = new GeoPoint(39.574689, 2.651332);
+        network        = dbManager.getLastStationNetworkState(context);
+        favourites     = dbManager.getFavouriteStations();
+        lastUpdateTime = dbManager.getLastUpdateTime();
+        mappedNetwork  = new HashMap<String, Station>();
     }
     
-    public static synchronized NetworkInformation getInstance () {
+    public static synchronized NetworkInformation getInstance (Context context) {
         if (instance == null) {
-            instance = new NetworkInformation();
+            instance = new NetworkInformation(context);
         }
         return instance;
     }

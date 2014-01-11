@@ -89,7 +89,7 @@ public class StationListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        network  = NetworkInformation.getInstance();        
+        network  = NetworkInformation.getInstance(this.getActivity().getApplicationContext());        
         context  = this.getActivity();
         stations = network.getNetwork();
         adapter  = new StationAdapter(this.getActivity(), stations);

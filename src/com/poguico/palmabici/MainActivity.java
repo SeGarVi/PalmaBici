@@ -17,13 +17,12 @@
 
 package com.poguico.palmabici;
 
-import java.util.Calendar;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.poguico.palmabici.map.StationMapFragment;
 import com.poguico.palmabici.notification.NotificationManager;
-import com.poguico.palmabici.synchronizers.NetworkSynchronizer;
+import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
+import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer.NetworkSynchronizationState;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
@@ -39,8 +38,7 @@ import android.support.v4.app.FragmentManager;
 import android.widget.TextView;
 
 public class MainActivity extends    SherlockFragmentActivity
-                          implements SynchronizableActivity {
-	private static final long UPDATE_TIME = 600000;
+                          implements SynchronizableElement {
 	private static final String REPORT_URL = "https://github.com/SeGarVi/PalmaBici/issues/new";
 	
 	private ProgressDialog      dialog;	
@@ -51,10 +49,11 @@ public class MainActivity extends    SherlockFragmentActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	synchronizer = NetworkSynchronizer.getInstance(this);
-    	network = NetworkInformation.getInstance();
+    	synchronizer = NetworkSynchronizer.getInstance(this.getApplicationContext());
+    	network = NetworkInformation.getInstance(this.getApplicationContext());
     	conf = PreferenceManager.getDefaultSharedPreferences(this);
-    		
+    	
+    	synchronizer.addSynchronizableActivity(this);
     	setContentView(R.layout.main);
     	
     	FragmentManager fm = this.getSupportFragmentManager();
@@ -81,7 +80,7 @@ public class MainActivity extends    SherlockFragmentActivity
             			getString(R.string.refresh_ongoing), true);
             	NetworkSynchronizer synchronizer =
             			NetworkSynchronizer.getInstance(this);
-            	synchronizer.synchronize(this);
+            	synchronizer.forceSync();
                 break;
 
             case R.id.menu_credits:
@@ -105,15 +104,27 @@ public class MainActivity extends    SherlockFragmentActivity
 
     @Override
 	protected void onResume() {
+    	NetworkSynchronizationState syncState;
 		super.onResume();
 		
-		checkUpdate();
+		if (conf.getBoolean("autoupdate", true)) {
+			syncState = synchronizer.sync();
+			
+			if (syncState == NetworkSynchronizationState.UPDATED) {
+				onSuccessfulNetworkSynchronization();
+			} else if (syncState == NetworkSynchronizationState.ERROR) {
+				onUnsuccessfulNetworkSynchronization();
+			} else if (syncState == NetworkSynchronizationState.UPDATING) {
+				dialog = ProgressDialog.show(this, "",
+            			getString(R.string.refresh_ongoing), true);
+			}
+		}
 	}
 		
 	@Override
 	protected void onDestroy() {
-		synchronizer.storeToDB(this);
-		synchronizer.detachSynchronizableActivity(this);		
+		synchronizer.detachSynchronizableActivity(this);
+		dialog.dismiss();
 		super.onDestroy();
 	}
 	
@@ -154,30 +165,5 @@ public class MainActivity extends    SherlockFragmentActivity
 	@Override
 	public FragmentActivity getSynchronizableActivity() {
 		return this;
-	}
-	
-	private void checkUpdate() {
-		long now = Calendar.getInstance().getTimeInMillis();
-		long lastUpdated = now - network.getLastUpdateTime();
-		
-		if (network.getNetwork() == null ||
-				(conf.getBoolean("autoupdate", true) &&
-				(lastUpdated) > UPDATE_TIME)) {
-			dialog = ProgressDialog.show(this, "",
-					getString(R.string.refresh_ongoing), true);
-			synchronizer.synchronize(this);
-		} else if ((lastUpdated/1000) % 60 > 0) {
-			TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
-			NotificationManager.showMessage(updateTime,
-					 Formatter.formatLastUpdated(network.getLastUpdateTime(), this),
-					 3000,
-					 this,
-					 false);
-		}
-		
-		/*if (!conf.getString("list_order", "distance").equals(list_ordering)) {
-			list_ordering = conf.getString("list_order", "distance");
-			station_list.refresh();
-		}*/
 	}
 }

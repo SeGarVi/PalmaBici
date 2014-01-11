@@ -19,7 +19,7 @@ package com.poguico.palmabici;
 
 import android.support.v4.app.FragmentActivity;
 
-public interface SynchronizableActivity {
+public interface SynchronizableElement {
 	public void onSuccessfulNetworkSynchronization();
 	public void onUnsuccessfulNetworkSynchronization();
 	public void onLocationSynchronization();

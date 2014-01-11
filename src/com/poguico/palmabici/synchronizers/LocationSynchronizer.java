@@ -19,7 +19,7 @@ package com.poguico.palmabici.synchronizers;
 
 import java.util.ArrayList;
 
-import com.poguico.palmabici.SynchronizableActivity;
+import com.poguico.palmabici.SynchronizableElement;
 
 import android.content.Context;
 import android.location.Location;
@@ -35,9 +35,9 @@ public class LocationSynchronizer {
 	private LocationManager  manager;
 	private LocationListener listener;
 	
-	private static ArrayList<SynchronizableActivity> synchronizable_activities;
+	private static ArrayList<SynchronizableElement> synchronizable_activities;
 	
-	public static LocationSynchronizer getInstance (SynchronizableActivity activity) {
+	public static LocationSynchronizer getInstance (SynchronizableElement activity) {
 		if (instance == null) {
 			instance = new LocationSynchronizer(activity.getSynchronizableActivity());
 		}		
@@ -83,19 +83,19 @@ public class LocationSynchronizer {
 		if (location == null)
 			location =  manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 				
-		synchronizable_activities = new ArrayList<SynchronizableActivity>();
+		synchronizable_activities = new ArrayList<SynchronizableElement>();
 	}
 	
 	private void updateViews () {
-		for (SynchronizableActivity activity : synchronizable_activities)
+		for (SynchronizableElement activity : synchronizable_activities)
 			activity.onLocationSynchronization();
 	}
 	
-	public void addSynchronizableActivity(SynchronizableActivity activity) {
+	public void addSynchronizableActivity(SynchronizableElement activity) {
 		synchronizable_activities.add(activity);
 	}
 	
-	public void detachSynchronizableActivity(SynchronizableActivity activity) {
+	public void detachSynchronizableActivity(SynchronizableElement activity) {
 		synchronizable_activities.remove(activity);
 	}
 	

@@ -147,8 +147,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		
 		if (c.moveToFirst()) {
 			do {
-				stationList.add(new Station(context,
-											c.getInt(id_col), 
+				stationList.add(new Station(c.getInt(id_col), 
 											c.getString(n_estacio_col),
 											c.getString(name_col),
 											c.getDouble(station_long_col),

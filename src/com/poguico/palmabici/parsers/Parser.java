@@ -24,14 +24,9 @@ import org.json.JSONObject;
 
 import com.poguico.palmabici.util.Station;
 
-
-
-import android.content.Context;
-
 public class Parser {
     
-    public static ArrayList <Station> parseNetworkJSON (Context context,
-                                                        String data)    {
+    public static ArrayList <Station> parseNetworkJSON (String data)    {
         ArrayList <Station> stations = new ArrayList<Station>();
         JSONArray json_array;
         JSONObject json_object;
@@ -46,8 +41,7 @@ public class Parser {
                 lngAcum += json_object.getLong("lng");
                 latAcum += json_object.getLong("lat");
                 
-                stations.add(new Station(context,
-                                         json_object.getInt("id"),
+                stations.add(new Station(json_object.getInt("id"),
                                          json_object.getString("name").substring(1, 3),
                                          json_object.getString("name").substring(5),
                                          json_object.getDouble("lng") / 1e6,

@@ -19,7 +19,7 @@ package com.poguico.palmabici.synchronizers;
 
 import java.util.ArrayList;
 
-import com.poguico.palmabici.SynchronizableActivity;
+import com.poguico.palmabici.SynchronizableElement;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -35,7 +35,7 @@ public class OrientationSynchronizer {
 	
 	private static float orientation;
 	
-	private static ArrayList<SynchronizableActivity> synchronizable_activities;
+	private static ArrayList<SynchronizableElement> synchronizable_activities;
 	
 	public static void init (Context context) {
 		manager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -55,20 +55,20 @@ public class OrientationSynchronizer {
 		
 		manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 		
-		synchronizable_activities = new ArrayList<SynchronizableActivity>();
+		synchronizable_activities = new ArrayList<SynchronizableElement>();
 	}
 	
 	private static void updateViews () {
-		for (SynchronizableActivity activity : synchronizable_activities) {
+		for (SynchronizableElement activity : synchronizable_activities) {
 			activity.onLocationSynchronization();
 		}
 	}
 	
-	public static void addSynchronizableActivity(SynchronizableActivity activity) {
+	public static void addSynchronizableActivity(SynchronizableElement activity) {
 		synchronizable_activities.add(activity);
 	}
 	
-	public static void detachSynchronizableActivity(SynchronizableActivity activity) {
+	public static void detachSynchronizableActivity(SynchronizableElement activity) {
 		synchronizable_activities.remove(activity);
 	}	
 	

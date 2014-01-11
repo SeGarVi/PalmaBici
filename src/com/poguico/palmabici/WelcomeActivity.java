@@ -20,21 +20,20 @@ package com.poguico.palmabici;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.poguico.palmabici.map.OpenStreetMapConstants;
-import com.poguico.palmabici.synchronizers.*;
+import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
+import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer.NetworkSynchronizationState;
 import com.poguico.palmabici.util.NetworkInformation;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.util.DisplayMetrics;
 import android.widget.TextView;
 
 public class WelcomeActivity extends    SherlockFragmentActivity
-                             implements SynchronizableActivity,
+                               implements SynchronizableElement,
                                         OpenStreetMapConstants    {
 
 	private static final int DEFERRED_FINALIZATION_TIME = 2000;
@@ -54,17 +53,29 @@ public class WelcomeActivity extends    SherlockFragmentActivity
     
 	@Override
 	protected void onStart() {
+		NetworkSynchronizationState syncState;
+		SharedPreferences conf = PreferenceManager.getDefaultSharedPreferences(this);
 		super.onStart();
 		
 		setContentView(R.layout.welcome);
 		
-		synchronizer = NetworkSynchronizer.getInstance(this);
-		synchronizer.synchronize(this);
+		synchronizer = NetworkSynchronizer.getInstance(this.getApplicationContext());
+		synchronizer.addSynchronizableActivity(this);
+		
+		if (conf.getBoolean("autoupdate", true)) {
+			syncState = synchronizer.sync();
+			
+			if (syncState == NetworkSynchronizationState.UPDATED) {
+				onSuccessfulNetworkSynchronization();
+			} else if (syncState == NetworkSynchronizationState.ERROR) {
+				onUnsuccessfulNetworkSynchronization();
+			}
+		}
 	}
 
 	@Override
 	public void onDestroy() {
-		synchronizer.detachSynchronizableActivity(this);		
+		synchronizer.detachSynchronizableActivity(this);
 		super.onDestroy();
 	}
 	
@@ -93,7 +104,7 @@ public class WelcomeActivity extends    SherlockFragmentActivity
 	
 	public synchronized void instantiateMainActivity () {
 		nextActivity = new Intent(this, MainActivity.class);
-		synchronizer.detachSynchronizableActivity((SynchronizableActivity)this);
+		synchronizer.detachSynchronizableActivity((SynchronizableElement)this);
 		this.startActivity(nextActivity);
 		this.finish();
 	}
@@ -106,7 +117,7 @@ public class WelcomeActivity extends    SherlockFragmentActivity
 		public DeferredFinalizationClass (WelcomeActivity activity, long timeToDie) {
 			this.activity  = activity;
 			this.timeToDie = timeToDie;
-			this.network   = NetworkInformation.getInstance();
+			this.network   = NetworkInformation.getInstance(this.activity.getApplicationContext());
 		}
 		
     	protected Void doInBackground(Void... params) {    		

@@ -23,14 +23,10 @@ import java.util.Map;
 
 import org.osmdroid.util.GeoPoint;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
-import android.preference.PreferenceManager;
 
 public class Station implements Comparable <Station> {
-    private Context context;
     private int id, free_slots, busy_slots, broken_slots, broken_bikes, slots;
     private String n_estacio, name;
     private Location location;
@@ -114,11 +110,9 @@ public class Station implements Comparable <Station> {
 	    correct_locations = Collections.unmodifiableMap(aMap);
     }
     
-    public Station(Context context, int id, String n_estacio,
-                    String name, double station_long, double station_lat,
-                 int free_slots, int busy_slots, int broken_slots,
-                 int broken_bikes, boolean favourite) {
-        this.context = context;
+    public Station(int id, String n_estacio, String name, double station_long,
+    		        double station_lat, int free_slots, int busy_slots,
+    		        int broken_slots, int broken_bikes, boolean favourite) {
         this.id = id;
         this.n_estacio = n_estacio;
         this.free_slots = free_slots;
@@ -138,13 +132,6 @@ public class Station implements Comparable <Station> {
             location.setLatitude(station_lat);
             location.setLongitude(station_long);
         }
-        
-        /*if (userLocation != null) {
-            distance = location.distanceTo(userLocation);
-            bearing = userLocation.bearingTo(location);
-        } else {
-            distance = (float)-1;
-        }*/
     }
 
     public int getId() {
@@ -209,11 +196,6 @@ public class Station implements Comparable <Station> {
 
     public void changeFavouriteState() {
         favourite = !favourite;
-        
-        /*if (favourite)
-            NetworkInformation.setFavourite(n_estacio);
-        else
-            NetworkInformation.unSetFavourite(n_estacio);*/
     }
     
     public double getLat() {
@@ -235,28 +217,9 @@ public class Station implements Comparable <Station> {
     
     @Override
     public int compareTo(Station altra) {
-        int res;
-        
-        SharedPreferences conf=PreferenceManager
-                .getDefaultSharedPreferences(context);
-        
-        Integer inter_n = Integer.valueOf(this.n_estacio);
-        Integer exter_n = Integer.valueOf(altra.n_estacio);
-        Float inter_d = this.distance;
-        Float exter_d = altra.distance;
         Boolean inter_f = this.favourite;
         Boolean exter_f = altra.favourite;
         
-        if (conf.getString("list_order", "distance").equals("distance") ||
-            (this.favourite && altra.favourite) ||
-            (!this.favourite && !altra.favourite))
-            if (distance >= 0)
-                res = inter_d.compareTo(exter_d);
-            else
-                res = inter_n.compareTo(exter_n);
-        else
-            res = exter_f.compareTo(inter_f);
-        
-        return res;
+        return exter_f.compareTo(inter_f);
     }
 }

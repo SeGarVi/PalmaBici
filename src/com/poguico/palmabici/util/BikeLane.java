@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import com.poguico.palmabici.R;
 
-import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.PathOverlay;
@@ -47,6 +46,7 @@ public class BikeLane {
 		try {
 		    xpp.next();
             int eventType = xpp.getEventType();
+            
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
             	if(eventType == XmlPullParser.START_TAG &&
@@ -56,15 +56,17 @@ public class BikeLane {
             		if(eventType == XmlPullParser.TEXT) {
             			String text = xpp.getText();
 
-            			ArrayList<IGeoPoint> path = new ArrayList<IGeoPoint>();
+            			pathOverlay = new PathOverlay(0xffa0a0ff,
+            					                      pathWidth,
+            					                      mapView.getResourceProxy());
             			for (String coordinate : text.split("\n")) {
             				String[] coord_elements = coordinate.split(",");
-            				
-            				path.add(new GeoPoint(Double.valueOf(coord_elements[1]),
-            						Double.valueOf(coord_elements[0])));
+
+                			pathOverlay.addPoint(
+                				new GeoPoint(Double.valueOf(coord_elements[1]),
+            						         Double.valueOf(coord_elements[0])));
             			}
-            			pathOverlay = new PathOverlay(0xffa0a0ff, pathWidth, mapView.getResourceProxy());
-            			pathOverlay.addPoints(path);
+            			
             			osmPaths.add(pathOverlay);
             		}
             	} else {

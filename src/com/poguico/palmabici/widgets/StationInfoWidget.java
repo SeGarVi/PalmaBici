@@ -17,37 +17,34 @@
 
 package com.poguico.palmabici.widgets;
 
-import android.app.Activity;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
-import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.osmdroid.bonuspack.location.POI;
 import org.osmdroid.bonuspack.overlays.DefaultInfoWindow;
 import org.osmdroid.bonuspack.overlays.ExtendedOverlayItem;
 import org.osmdroid.views.MapView;
 
 import com.poguico.palmabici.R;
-import com.poguico.palmabici.SynchronizableActivity;
+import com.poguico.palmabici.SynchronizableElement;
 import com.poguico.palmabici.synchronizers.LocationSynchronizer;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
 
-public class StationInfoWidget extends DefaultInfoWindow implements SynchronizableActivity {
+public class StationInfoWidget extends DefaultInfoWindow implements SynchronizableElement {
 
 	private NetworkInformation     networkInformation;
-	private SynchronizableActivity parentActivity;
+	private SynchronizableElement parentActivity;
 	private LocationSynchronizer   locationSynchronizer;
 	private ExtendedOverlayItem    eItem;
 	private Station station;
 	
-	public StationInfoWidget (MapView mapView, SynchronizableActivity parentActivity) {
+	public StationInfoWidget (MapView mapView, SynchronizableElement parentActivity) {
 		super(R.layout.station_info, mapView);
-		networkInformation = NetworkInformation.getInstance();
+		networkInformation = NetworkInformation.getInstance(parentActivity.getSynchronizableActivity().getApplicationContext());
 		this.parentActivity = parentActivity;
 		locationSynchronizer = LocationSynchronizer.getInstance(parentActivity);
 	}
@@ -58,11 +55,10 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		eItem = (ExtendedOverlayItem)item;
 		
 		int    freeBikes, freeSlots, brokenBikes, brokenSlots;
-		station = networkInformation.get(eItem.getDescription());
 		
 		float[] distance           = new float[1];
 		Location my_location        = locationSynchronizer.getLocation();
-		Station  station = networkInformation.get(eItem.getDescription());
+		station = networkInformation.get(eItem.getDescription());
 		
 		Location.distanceBetween(station.getLat(),
 				 station.getLong(),
@@ -101,12 +97,10 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 					(TextView)mView.findViewById(R.id.brokenSlots);
 			tvBrokenBikes.setText(String.valueOf(brokenBikes));
 			tvBrokenSlots.setText(String.valueOf(brokenSlots));
-			//lyBrokenApparel.setVisibility(View.VISIBLE);
 			lyBrokenApparel.setLayoutParams(
 					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
 												  LayoutParams.WRAP_CONTENT));
 		} else {
-			//lyBrokenApparel.setVisibility(View.INVISIBLE);
 			lyBrokenApparel.setLayoutParams(
 					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,0));
 		}

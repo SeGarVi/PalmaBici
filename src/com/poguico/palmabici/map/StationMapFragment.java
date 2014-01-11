@@ -49,17 +49,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.poguico.palmabici.R;
-import com.poguico.palmabici.SynchronizableActivity;
+import com.poguico.palmabici.SynchronizableElement;
 import com.poguico.palmabici.synchronizers.LocationSynchronizer;
-import com.poguico.palmabici.synchronizers.NetworkSynchronizer;
 import com.poguico.palmabici.util.BikeLane;
-import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
 import com.poguico.palmabici.widgets.StationInfoWidget;
 
 public class StationMapFragment extends Fragment implements
-		SynchronizableActivity, OpenStreetMapConstants {
+		SynchronizableElement, OpenStreetMapConstants {
 
     // ===========================================================
     // Fields
@@ -89,8 +87,6 @@ public class StationMapFragment extends Fragment implements
 		conf=PreferenceManager
 				.getDefaultSharedPreferences(this.getActivity());
 		bikeLaneState = conf.getBoolean(BIKE_LANE_OPTION, true);
-		NetworkSynchronizer.getInstance(this);
-        
 	}
 
 	@Override
@@ -109,7 +105,8 @@ public class StationMapFragment extends Fragment implements
 		int      percentage;
 		Location my_location        = LocationSynchronizer.getInstance(this)
                                                           .getLocation();
-		NetworkInformation network  = NetworkInformation.getInstance();
+		NetworkInformation network =
+			NetworkInformation.getInstance(this.getActivity().getApplicationContext());
 		
 		mapMarkers = new HashMap<String, ExtendedOverlayItem>();
 		for (Station station : network.getNetwork()) {
@@ -160,7 +157,8 @@ public class StationMapFragment extends Fragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		NetworkInformation network  = NetworkInformation.getInstance();
+		NetworkInformation network =
+			NetworkInformation.getInstance(this.getActivity().getApplicationContext());
 		float[] distance = null;
 		final Context context = this.getActivity();
 		final DisplayMetrics dm = context.getResources().getDisplayMetrics();
@@ -210,7 +208,8 @@ public class StationMapFragment extends Fragment implements
 	@Override
 	public void onStart() {
 		super.onStart();
-		NetworkInformation network  = NetworkInformation.getInstance();
+		NetworkInformation network =
+			NetworkInformation.getInstance(this.getActivity().getApplicationContext());
 		if (network.getNetwork() != null) {
         	updateStations();
         }
