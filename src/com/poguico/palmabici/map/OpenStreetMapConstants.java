@@ -18,6 +18,7 @@
  */
 
 // Created by plusminus on 23:11:31 - 22.09.2008
+
 package com.poguico.palmabici.map;
 
 /**
