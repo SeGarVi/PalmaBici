@@ -99,7 +99,6 @@ public class StationMapFragment extends Fragment implements
         mMapView = new MapView(inflater.getContext(), 256, mResourceProxy);
         mMapView.setUseSafeCanvas(true);
         setHardwareAccelerationOff();
-        BikeLane.osmInit(this.getActivity(), mMapView);
         return mMapView;
 	}
 	
@@ -291,7 +290,7 @@ public class StationMapFragment extends Fragment implements
 
 
 	private void drawBikeLane () {
-		bikeLane = BikeLane.getOSMPaths();
+		bikeLane = BikeLane.getOSMPaths(this.getActivity(), mMapView);
 		for (PathOverlay pathOverlay : bikeLane) {
 			mMapView.getOverlays().add(pathOverlay);
 		}

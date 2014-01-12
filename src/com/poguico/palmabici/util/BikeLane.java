@@ -29,12 +29,14 @@ import org.xmlpull.v1.XmlPullParser;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.os.IInterface;
 import android.util.DisplayMetrics;
 
 public class BikeLane {
-	private static ArrayList<PathOverlay> osmPaths;
+	//private static ArrayList<ArrayList<GeoPoint>> paths = null;
+	private static ArrayList<PathOverlay> osmPaths = null;
 	
-	public static void osmInit (Activity activity, MapView mapView) {
+	private static void init (Activity activity, MapView mapView) {
 		PathOverlay pathOverlay;
 		osmPaths = new ArrayList<PathOverlay>();
 		Resources res = activity.getResources();
@@ -78,7 +80,11 @@ public class BikeLane {
 		}
 	}
 	
-	public static ArrayList<PathOverlay> getOSMPaths() {
+	public static ArrayList<PathOverlay> getOSMPaths(Activity activity, MapView mapView) {
+		if (osmPaths == null) {
+			init(activity, mapView);
+		}
+		
 		return osmPaths;
 	}
 }
