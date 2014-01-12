@@ -39,10 +39,10 @@ public class NetworkInformation {
     	DatabaseManager dbManager = DatabaseManager.getInstance(context);
     	
     	center         = new GeoPoint(39.574689, 2.651332);
-        network        = dbManager.getLastStationNetworkState(context);
         favourites     = dbManager.getFavouriteStations();
         lastUpdateTime = dbManager.getLastUpdateTime();
         mappedNetwork  = new HashMap<String, Station>();
+        setNetwork(dbManager.getLastStationNetworkState(context));
     }
     
     public static synchronized NetworkInformation getInstance (Context context) {

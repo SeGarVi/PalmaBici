@@ -17,6 +17,7 @@
 
 package com.poguico.palmabici.widgets;
 
+import android.content.Context;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.view.ViewGroup.LayoutParams;
@@ -37,15 +38,15 @@ import com.poguico.palmabici.util.Station;
 public class StationInfoWidget extends DefaultInfoWindow implements SynchronizableElement {
 
 	private NetworkInformation     networkInformation;
-	private SynchronizableElement parentActivity;
 	private LocationSynchronizer   locationSynchronizer;
+	private Context                context;
 	private ExtendedOverlayItem    eItem;
 	private Station station;
 	
 	public StationInfoWidget (MapView mapView, SynchronizableElement parentActivity) {
 		super(R.layout.station_info, mapView);
-		networkInformation = NetworkInformation.getInstance(parentActivity.getSynchronizableActivity().getApplicationContext());
-		this.parentActivity = parentActivity;
+		context = parentActivity.getSynchronizableActivity().getApplicationContext();
+		networkInformation = NetworkInformation.getInstance(context);
 		locationSynchronizer = LocationSynchronizer.getInstance(parentActivity);
 	}
 	
@@ -66,8 +67,7 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 				 my_location.getLongitude(), distance);
 		
 		String formatted_distance = " (" + 
-				 Formatter.formatDistance(distance[0],
-						 parentActivity.getSynchronizableActivity()) +
+				 Formatter.formatDistance(distance[0], context) +
 				 ")";
 		
 		
@@ -133,8 +133,7 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 				 my_location.getLongitude(), distance);
 		
 		String formatted_distance = " (" + 
-				 Formatter.formatDistance(distance[0],
-						 parentActivity.getSynchronizableActivity()) +
+				 Formatter.formatDistance(distance[0], context) +
 				 ")";
 		
 		TextView title =

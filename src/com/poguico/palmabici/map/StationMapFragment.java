@@ -78,7 +78,8 @@ public class StationMapFragment extends Fragment implements
 	
 	private boolean bikeLaneState;
 	
-	ItemizedOverlayWithBubble<OverlayItem> markerOverlay;
+	private LocationSynchronizer locationSynchronizer;
+	private ItemizedOverlayWithBubble<OverlayItem> markerOverlay;
     
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,8 @@ public class StationMapFragment extends Fragment implements
 		conf=PreferenceManager
 				.getDefaultSharedPreferences(this.getActivity());
 		bikeLaneState = conf.getBoolean(BIKE_LANE_OPTION, true);
+		locationSynchronizer = LocationSynchronizer.getInstance(this);
+		this.setRetainInstance(true);
 	}
 
 	@Override
@@ -160,7 +163,7 @@ public class StationMapFragment extends Fragment implements
 		NetworkInformation network =
 			NetworkInformation.getInstance(this.getActivity().getApplicationContext());
 		float[] distance = null;
-		final Context context = this.getActivity();
+		final Context context = this.getActivity().getApplicationContext();
 		final DisplayMetrics dm = context.getResources().getDisplayMetrics();
 
         mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -221,9 +224,9 @@ public class StationMapFragment extends Fragment implements
         edit.putInt(PREFS_SCROLL_X, mMapView.getScrollX());
         edit.putInt(PREFS_SCROLL_Y, mMapView.getScrollY());
         edit.putInt(PREFS_ZOOM_LEVEL, mMapView.getZoomLevel());
+        edit.putInt(PREFS_SHOWN_MARKER, markerOverlay.getBubbledItemId());
         edit.commit();
 
-        //this.mLocationOverlay.disableMyLocation();
         super.onPause();
     }
 	
@@ -245,19 +248,15 @@ public class StationMapFragment extends Fragment implements
         drawStationMarkers();
         this.mLocationOverlay.enableMyLocation();
         
-        if ((shownBubble = mPrefs.getInt(PREFS_SHOWN_MARKER, -1)) > 0) {
+        shownBubble = mPrefs.getInt(PREFS_SHOWN_MARKER, -1);
+        if (shownBubble > 0) {
         	markerOverlay.showBubbleOnItem(shownBubble, mMapView, true);
         }
     }
 
 	@Override
 	public void onDestroy() {
-		
-		final SharedPreferences.Editor edit = mPrefs.edit();
-        edit.putInt(PREFS_SHOWN_MARKER, markerOverlay.getBubbledItemId());
-        edit.commit();
-		
-		markerOverlay.hideBubble();
+		locationSynchronizer.detachSynchronizableActivity(this);
 		super.onDestroy();
 	}
 	

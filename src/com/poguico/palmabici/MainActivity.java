@@ -17,6 +17,8 @@
 
 package com.poguico.palmabici;
 
+import java.util.Calendar;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.poguico.palmabici.map.StationMapFragment;
@@ -41,10 +43,10 @@ public class MainActivity extends    SherlockFragmentActivity
                           implements SynchronizableElement {
 	private static final String REPORT_URL = "https://github.com/SeGarVi/PalmaBici/issues/new";
 	
-	private ProgressDialog      dialog;	
-	private SharedPreferences   conf = null;
-	private NetworkSynchronizer synchronizer;
-	private NetworkInformation  network;
+	private ProgressDialog       dialog;	
+	private SharedPreferences    conf = null;
+	private NetworkSynchronizer  synchronizer;
+	private NetworkInformation   network;
 		
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,7 +113,7 @@ public class MainActivity extends    SherlockFragmentActivity
 			syncState = synchronizer.sync();
 			
 			if (syncState == NetworkSynchronizationState.UPDATED) {
-				onSuccessfulNetworkSynchronization();
+				showLastUpdateTime(false);
 			} else if (syncState == NetworkSynchronizationState.ERROR) {
 				onUnsuccessfulNetworkSynchronization();
 			} else if (syncState == NetworkSynchronizationState.UPDATING) {
@@ -123,8 +125,11 @@ public class MainActivity extends    SherlockFragmentActivity
 		
 	@Override
 	protected void onDestroy() {
+		if (dialog != null) {
+			dialog.dismiss();
+		}
+		
 		synchronizer.detachSynchronizableActivity(this);
-		dialog.dismiss();
 		super.onDestroy();
 	}
 	
@@ -152,11 +157,7 @@ public class MainActivity extends    SherlockFragmentActivity
 										 3000,
 										 this,
 										 true);
-		NotificationManager.showMessage(updateTime,
-				 Formatter.formatLastUpdated(network.getLastUpdateTime(), this),
-				 3000,
-				 this,
-				 false);
+		showLastUpdateTime(true);
 	}
 
 	@Override
@@ -165,5 +166,19 @@ public class MainActivity extends    SherlockFragmentActivity
 	@Override
 	public FragmentActivity getSynchronizableActivity() {
 		return this;
+	}
+	
+	private void showLastUpdateTime(boolean forceShow) {
+		long lastUpdateTime = network.getLastUpdateTime();
+		long delay = Calendar.getInstance().getTimeInMillis() - lastUpdateTime;
+		
+		if (forceShow || delay > 60000) {
+			TextView updateTime = (TextView) findViewById(R.id.lastUpdatedLabel);
+			NotificationManager.showMessage(updateTime,
+					 Formatter.formatLastUpdated(lastUpdateTime, this),
+					 3000,
+					 this,
+					 false);
+		}
 	}
 }

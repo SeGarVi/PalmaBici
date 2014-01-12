@@ -92,7 +92,7 @@ public class StationListFragment extends ListFragment {
         network  = NetworkInformation.getInstance(this.getActivity().getApplicationContext());        
         context  = this.getActivity();
         stations = network.getNetwork();
-        adapter  = new StationAdapter(this.getActivity(), stations);
+        adapter  = new StationAdapter(this.getActivity().getApplicationContext(), stations);
         
         setListAdapter(adapter);
         

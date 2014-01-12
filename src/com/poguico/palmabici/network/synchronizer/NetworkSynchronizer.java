@@ -79,7 +79,8 @@ public class NetworkSynchronizer {
 			
 			@Override
 			public void onNetworkSynchronized(long updateTime) {
-				syncState = NetworkSynchronizationState.UPDATED;
+				syncState  = NetworkSynchronizationState.UPDATED;
+				lastUpdate = updateTime;
 				for (SynchronizableElement activity : synchronizableElements) {
 					activity.onSuccessfulNetworkSynchronization();
 				}
