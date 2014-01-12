@@ -102,51 +102,54 @@ public class StationMapFragment extends Fragment implements
         return mMapView;
 	}
 	
-	private void drawStationMarkers() {
-		String   filename;
-		int      percentage;
-		Location my_location        = LocationSynchronizer.getInstance(this)
-                                                          .getLocation();
-		NetworkInformation network =
-			NetworkInformation.getInstance(this.getActivity().getApplicationContext());
+	private void drawStationMarkers(boolean force) {
+		String             filename;
+		int                percentage;
+		Location           my_location;
+		NetworkInformation network;
 		
-		mapMarkers = new HashMap<String, ExtendedOverlayItem>();
-		for (Station station : network.getNetwork()) {
-			percentage = (int)Math.round((station.getBusy_slots()*10 / station.getSlots()));
-			
-			if (my_location != null) {
-				ExtendedOverlayItem marker = new ExtendedOverlayItem(
-						station.getName(),
-						station.getN_estacio(),
-						new GeoPoint(station.getLat(), station.getLong()),
-						this.getActivity());
-				try {
-					filename  = "marker" + percentage*10;
-					filename +=  (station.getBroken_bikes() > 0 ||
-							      station.getBroken_slots() > 0) ?
-							    	"_alert" : "";
-					marker.setMarker(
-						getResources().getDrawable(
-							R.drawable.class.getDeclaredField(filename).getInt(null)));
-					mapMarkers.put(station.getN_estacio(),marker);
-				} catch (NotFoundException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (NoSuchFieldException e) {
-					e.printStackTrace();
+		if (mapMarkers == null || force) {
+			my_location = LocationSynchronizer.getInstance(this).getLocation();
+			network =
+					NetworkInformation.getInstance(this.getActivity().getApplicationContext());
+			mapMarkers = new HashMap<String, ExtendedOverlayItem>();
+			for (Station station : network.getNetwork()) {
+				percentage = (int)Math.round((station.getBusy_slots()*10 / station.getSlots()));
+				
+				if (my_location != null) {
+					ExtendedOverlayItem marker = new ExtendedOverlayItem(
+							station.getName(),
+							station.getN_estacio(),
+							new GeoPoint(station.getLat(), station.getLong()),
+							this.getActivity());
+					try {
+						filename  = "marker" + percentage*10;
+						filename +=  (station.getBroken_bikes() > 0 ||
+								      station.getBroken_slots() > 0) ?
+								    	"_alert" : "";
+						marker.setMarker(
+							getResources().getDrawable(
+								R.drawable.class.getDeclaredField(filename).getInt(null)));
+						mapMarkers.put(station.getN_estacio(),marker);
+					} catch (NotFoundException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (NoSuchFieldException e) {
+						e.printStackTrace();
+					}
 				}
 			}
+			
+			markerOverlay = new ItemizedOverlayWithBubble<OverlayItem>(this.getActivity(), 
+					getResources().getDrawable(R.drawable.marker0),
+					new ArrayList<OverlayItem>(mapMarkers.values()), mMapView,
+					new StationInfoWidget(mMapView, this));
+			
+			mMapView.getOverlays().add(markerOverlay);
 		}
-		
-		markerOverlay = new ItemizedOverlayWithBubble<OverlayItem>(this.getActivity(), 
-				getResources().getDrawable(R.drawable.marker0),
-				new ArrayList<OverlayItem>(mapMarkers.values()), mMapView,
-				new StationInfoWidget(mMapView, this));
-		
-		mMapView.getOverlays().add(markerOverlay);
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -244,7 +247,7 @@ public class StationMapFragment extends Fragment implements
 			bikeLaneState = showBikeLane;
 			toggleBikeLane(bikeLaneState);
 		}
-        drawStationMarkers();
+        drawStationMarkers(false);
         this.mLocationOverlay.enableMyLocation();
         
         shownBubble = mPrefs.getInt(PREFS_SHOWN_MARKER, -1);
@@ -260,12 +263,10 @@ public class StationMapFragment extends Fragment implements
 	}
 	
 	private void updateStations() {		
-		if (mapMarkers == null) {
-			mapMarkers = new HashMap<String, ExtendedOverlayItem>();
-		} else {
+		if (mapMarkers != null) {
 			mMapView.getOverlays().remove(markerOverlay);
 		}
-		drawStationMarkers();
+		drawStationMarkers(true);
 	}
 	
 	@Override
