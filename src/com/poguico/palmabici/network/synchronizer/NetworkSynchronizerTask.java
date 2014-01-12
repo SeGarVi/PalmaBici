@@ -42,6 +42,7 @@ import android.util.Log;
 public class NetworkSynchronizerTask {
 	private static final int    HTTP_STATUS_OK = 200;
 	private static final String STR_HTTP_STATUS_OK = "200";
+	private static final String STR_HTTP_STATUS_NOT_FOUND = "404";
 	private static final String URL = "http://api.citybik.es/palma.json";
 	
 	public static void synchronize(Context context, NetworkSyncCallback callback) {
@@ -118,6 +119,7 @@ public class NetworkSynchronizerTask {
 						"Failed to download file");
 			}
 		} catch (Exception e) {
+			ret[0] = STR_HTTP_STATUS_NOT_FOUND;
 			e.printStackTrace();
 		}
 		return ret;
