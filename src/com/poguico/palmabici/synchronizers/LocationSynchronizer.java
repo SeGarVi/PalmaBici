@@ -37,7 +37,7 @@ public class LocationSynchronizer {
 	
 	private static ArrayList<SynchronizableElement> synchronizable_activities;
 	
-	public static LocationSynchronizer getInstance (SynchronizableElement activity) {
+	public synchronized static LocationSynchronizer getInstance (SynchronizableElement activity) {
 		if (instance == null) {
 			instance = new LocationSynchronizer(activity.getSynchronizableActivity());
 		}		
@@ -86,16 +86,18 @@ public class LocationSynchronizer {
 		synchronizable_activities = new ArrayList<SynchronizableElement>();
 	}
 	
-	private void updateViews () {
+	private synchronized void updateViews () {
 		for (SynchronizableElement activity : synchronizable_activities)
 			activity.onLocationSynchronization();
 	}
 	
-	public void addSynchronizableActivity(SynchronizableElement activity) {
-		synchronizable_activities.add(activity);
+	public synchronized void addSynchronizableActivity(SynchronizableElement activity) {
+		if (!synchronizable_activities.contains(activity)) { 
+			synchronizable_activities.add(activity);
+		}
 	}
 	
-	public void detachSynchronizableActivity(SynchronizableElement activity) {
+	public synchronized void detachSynchronizableActivity(SynchronizableElement activity) {
 		synchronizable_activities.remove(activity);
 	}
 	

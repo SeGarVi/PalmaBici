@@ -50,6 +50,7 @@ import android.view.ViewGroup;
 
 import com.poguico.palmabici.R;
 import com.poguico.palmabici.SynchronizableElement;
+import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.synchronizers.LocationSynchronizer;
 import com.poguico.palmabici.util.BikeLane;
 import com.poguico.palmabici.util.NetworkInformation;
@@ -79,8 +80,11 @@ public class StationMapFragment extends Fragment implements
 	private boolean bikeLaneState;
 	
 	private LocationSynchronizer locationSynchronizer;
+	private NetworkInformation network;
 	private ItemizedOverlayWithBubble<OverlayItem> markerOverlay;
-    
+	private NetworkSynchronizer networkSync;
+    private Context context;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,6 +93,10 @@ public class StationMapFragment extends Fragment implements
 				.getDefaultSharedPreferences(this.getActivity());
 		bikeLaneState = conf.getBoolean(BIKE_LANE_OPTION, true);
 		locationSynchronizer = LocationSynchronizer.getInstance(this);
+		context = this.getActivity().getApplicationContext();
+		network = NetworkInformation.getInstance(context);
+		networkSync = NetworkSynchronizer.getInstance(context);
+		networkSync.addSynchronizableActivity(this);
 		this.setRetainInstance(true);
 	}
 
@@ -103,15 +111,12 @@ public class StationMapFragment extends Fragment implements
 	}
 	
 	private void drawStationMarkers(boolean force) {
-		String             filename;
-		int                percentage;
-		Location           my_location;
-		NetworkInformation network;
+		String   filename;
+		int      percentage;
+		Location my_location;
 		
 		if (mapMarkers == null || force) {
-			my_location = LocationSynchronizer.getInstance(this).getLocation();
-			network =
-					NetworkInformation.getInstance(this.getActivity().getApplicationContext());
+			my_location = locationSynchronizer.getLocation();
 			mapMarkers = new HashMap<String, ExtendedOverlayItem>();
 			for (Station station : network.getNetwork()) {
 				percentage = (int)Math.round((station.getBusy_slots()*10 / station.getSlots()));
@@ -162,10 +167,8 @@ public class StationMapFragment extends Fragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		NetworkInformation network =
-			NetworkInformation.getInstance(this.getActivity().getApplicationContext());
 		float[] distance = null;
-		final Context context = this.getActivity().getApplicationContext();
+		//final Context context = this.getActivity().getApplicationContext();
 		final DisplayMetrics dm = context.getResources().getDisplayMetrics();
 
         mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -187,7 +190,7 @@ public class StationMapFragment extends Fragment implements
 		mMapView.getOverlays().add(this.mScaleBarOverlay);
 
         Location my_location =
-				LocationSynchronizer.getInstance(this).getLocation();
+				locationSynchronizer.getLocation();
 		
 		if (my_location != null) {
 			distance = new float[1];
@@ -206,18 +209,20 @@ public class StationMapFragment extends Fragment implements
 			mMapView.getController().setCenter(new GeoPoint(my_location));
 		}
         setHasOptionsMenu(true);
-        
         mMapView.getOverlays().add(this.mLocationOverlay);
+        
+        final SharedPreferences.Editor edit = mPrefs.edit();
+        edit.putInt(PREFS_SCROLL_X, mMapView.getScrollX());
+        edit.putInt(PREFS_SCROLL_Y, mMapView.getScrollY());
+        edit.putInt(PREFS_ZOOM_LEVEL, mMapView.getZoomLevel());
+        edit.putInt(PREFS_SHOWN_MARKER, -1);
+        edit.commit();
     }
 	
 	@Override
 	public void onStart() {
 		super.onStart();
-		NetworkInformation network =
-			NetworkInformation.getInstance(this.getActivity().getApplicationContext());
-		if (network.getNetwork() != null) {
-        	updateStations();
-        }
+		updateStations();
 	}
 	
 	@Override
@@ -236,6 +241,12 @@ public class StationMapFragment extends Fragment implements
     public void onResume() {
 		int shownBubble;
         super.onResume();
+        
+        shownBubble = mPrefs.getInt(PREFS_SHOWN_MARKER, -1);
+        if (shownBubble >= 0) {
+        	markerOverlay.showBubbleOnItem(shownBubble, mMapView, true);	
+        }
+        
         try {
             mMapView.setTileSource(TileSourceFactory.MAPQUESTOSM);
         } catch (final IllegalArgumentException ignore) {
@@ -249,16 +260,12 @@ public class StationMapFragment extends Fragment implements
 		}
         drawStationMarkers(false);
         this.mLocationOverlay.enableMyLocation();
-        
-        shownBubble = mPrefs.getInt(PREFS_SHOWN_MARKER, -1);
-        if (shownBubble > 0) {
-        	markerOverlay.showBubbleOnItem(shownBubble, mMapView, true);
-        }
     }
 
 	@Override
 	public void onDestroy() {
 		locationSynchronizer.detachSynchronizableActivity(this);
+		networkSync.detachSynchronizableActivity(this);
 		super.onDestroy();
 	}
 	
@@ -281,7 +288,22 @@ public class StationMapFragment extends Fragment implements
 
 	@Override
 	public void onLocationSynchronization() {
-
+		float[] distance;
+		Location my_location;
+		if (markerOverlay.getBubbledItemId() < 0) {
+			my_location =
+				locationSynchronizer.getLocation();
+			
+			distance = new float[1];
+			Location.distanceBetween(network.getCenter().getLatitude(),
+					                 network.getCenter().getLongitude(),
+									 my_location.getLatitude(),
+                                     my_location.getLongitude(), distance);
+			
+			if (distance != null && distance[0] <= 10000) {
+				mMapView.getController().animateTo(new GeoPoint(my_location));
+			}
+		}
 	}
 
 	@Override
