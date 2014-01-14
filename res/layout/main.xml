@@ -27,10 +27,16 @@
         android:name="com.poguico.palmabici.StationMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" /> -->
-    <FrameLayout
+    <fragment
+       class="com.poguico.palmabici.map.StationMapFragment"
+       android:id="@+id/map_fragment"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent" />
+        
+    <!-- <FrameLayout
         android:id="@+id/map_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" /> -->
 
     <TextView
         android:id="@+id/lastUpdatedLabel"

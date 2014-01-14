@@ -17,7 +17,6 @@
 
 package com.poguico.palmabici;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.poguico.palmabici.map.OpenStreetMapConstants;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
@@ -45,10 +44,6 @@ public class WelcomeActivity extends    SherlockFragmentActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-        	actionBar.hide();
     }
     
 	@Override

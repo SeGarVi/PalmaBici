@@ -57,12 +57,6 @@ public class MainActivity extends    SherlockFragmentActivity
     	
     	synchronizer.addSynchronizableActivity(this);
     	setContentView(R.layout.main);
-    	
-    	FragmentManager fm = this.getSupportFragmentManager();
-
-        StationMapFragment mapFragment = new StationMapFragment();
-
-        fm.beginTransaction().add(R.id.map_fragment, mapFragment).commit();
     }
     
     @Override

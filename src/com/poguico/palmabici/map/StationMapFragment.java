@@ -97,6 +97,16 @@ public class StationMapFragment extends Fragment implements
 		network = NetworkInformation.getInstance(context);
 		networkSync = NetworkSynchronizer.getInstance(context);
 		networkSync.addSynchronizableActivity(this);
+		
+		mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+		
+		final SharedPreferences.Editor edit = mPrefs.edit();
+        edit.remove(PREFS_SHOWN_MARKER);
+        edit.remove(PREFS_SCROLL_X);
+        edit.remove(PREFS_SCROLL_Y);
+        edit.remove(PREFS_ZOOM_LEVEL);
+        edit.commit();
+		
 		this.setRetainInstance(true);
 	}
 
@@ -168,10 +178,7 @@ public class StationMapFragment extends Fragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		float[] distance = null;
-		//final Context context = this.getActivity().getApplicationContext();
 		final DisplayMetrics dm = context.getResources().getDisplayMetrics();
-
-        mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         // only do static initialisation if needed
         if (CloudmadeUtil.getCloudmadeKey().length() == 0) {
@@ -211,12 +218,8 @@ public class StationMapFragment extends Fragment implements
         setHasOptionsMenu(true);
         mMapView.getOverlays().add(this.mLocationOverlay);
         
-        final SharedPreferences.Editor edit = mPrefs.edit();
-        edit.putInt(PREFS_SCROLL_X, mMapView.getScrollX());
-        edit.putInt(PREFS_SCROLL_Y, mMapView.getScrollY());
-        edit.putInt(PREFS_ZOOM_LEVEL, mMapView.getZoomLevel());
-        edit.putInt(PREFS_SHOWN_MARKER, -1);
-        edit.commit();
+        mMapView.scrollTo(mPrefs.getInt(PREFS_SCROLL_X, mMapView.getScrollX()),
+        				  mPrefs.getInt(PREFS_SCROLL_Y, mMapView.getScrollY()));
     }
 	
 	@Override
@@ -233,7 +236,8 @@ public class StationMapFragment extends Fragment implements
         edit.putInt(PREFS_ZOOM_LEVEL, mMapView.getZoomLevel());
         edit.putInt(PREFS_SHOWN_MARKER, markerOverlay.getBubbledItemId());
         edit.commit();
-
+        markerOverlay.hideBubble();
+        
         super.onPause();
     }
 	
