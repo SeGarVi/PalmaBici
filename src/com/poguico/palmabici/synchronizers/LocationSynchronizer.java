@@ -35,13 +35,13 @@ public class LocationSynchronizer {
 	private LocationManager  manager;
 	private LocationListener listener;
 	
-	private static ArrayList<SynchronizableElement> synchronizable_activities;
+	private static ArrayList<SynchronizableElement> synchronizableElements;
 	
 	public synchronized static LocationSynchronizer getInstance (SynchronizableElement activity) {
 		if (instance == null) {
 			instance = new LocationSynchronizer(activity.getSynchronizableActivity());
 		}		
-		instance.addSynchronizableActivity(activity);
+		instance.addSynchronizableElement(activity);
 		
 		return instance;
 	}
@@ -83,22 +83,22 @@ public class LocationSynchronizer {
 		if (location == null)
 			location =  manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 				
-		synchronizable_activities = new ArrayList<SynchronizableElement>();
+		synchronizableElements = new ArrayList<SynchronizableElement>();
 	}
 	
 	private synchronized void updateViews () {
-		for (SynchronizableElement activity : synchronizable_activities)
+		for (SynchronizableElement activity : synchronizableElements)
 			activity.onLocationSynchronization();
 	}
 	
-	public synchronized void addSynchronizableActivity(SynchronizableElement activity) {
-		if (!synchronizable_activities.contains(activity)) { 
-			synchronizable_activities.add(activity);
+	public synchronized void addSynchronizableElement(SynchronizableElement element) {
+		if (!synchronizableElements.contains(element)) { 
+			synchronizableElements.add(element);
 		}
 	}
 	
-	public synchronized void detachSynchronizableActivity(SynchronizableElement activity) {
-		synchronizable_activities.remove(activity);
+	public synchronized void detachSynchronizableElement(SynchronizableElement element) {
+		synchronizableElements.remove(element);
 	}
 	
 	public Location getLocation () {

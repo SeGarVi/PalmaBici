@@ -55,7 +55,7 @@ public class MainActivity extends    SherlockFragmentActivity
     	network = NetworkInformation.getInstance(this.getApplicationContext());
     	conf = PreferenceManager.getDefaultSharedPreferences(this);
     	
-    	synchronizer.addSynchronizableActivity(this);
+    	synchronizer.addSynchronizableElement(this);
     	setContentView(R.layout.main);
     }
     
@@ -123,7 +123,7 @@ public class MainActivity extends    SherlockFragmentActivity
 			dialog.dismiss();
 		}
 		
-		synchronizer.detachSynchronizableActivity(this);
+		synchronizer.detachSynchronizableElement(this);
 		super.onDestroy();
 	}
 	

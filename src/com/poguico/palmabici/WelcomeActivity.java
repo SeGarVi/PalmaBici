@@ -55,7 +55,7 @@ public class WelcomeActivity extends    SherlockFragmentActivity
 		setContentView(R.layout.welcome);
 		
 		synchronizer = NetworkSynchronizer.getInstance(this.getApplicationContext());
-		synchronizer.addSynchronizableActivity(this);
+		synchronizer.addSynchronizableElement(this);
 		
 		if (conf.getBoolean("autoupdate", true)) {
 			syncState = synchronizer.sync();
@@ -70,7 +70,7 @@ public class WelcomeActivity extends    SherlockFragmentActivity
 
 	@Override
 	public void onDestroy() {
-		synchronizer.detachSynchronizableActivity(this);
+		synchronizer.detachSynchronizableElement(this);
 		super.onDestroy();
 	}
 	
@@ -99,7 +99,7 @@ public class WelcomeActivity extends    SherlockFragmentActivity
 	
 	public synchronized void instantiateMainActivity () {
 		nextActivity = new Intent(this, MainActivity.class);
-		synchronizer.detachSynchronizableActivity((SynchronizableElement)this);
+		synchronizer.detachSynchronizableElement((SynchronizableElement)this);
 		this.startActivity(nextActivity);
 		this.finish();
 	}

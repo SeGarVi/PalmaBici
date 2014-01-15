@@ -96,7 +96,7 @@ public class StationMapFragment extends Fragment implements
 		context = this.getActivity().getApplicationContext();
 		network = NetworkInformation.getInstance(context);
 		networkSync = NetworkSynchronizer.getInstance(context);
-		networkSync.addSynchronizableActivity(this);
+		networkSync.addSynchronizableElement(this);
 		
 		mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 		
@@ -268,8 +268,8 @@ public class StationMapFragment extends Fragment implements
 
 	@Override
 	public void onDestroy() {
-		locationSynchronizer.detachSynchronizableActivity(this);
-		networkSync.detachSynchronizableActivity(this);
+		locationSynchronizer.detachSynchronizableElement(this);
+		networkSync.detachSynchronizableElement(this);
 		super.onDestroy();
 	}
 	
@@ -282,7 +282,13 @@ public class StationMapFragment extends Fragment implements
 	
 	@Override
 	public void onSuccessfulNetworkSynchronization() {
+		int bubbleId = markerOverlay.getBubbledItemId();
+		markerOverlay.hideBubble();		
 		updateStations();
+		
+		if (bubbleId >= 0) {
+			markerOverlay.showBubbleOnItem(bubbleId, mMapView, true);	
+		}
 	}
 
 	@Override

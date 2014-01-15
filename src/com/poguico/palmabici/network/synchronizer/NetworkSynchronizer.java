@@ -98,13 +98,13 @@ public class NetworkSynchronizer {
 		return NetworkSynchronizationState.UPDATING;
 	}
 	
-	public synchronized void addSynchronizableActivity(SynchronizableElement activity) {
-		if (!synchronizableElements.contains(activity)) { 
-			synchronizableElements.add(activity);
+	public synchronized void addSynchronizableElement(SynchronizableElement element) {
+		if (!synchronizableElements.contains(element)) { 
+			synchronizableElements.add(element);
 		}
 	}
 	
-	public synchronized void detachSynchronizableActivity(SynchronizableElement activity) {
-		synchronizableElements.remove(activity);
+	public synchronized void detachSynchronizableElement(SynchronizableElement element) {
+		synchronizableElements.remove(element);
 	}
 }

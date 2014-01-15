@@ -23,7 +23,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.osmdroid.bonuspack.overlays.DefaultInfoWindow;
@@ -32,6 +31,7 @@ import org.osmdroid.views.MapView;
 
 import com.poguico.palmabici.R;
 import com.poguico.palmabici.SynchronizableElement;
+import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.synchronizers.LocationSynchronizer;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
@@ -44,12 +44,16 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 	private Context              context;
 	private ExtendedOverlayItem  eItem;
 	private Station              station;
+	private ImageButton          alarmButton;
+	private NetworkSynchronizer  networkSync;
 	
 	public StationInfoWidget (MapView mapView, SynchronizableElement parentActivity) {
 		super(R.layout.station_info, mapView);
 		context = parentActivity.getSynchronizableActivity().getApplicationContext();
 		networkInformation = NetworkInformation.getInstance(context);
 		locationSynchronizer = LocationSynchronizer.getInstance(parentActivity);
+		networkSync = NetworkSynchronizer.getInstance(context);
+		alarmButton = (ImageButton)mView.findViewById(R.id.alarmButton);
 	}
 	
 	@Override
@@ -82,8 +86,6 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 				(TextView)mView.findViewById(R.id.freeSlots);
 		LinearLayout lyBrokenApparel =
 				(LinearLayout)mView.findViewById(R.id.brokenApparel);
-		ImageButton alarmButton =
-				(ImageButton)mView.findViewById(R.id.alarmButton);
 		
 		freeBikes   = station.getBusy_slots();
 		freeSlots   = station.getFree_slots();
@@ -109,7 +111,6 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 			lyBrokenApparel.setLayoutParams(
 					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,0));
 		}
-		locationSynchronizer.addSynchronizableActivity(this);
 		
 		if (station.getBusy_slots() != 0) {
 			layoutParams = new LinearLayout.LayoutParams(0,0);
@@ -121,17 +122,32 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 			layoutParams.setMargins(5, 5, 5, 5);
 			alarmButton.setLayoutParams(layoutParams);
 		}
+		locationSynchronizer.addSynchronizableElement(this);
+		//networkSync.addSynchronizableElement(this);
 	}
 	
 	@Override
 	public void onClose() {
-		locationSynchronizer.detachSynchronizableActivity(this);
+		//networkSync.detachSynchronizableElement(this);
+		locationSynchronizer.detachSynchronizableElement(this);
 		super.onClose();
 	}
 
 	@Override
 	public void onSuccessfulNetworkSynchronization() {
+		/*LinearLayout.LayoutParams layoutParams;
+		station = networkInformation.get(eItem.getDescription());
 		
+		if (station.getBusy_slots() != 0) {
+			layoutParams = new LinearLayout.LayoutParams(0,0);
+			layoutParams.setMargins(5, 5, 5, 5);
+			alarmButton.setLayoutParams(layoutParams);
+		} else {
+			layoutParams = new LinearLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			layoutParams.setMargins(5, 5, 5, 5);
+			alarmButton.setLayoutParams(layoutParams);
+		}*/
 	}
 
 	@Override
