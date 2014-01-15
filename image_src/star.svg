@@ -9,15 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="800"
-   height="800"
+   width="746"
+   height="746"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="star.svg"
-   inkscape:export-filename="/home/kintaro/workspace/PalmaBici/res/drawable-hdpi/star.png"
-   inkscape:export-xdpi="5.79"
-   inkscape:export-ydpi="5.79">
+   inkscape:export-filename="/home/kintaro/workspace/PalmaBici/res/drawable-ldpi/star.png"
+   inkscape:export-xdpi="3.6663098"
+   inkscape:export-ydpi="3.6663098">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,15 +28,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="249.26896"
+     inkscape:cx="-100.24382"
      inkscape:cy="428.17246"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1600"
-     inkscape:window-height="853"
+     inkscape:window-height="841"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="26"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -54,10 +54,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-252.36218)">
+     transform="translate(0,-306.36218)">
     <path
        sodipodi:type="star"
-       style="fill:#ffff00;fill-rule:evenodd;stroke:#bebe00;stroke-width:2.60312366;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#edd800;fill-opacity:1;fill-rule:evenodd;stroke:#edd800;stroke-width:2.60312366000000006;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="path2985"
        sodipodi:sides="5"
        sodipodi:cx="148.57143"
@@ -70,8 +70,11 @@
        inkscape:rounded="-3.1225023e-17"
        inkscape:randomized="0"
        d="m 254.28571,438.07647 -57.10273,50.10952 16.66361,74.12158 -65.3027,-38.82323 -65.344477,38.75286 16.743443,-74.10359 -57.048715,-50.171 75.650709,-6.97531 30.08644,-69.76024 30.01126,69.79261 z"
-       inkscape:transform-center-x="-0.064509901"
-       inkscape:transform-center-y="-35.759188"
-       transform="matrix(3.4875333,0,0,3.3751434,-116.70914,-906.78099)" />
+       inkscape:transform-center-x="-0.064489278"
+       inkscape:transform-center-y="-35.751203"
+       transform="matrix(3.4867544,0,0,3.3743896,-145.09683,-878.82117)"
+       inkscape:export-filename="/home/kintaro/workspace/PalmaBici/res/drawable-xxhdpi/star-active.png"
+       inkscape:export-xdpi="14.472434"
+       inkscape:export-ydpi="14.472434" />
   </g>
 </svg>

@@ -21,7 +21,9 @@ import android.content.Context;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.osmdroid.bonuspack.overlays.DefaultInfoWindow;
@@ -37,11 +39,11 @@ import com.poguico.palmabici.util.Station;
 
 public class StationInfoWidget extends DefaultInfoWindow implements SynchronizableElement {
 
-	private NetworkInformation     networkInformation;
-	private LocationSynchronizer   locationSynchronizer;
-	private Context                context;
-	private ExtendedOverlayItem    eItem;
-	private Station station;
+	private NetworkInformation   networkInformation;
+	private LocationSynchronizer locationSynchronizer;
+	private Context              context;
+	private ExtendedOverlayItem  eItem;
+	private Station              station;
 	
 	public StationInfoWidget (MapView mapView, SynchronizableElement parentActivity) {
 		super(R.layout.station_info, mapView);
@@ -56,6 +58,7 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		eItem = (ExtendedOverlayItem)item;
 		
 		int    freeBikes, freeSlots, brokenBikes, brokenSlots;
+		LinearLayout.LayoutParams layoutParams;
 		
 		float[] distance           = new float[1];
 		Location my_location        = locationSynchronizer.getLocation();
@@ -79,6 +82,8 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 				(TextView)mView.findViewById(R.id.freeSlots);
 		LinearLayout lyBrokenApparel =
 				(LinearLayout)mView.findViewById(R.id.brokenApparel);
+		ImageButton alarmButton =
+				(ImageButton)mView.findViewById(R.id.alarmButton);
 		
 		freeBikes   = station.getBusy_slots();
 		freeSlots   = station.getFree_slots();
@@ -105,6 +110,17 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,0));
 		}
 		locationSynchronizer.addSynchronizableActivity(this);
+		
+		if (station.getBusy_slots() != 0) {
+			layoutParams = new LinearLayout.LayoutParams(0,0);
+			layoutParams.setMargins(5, 5, 5, 5);
+			alarmButton.setLayoutParams(layoutParams);
+		} else {
+			layoutParams = new LinearLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			layoutParams.setMargins(5, 5, 5, 5);
+			alarmButton.setLayoutParams(layoutParams);
+		}
 	}
 	
 	@Override
