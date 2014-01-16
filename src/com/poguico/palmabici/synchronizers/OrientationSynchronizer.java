@@ -35,7 +35,7 @@ public class OrientationSynchronizer {
 	
 	private static float orientation;
 	
-	private static ArrayList<SynchronizableElement> synchronizable_activities;
+	private static ArrayList<SynchronizableElement> synchronizableElements;
 	
 	public static void init (Context context) {
 		manager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -55,21 +55,21 @@ public class OrientationSynchronizer {
 		
 		manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 		
-		synchronizable_activities = new ArrayList<SynchronizableElement>();
+		synchronizableElements = new ArrayList<SynchronizableElement>();
 	}
 	
 	private static void updateViews () {
-		for (SynchronizableElement activity : synchronizable_activities) {
+		for (SynchronizableElement activity : synchronizableElements) {
 			activity.onLocationSynchronization();
 		}
 	}
 	
 	public static void addSynchronizableActivity(SynchronizableElement activity) {
-		synchronizable_activities.add(activity);
+		synchronizableElements.add(activity);
 	}
 	
 	public static void detachSynchronizableActivity(SynchronizableElement activity) {
-		synchronizable_activities.remove(activity);
+		synchronizableElements.remove(activity);
 	}	
 	
 	public static float getOrientation () {

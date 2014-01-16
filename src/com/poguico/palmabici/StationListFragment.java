@@ -57,7 +57,7 @@ public class StationListFragment extends ListFragment {
     	
     	@Override
     	public View getView(int position, View convertView, ViewGroup parent) {
-    		Float dist_f;
+    		Float distF;
     		LayoutInflater inflater = (LayoutInflater) context
     				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		View rowView   = inflater.inflate(R.layout.main_list_item_layout, parent, false);
@@ -72,14 +72,14 @@ public class StationListFragment extends ListFragment {
     		TextView distance = (TextView)  rowView.findViewById(R.id.distance);
     		//ImageView compass = (ImageView) rowView.findViewById(R.id.compass);
     				
-    		id.setText(stations.get(position).getN_estacio() + " · ");		
+    		id.setText(stations.get(position).getNEstacio() + " · ");		
     		name.setText(stations.get(position).getName());
-    		bikes.setText(context.getString(R.string.free_bikes) + ": " + stations.get(position).getBusy_slots());
-    		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFree_slots());
+    		bikes.setText(context.getString(R.string.free_bikes) + ": " + stations.get(position).getBusySlots());
+    		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFreeSlots());
     		    		
-    		dist_f = stations.get(position).getDistance();
-    		if (dist_f >= 0) {
-    			distance.setText(Formatter.formatDistance(dist_f/1000, context));
+    		distF = stations.get(position).getDistance();
+    		if (distF >= 0) {
+    			distance.setText(Formatter.formatDistance(distF/1000, context));
     		}
     		
     		return rowView;

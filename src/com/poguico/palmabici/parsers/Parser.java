@@ -28,28 +28,28 @@ public class Parser {
     
     public static ArrayList <Station> parseNetworkJSON (String data)    {
         ArrayList <Station> stations = new ArrayList<Station>();
-        JSONArray json_array;
-        JSONObject json_object;
+        JSONArray jsonArray;
+        JSONObject jsonObject;
         Long lngAcum=0L, latAcum=0L;
         
         try {
-            json_array = new JSONArray(data);
+            jsonArray = new JSONArray(data);
             
-            for (int i = 0; i < json_array.length(); i++) {
-                json_object = json_array.getJSONObject(i);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jsonObject = jsonArray.getJSONObject(i);
                 
-                lngAcum += json_object.getLong("lng");
-                latAcum += json_object.getLong("lat");
+                lngAcum += jsonObject.getLong("lng");
+                latAcum += jsonObject.getLong("lat");
                 
-                stations.add(new Station(json_object.getInt("id"),
-                                         json_object.getString("name").substring(1, 3),
-                                         json_object.getString("name").substring(5),
-                                         json_object.getDouble("lng") / 1e6,
-                                         json_object.getDouble("lat") / 1e6,
-                                         json_object.getInt("free"),
-                                         json_object.getInt("bikes"),
-                                         json_object.getInt("free_fck"),
-                                         json_object.getInt("bikes_fck"),
+                stations.add(new Station(jsonObject.getInt("id"),
+                                         jsonObject.getString("name").substring(1, 3),
+                                         jsonObject.getString("name").substring(5),
+                                         jsonObject.getDouble("lng") / 1e6,
+                                         jsonObject.getDouble("lat") / 1e6,
+                                         jsonObject.getInt("free"),
+                                         jsonObject.getInt("bikes"),
+                                         jsonObject.getInt("free_fck"),
+                                         jsonObject.getInt("bikes_fck"),
                                          false));
             }
         } catch (Exception e) {

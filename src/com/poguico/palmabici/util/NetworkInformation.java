@@ -75,7 +75,7 @@ public class NetworkInformation {
     public synchronized void setNetwork(ArrayList<Station> network) {
         this.network = network;
         for (Station station : network) {
-            mappedNetwork.put(station.getN_estacio(), station);
+            mappedNetwork.put(station.getNEstacio(), station);
         }
     }
 
@@ -94,7 +94,7 @@ public class NetworkInformation {
     public synchronized void setFavourites(ArrayList<String> favourites) {
         this.favourites = favourites;
         for (Station station : network) {
-            if (favourites.contains(station.getN_estacio())) {
+            if (favourites.contains(station.getNEstacio())) {
                 station.changeFavouriteState();
             }
         }

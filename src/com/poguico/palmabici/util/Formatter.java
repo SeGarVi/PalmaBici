@@ -29,8 +29,8 @@ public class Formatter {
 	public static String formatDistance (float meters, Context context) {
 		String ret = "";
 		
-		Locale current_local = context.getResources().getConfiguration().locale;
-		NumberFormat format  = NumberFormat.getNumberInstance(current_local);
+		Locale currentLocal = context.getResources().getConfiguration().locale;
+		NumberFormat format  = NumberFormat.getNumberInstance(currentLocal);
 		
 		format.setMaximumFractionDigits(2);
 		

@@ -121,40 +121,36 @@ public class StationMapFragment extends Fragment implements
 	}
 	
 	private void drawStationMarkers(boolean force) {
-		String   filename;
-		int      percentage;
-		Location my_location;
+		String filename;
+		int    percentage;
 		
 		if (mapMarkers == null || force) {
-			my_location = locationSynchronizer.getLocation();
 			mapMarkers = new HashMap<String, ExtendedOverlayItem>();
 			for (Station station : network.getNetwork()) {
-				percentage = (int)Math.round((station.getBusy_slots()*10 / station.getSlots()));
+				percentage = (int)Math.round((station.getBusySlots()*10 / station.getSlots()));
 				
-				if (my_location != null) {
-					ExtendedOverlayItem marker = new ExtendedOverlayItem(
-							station.getName(),
-							station.getN_estacio(),
-							new GeoPoint(station.getLat(), station.getLong()),
-							this.getActivity());
-					try {
-						filename  = "marker" + percentage*10;
-						filename +=  (station.getBroken_bikes() > 0 ||
-								      station.getBroken_slots() > 0) ?
-								    	"_alert" : "";
-						marker.setMarker(
-							getResources().getDrawable(
-								R.drawable.class.getDeclaredField(filename).getInt(null)));
-						mapMarkers.put(station.getN_estacio(),marker);
-					} catch (NotFoundException e) {
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (NoSuchFieldException e) {
-						e.printStackTrace();
-					}
+				ExtendedOverlayItem marker = new ExtendedOverlayItem(
+						station.getName(),
+						station.getNEstacio(),
+						new GeoPoint(station.getLat(), station.getLong()),
+						this.getActivity());
+				try {
+					filename  = "marker" + percentage*10;
+					filename +=  (station.getBrokenBikes() > 0 ||
+							      station.getBrokenSlots() > 0) ?
+							    	"_alert" : "";
+					marker.setMarker(
+						getResources().getDrawable(
+							R.drawable.class.getDeclaredField(filename).getInt(null)));
+					mapMarkers.put(station.getNEstacio(),marker);
+				} catch (NotFoundException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (NoSuchFieldException e) {
+					e.printStackTrace();
 				}
 			}
 			
@@ -196,15 +192,15 @@ public class StationMapFragment extends Fragment implements
         mMapView.setMultiTouchControls(true);
 		mMapView.getOverlays().add(this.mScaleBarOverlay);
 
-        Location my_location =
+        Location myLocation =
 				locationSynchronizer.getLocation();
 		
-		if (my_location != null) {
+		if (myLocation != null) {
 			distance = new float[1];
 			Location.distanceBetween(network.getCenter().getLatitude(),
 					                 network.getCenter().getLongitude(),
-									 my_location.getLatitude(),
-                                     my_location.getLongitude(), distance);
+									 myLocation.getLatitude(),
+                                     myLocation.getLongitude(), distance);
 		}
 		
 		drawBikeLane();
@@ -213,7 +209,7 @@ public class StationMapFragment extends Fragment implements
 		if (distance == null || distance[0] > 10000) {
 			mMapView.getController().setCenter(new GeoPoint(39574689, 2651332));
 		} else {
-			mMapView.getController().setCenter(new GeoPoint(my_location));
+			mMapView.getController().setCenter(new GeoPoint(myLocation));
 		}
         setHasOptionsMenu(true);
         mMapView.getOverlays().add(this.mLocationOverlay);
@@ -299,19 +295,19 @@ public class StationMapFragment extends Fragment implements
 	@Override
 	public void onLocationSynchronization() {
 		float[] distance;
-		Location my_location;
+		Location myLocation;
 		if (markerOverlay.getBubbledItemId() < 0) {
-			my_location =
+			myLocation =
 				locationSynchronizer.getLocation();
 			
 			distance = new float[1];
 			Location.distanceBetween(network.getCenter().getLatitude(),
 					                 network.getCenter().getLongitude(),
-									 my_location.getLatitude(),
-                                     my_location.getLongitude(), distance);
+									 myLocation.getLatitude(),
+                                     myLocation.getLongitude(), distance);
 			
 			if (distance != null && distance[0] <= 10000) {
-				mMapView.getController().animateTo(new GeoPoint(my_location));
+				mMapView.getController().animateTo(new GeoPoint(myLocation));
 			}
 		}
 	}

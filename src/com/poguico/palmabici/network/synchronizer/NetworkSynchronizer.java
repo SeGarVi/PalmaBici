@@ -51,7 +51,7 @@ public class NetworkSynchronizer {
 		return instance;
 	}
 	
-	public NetworkSynchronizationState sync() {
+	public NetworkSynchronizationState sync(boolean force) {
 		long now;
 		long delay;
 		
@@ -59,7 +59,7 @@ public class NetworkSynchronizer {
 			now   = Calendar.getInstance().getTimeInMillis();
 			delay = now - lastUpdate;
 			
-			if (delay > UPDATE_TIME) {
+			if (delay > UPDATE_TIME || force) {
 				syncState = forceSync();
 			}
 		}
@@ -67,7 +67,7 @@ public class NetworkSynchronizer {
 		return syncState;
 	}
 	
-	public NetworkSynchronizationState forceSync() {
+	private NetworkSynchronizationState forceSync() {
 		ConnectivityManager conMgr =
 				(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo i = conMgr.getActiveNetworkInfo();

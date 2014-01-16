@@ -72,11 +72,15 @@ public class MainActivity extends    SherlockFragmentActivity
                 break;
 
             case R.id.menu_refresh:
+            	NetworkSynchronizationState syncState;
             	dialog = ProgressDialog.show(this, "",
             			getString(R.string.refresh_ongoing), true);
             	NetworkSynchronizer synchronizer =
             			NetworkSynchronizer.getInstance(this);
-            	synchronizer.forceSync();
+            	syncState = synchronizer.sync(true);
+            	if (syncState == NetworkSynchronizationState.ERROR) {
+    				onUnsuccessfulNetworkSynchronization();
+    			}
                 break;
 
             case R.id.menu_credits:
@@ -84,15 +88,15 @@ public class MainActivity extends    SherlockFragmentActivity
                 break;
 
             case R.id.menu_preferences:
-            	Intent preferences_activity =
+            	Intent preferencesActivity =
             	new Intent(this, PreferencesActivity.class);
-            	this.startActivity(preferences_activity);
+            	this.startActivity(preferencesActivity);
                 break;
                 
             case R.id.menu_report:
-                Intent issue_intent = new Intent(Intent.ACTION_VIEW);
-                issue_intent.setData(Uri.parse(REPORT_URL));
-                startActivity(issue_intent);
+                Intent issueIntent = new Intent(Intent.ACTION_VIEW);
+                issueIntent.setData(Uri.parse(REPORT_URL));
+                startActivity(issueIntent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -104,7 +108,7 @@ public class MainActivity extends    SherlockFragmentActivity
 		super.onResume();
 		
 		if (conf.getBoolean("autoupdate", true)) {
-			syncState = synchronizer.sync();
+			syncState = synchronizer.sync(false);
 			
 			if (syncState == NetworkSynchronizationState.UPDATED) {
 				showLastUpdateTime(false);

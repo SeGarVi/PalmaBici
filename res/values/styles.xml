@@ -34,7 +34,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="WelcomeTheme" parent="Theme.Sherlock.Light">
+    <style name="WelcomeTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:background">#00599e</item>
         <item name="android:textColor" >#ffffff</item>
     </style>

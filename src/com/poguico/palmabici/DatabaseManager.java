@@ -105,16 +105,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	public ArrayList<String> getFavouriteStations () {
 		SQLiteDatabase db;
 		Cursor c;
-		int n_estacio_col;
+		int nEstacioCol;
 		ArrayList<String> res = new ArrayList<String>();
 		
 		db = instance.getReadableDatabase();
 		c = db.rawQuery(GET_FAVOURITE_STATIONS, null);
-		n_estacio_col = c.getColumnIndex("nestacio");
+		nEstacioCol = c.getColumnIndex("nestacio");
 		
 		if (c.moveToFirst()) {
 			do {
-				res.add(c.getString(n_estacio_col));
+				res.add(c.getString(nEstacioCol));
 			} while(c.moveToNext());
 		}
 		
@@ -129,33 +129,33 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		ArrayList<Station> stationList = new ArrayList<Station>();
 		SQLiteDatabase db;
 		Cursor c;
-		int id_col, n_estacio_col, name_col, station_long_col, station_lat_col,
-		    free_slots_col,  busy_slots_col, broken_slots_col, broken_bikes_col;
+		int idCol, nEstacioCol, nameCol, stationLongCol, stationLatCol,
+		    freeSlotsCol,  busySlotsCol, brokenSlotsCol, brokenBikesCol;
 		
 		db = instance.getReadableDatabase();
 		c  = db.rawQuery(GET_STATIONS, null);
 		
-		id_col           = c.getColumnIndex("id");
-		n_estacio_col    = c.getColumnIndex("n_estacio");
-		name_col         = c.getColumnIndex("name");
-		station_long_col = c.getColumnIndex("station_long");
-		station_lat_col  = c.getColumnIndex("station_lat");
-		free_slots_col   = c.getColumnIndex("free_slots");
-		busy_slots_col   = c.getColumnIndex("busy_slots");
-		broken_slots_col = c.getColumnIndex("broken_slots");
-		broken_bikes_col = c.getColumnIndex("broken_bikes");
+		idCol          = c.getColumnIndex("id");
+		nEstacioCol    = c.getColumnIndex("n_estacio");
+		nameCol        = c.getColumnIndex("name");
+		stationLongCol = c.getColumnIndex("station_long");
+		stationLatCol  = c.getColumnIndex("station_lat");
+		freeSlotsCol   = c.getColumnIndex("free_slots");
+		busySlotsCol   = c.getColumnIndex("busy_slots");
+		brokenSlotsCol = c.getColumnIndex("broken_slots");
+		brokenBikesCol = c.getColumnIndex("broken_bikes");
 		
 		if (c.moveToFirst()) {
 			do {
-				stationList.add(new Station(c.getInt(id_col), 
-											c.getString(n_estacio_col),
-											c.getString(name_col),
-											c.getDouble(station_long_col),
-											c.getDouble(station_lat_col),
-											c.getInt(free_slots_col),
-											c.getInt(busy_slots_col),
-											c.getInt(broken_slots_col),
-											c.getInt(broken_bikes_col),
+				stationList.add(new Station(c.getInt(idCol), 
+											c.getString(nEstacioCol),
+											c.getString(nameCol),
+											c.getDouble(stationLongCol),
+											c.getDouble(stationLatCol),
+											c.getInt(freeSlotsCol),
+											c.getInt(busySlotsCol),
+											c.getInt(brokenSlotsCol),
+											c.getInt(brokenBikesCol),
 											false));
 			} while(c.moveToNext());
 		}
@@ -176,14 +176,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.execSQL(DELETE_STATIONS);
 		for (Station station : stations) {
 			values.put("id", station.getId());
-			values.put("n_estacio", station.getN_estacio());
+			values.put("n_estacio", station.getNEstacio());
 			values.put("name", station.getName());
 			values.put("station_long", station.getLong());
 			values.put("station_lat", station.getLat());
-			values.put("free_slots", station.getFree_slots());
-			values.put("busy_slots", station.getBusy_slots());
-			values.put("broken_slots", station.getBroken_slots());
-			values.put("broken_bikes", station.getBroken_bikes());
+			values.put("free_slots", station.getFreeSlots());
+			values.put("busy_slots", station.getBusySlots());
+			values.put("broken_slots", station.getBrokenSlots());
+			values.put("broken_bikes", station.getBrokenBikes());
 			db.insert(STATION_TABLE_NAME, null, values);
 		}
 		
@@ -195,14 +195,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		long res = 0;
 		SQLiteDatabase db;
 		Cursor c;
-		int time_col;
+		int timeCol;
 		
 		db = instance.getReadableDatabase();
 		c = db.rawQuery(GET_LAST_UPDATE_TIME, null);
-		time_col = c.getColumnIndex("time");
+		timeCol = c.getColumnIndex("time");
 		
 		if (c.moveToFirst()) {
-			res = c.getLong(time_col);
+			res = c.getLong(timeCol);
 		}
 		
 		c.close();		
@@ -214,7 +214,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	
 	public void saveLastUpdateTime (long time) {
 		SQLiteDatabase db;
-		ContentValues values = new ContentValues(1);
+		ContentValues  values = new ContentValues(1);
 		
 		db = instance.getWritableDatabase();
 		
@@ -232,7 +232,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		for (Station station : stations) {
 			if (station.isFavourite()) {
 				values.put("id", station.getId());
-				values.put("nestacio", station.getN_estacio());
+				values.put("nestacio", station.getNEstacio());
 				db.insert(FAVORITES_TABLE_NAME, null, values);
 			} else {
 				db.delete(FAVORITES_TABLE_NAME,"id='"+ station.getId() +"'", null);

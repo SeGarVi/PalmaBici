@@ -34,7 +34,8 @@
 
 <resources>
     
-    <style name="WelcomeTheme" parent="android:style/Theme.Holo.Light.NoActionBar">
+    <style name="WelcomeTheme" parent="Theme.Sherlock.Light">
+        <item name="android:actionBarStyle">@android:style/Theme.Holo.NoActionBar</item>
         <item name="android:background">#00599e</item>
         <item name="android:textColor" >#ffffff</item>
     </style>

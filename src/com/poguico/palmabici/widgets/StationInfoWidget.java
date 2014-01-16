@@ -60,20 +60,11 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		
 		int    freeBikes, freeSlots, brokenBikes, brokenSlots;
 		LinearLayout.LayoutParams layoutParams;
+		String formattedDistance = "";
 		
 		float[] distance           = new float[1];
-		Location my_location        = locationSynchronizer.getLocation();
+		Location myLocation         = locationSynchronizer.getLocation();
 		station = networkInformation.get(eItem.getDescription());
-		
-		Location.distanceBetween(station.getLat(),
-				 station.getLong(),
-				 my_location.getLatitude(),
-				 my_location.getLongitude(), distance);
-		
-		String formatted_distance = " (" + 
-				 Formatter.formatDistance(distance[0], context) +
-				 ")";
-		
 		
 		TextView title =
 				(TextView)mView.findViewById(R.id.markerTitle);
@@ -84,13 +75,23 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		LinearLayout lyBrokenApparel =
 				(LinearLayout)mView.findViewById(R.id.brokenApparel);
 		
-		freeBikes   = station.getBusy_slots();
-		freeSlots   = station.getFree_slots();
-		brokenBikes = station.getBroken_bikes();
-		brokenSlots = station.getBroken_slots();
+		freeBikes   = station.getBusySlots();
+		freeSlots   = station.getFreeSlots();
+		brokenBikes = station.getBrokenBikes();
+		brokenSlots = station.getBrokenSlots();
 		
+		if (myLocation != null) {
+			Location.distanceBetween(station.getLat(),
+					 station.getLong(),
+					 myLocation.getLatitude(),
+					 myLocation.getLongitude(), distance);
+			
+			formattedDistance += " ("
+			                   +  Formatter.formatDistance(distance[0], context)
+			                   +  ")";
+		}
 		
-		title.setText(eItem.getTitle() + formatted_distance);
+		title.setText(eItem.getTitle() + formattedDistance);
 		tvFreeBikes.setText(String.valueOf(freeBikes));
 		tvFreeSlots.setText(String.valueOf(freeSlots));
 		
@@ -109,8 +110,8 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,0));
 		}
 		
-		if (station.getBusy_slots() == 0 &&
-				station.getSlots() != station.getBroken_slots()) {
+		if (station.getBusySlots() == 0 &&
+				station.getSlots() != station.getBrokenSlots()) {
 			layoutParams = new LinearLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			layoutParams.setMargins(5, 5, 5, 5);

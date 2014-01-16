@@ -27,8 +27,8 @@ import android.location.Location;
 import android.location.LocationManager;
 
 public class Station implements Comparable <Station> {
-    private int id, free_slots, busy_slots, broken_slots, broken_bikes, slots;
-    private String n_estacio, name;
+    private int id, freeSlots, busySlots, brokenSlots, brokenBikes, slots;
+    private String nEstacio, name;
     private Location location;
     private Float distance;
     private boolean favourite;
@@ -38,7 +38,7 @@ public class Station implements Comparable <Station> {
      * Ugly solution to keep nice names
      * (change it to a properties file)
      */
-    private static final Map<String, String> nice_names;
+    private static final Map<String, String> niceNames;
     static {
         Map<String, String> aMap = new HashMap<String, String>();
     aMap.put("01", "Parc de ses Veles");
@@ -69,14 +69,14 @@ public class Station implements Comparable <Station> {
     aMap.put("60", "Travessera Ballester");
     aMap.put("63", "Pl. d'Espanya");
     aMap.put("65", "Pl. Alexandre Jaume");
-    nice_names = Collections.unmodifiableMap(aMap);
+    niceNames = Collections.unmodifiableMap(aMap);
     }
     
     /*
      * Ugly solution to keep correct locations
      * (change it to a properties file)
      */
-    private static final Map<String, GeoPoint> correct_locations;
+    private static final Map<String, GeoPoint> correctLocations;
     static {
         Map<String, GeoPoint> aMap = new HashMap<String, GeoPoint>();
         aMap.put("01", new GeoPoint(39.566129, 2.659499));
@@ -107,30 +107,30 @@ public class Station implements Comparable <Station> {
 	    aMap.put("60", new GeoPoint(39.570273, 2.655827));
 	    aMap.put("63", new GeoPoint(39.575190, 2.654070));
 	    aMap.put("65", new GeoPoint(39.572426, 2.655438));
-	    correct_locations = Collections.unmodifiableMap(aMap);
+	    correctLocations = Collections.unmodifiableMap(aMap);
     }
     
-    public Station(int id, String n_estacio, String name, double station_long,
-    		        double station_lat, int free_slots, int busy_slots,
-    		        int broken_slots, int broken_bikes, boolean favourite) {
+    public Station(int id, String nEstacio, String name, double stationLong,
+    		        double stationLat, int freeSlots, int busySlots,
+    		        int brokenSlots, int brokenBikes, boolean favourite) {
         this.id = id;
-        this.n_estacio = n_estacio;
-        this.free_slots = free_slots;
-        this.busy_slots = busy_slots;
-        this.broken_slots = broken_slots;
-        this.broken_bikes = broken_bikes;
-        this.slots = free_slots + busy_slots + broken_slots;
-        this.name = nice_names.get(n_estacio);
+        this.nEstacio = nEstacio;
+        this.freeSlots = freeSlots;
+        this.busySlots = busySlots;
+        this.brokenSlots = brokenSlots;
+        this.brokenBikes = brokenBikes;
+        this.slots = freeSlots + busySlots + brokenSlots;
+        this.name = niceNames.get(nEstacio);
         this.favourite = favourite;
                 
         location = new Location(LocationManager.NETWORK_PROVIDER);
         
-        if (correct_locations.get(n_estacio) != null) {
-            location.setLatitude(correct_locations.get(n_estacio).getLatitude());
-            location.setLongitude(correct_locations.get(n_estacio).getLongitude());
+        if (correctLocations.get(nEstacio) != null) {
+            location.setLatitude(correctLocations.get(nEstacio).getLatitude());
+            location.setLongitude(correctLocations.get(nEstacio).getLongitude());
         } else {
-            location.setLatitude(station_lat);
-            location.setLongitude(station_long);
+            location.setLatitude(stationLat);
+            location.setLongitude(stationLong);
         }
     }
 
@@ -142,40 +142,40 @@ public class Station implements Comparable <Station> {
         this.id = id;
     }
 
-    public String getN_estacio() {
-        return n_estacio;
+    public String getNEstacio() {
+        return nEstacio;
     }
 
-    public void setN_estacio(String n_estacio) {
-        this.n_estacio = n_estacio;
+    public void setNEstacio(String nEstacio) {
+        this.nEstacio = nEstacio;
     }
 
-    public int getFree_slots() {
-        return free_slots;
+    public int getFreeSlots() {
+        return freeSlots;
     }
 
-    public void setFree_slots(int free_slots) {
-        this.free_slots = free_slots;
+    public void setFreeSlots(int freeSlots) {
+        this.freeSlots = freeSlots;
     }
 
-    public int getBusy_slots() {
-        return busy_slots;
+    public int getBusySlots() {
+        return busySlots;
     }
 
-    public void setBusy_slots(int busy_slots) {
-        this.busy_slots = busy_slots;
+    public void setBusySlots(int busySlots) {
+        this.busySlots = busySlots;
     }
 
     public int getSlots() {
         return slots;
     }
 
-    public int getBroken_slots() {
-        return broken_slots;
+    public int getBrokenSlots() {
+        return brokenSlots;
     }
     
-    public int getBroken_bikes() {
-        return broken_bikes;
+    public int getBrokenBikes() {
+        return brokenBikes;
     }
 
     public String getName() {
@@ -217,9 +217,9 @@ public class Station implements Comparable <Station> {
     
     @Override
     public int compareTo(Station altra) {
-        Boolean inter_f = this.favourite;
-        Boolean exter_f = altra.favourite;
+        Boolean interF = this.favourite;
+        Boolean exterF = altra.favourite;
         
-        return exter_f.compareTo(inter_f);
+        return exterF.compareTo(interF);
     }
 }

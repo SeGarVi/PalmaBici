@@ -102,13 +102,13 @@ public class NetworkSynchronizerTask {
 		
 		try {
 			HttpResponse response = client.execute(request);
-			StatusLine   status_line = response.getStatusLine();
-			ret[0] = String.valueOf(status_line.getStatusCode());
-			if (status_line.getStatusCode() == HTTP_STATUS_OK) {
+			StatusLine   statusLine = response.getStatusLine();
+			ret[0] = String.valueOf(statusLine.getStatusCode());
+			if (statusLine.getStatusCode() == HTTP_STATUS_OK) {
 				HttpEntity entity = response.getEntity();
 				InputStream content = entity.getContent();
-				InputStreamReader content_reader = new InputStreamReader(content);
-				BufferedReader reader = new BufferedReader(content_reader);
+				InputStreamReader contentReader = new InputStreamReader(content);
+				BufferedReader reader = new BufferedReader(contentReader);
 				
 				while ((line = reader.readLine()) != null) {
 					builder.append(line);

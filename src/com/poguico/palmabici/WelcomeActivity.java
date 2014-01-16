@@ -17,7 +17,6 @@
 
 package com.poguico.palmabici;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.poguico.palmabici.map.OpenStreetMapConstants;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer.NetworkSynchronizationState;
@@ -31,7 +30,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 
-public class WelcomeActivity extends    SherlockFragmentActivity
+public class WelcomeActivity extends    FragmentActivity
                                implements SynchronizableElement,
                                         OpenStreetMapConstants    {
 
@@ -58,7 +57,7 @@ public class WelcomeActivity extends    SherlockFragmentActivity
 		synchronizer.addSynchronizableElement(this);
 		
 		if (conf.getBoolean("autoupdate", true)) {
-			syncState = synchronizer.sync();
+			syncState = synchronizer.sync(false);
 			
 			if (syncState == NetworkSynchronizationState.UPDATED) {
 				onSuccessfulNetworkSynchronization();

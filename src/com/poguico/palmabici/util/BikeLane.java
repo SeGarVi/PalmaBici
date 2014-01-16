@@ -62,11 +62,11 @@ public class BikeLane {
             					                      pathWidth,
             					                      mapView.getResourceProxy());
             			for (String coordinate : text.split("\n")) {
-            				String[] coord_elements = coordinate.split(",");
+            				String[] coordElements = coordinate.split(",");
 
                 			pathOverlay.addPoint(
-                				new GeoPoint(Double.valueOf(coord_elements[1]),
-            						         Double.valueOf(coord_elements[0])));
+                				new GeoPoint(Double.valueOf(coordElements[1]),
+            						         Double.valueOf(coordElements[0])));
             			}
             			
             			osmPaths.add(pathOverlay);
