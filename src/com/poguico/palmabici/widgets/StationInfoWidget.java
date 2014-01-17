@@ -20,6 +20,8 @@ package com.poguico.palmabici.widgets;
 import android.content.Context;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -31,6 +33,7 @@ import org.osmdroid.views.MapView;
 
 import com.poguico.palmabici.R;
 import com.poguico.palmabici.SynchronizableElement;
+import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.synchronizers.LocationSynchronizer;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
@@ -39,17 +42,20 @@ import com.poguico.palmabici.util.Station;
 public class StationInfoWidget extends DefaultInfoWindow implements SynchronizableElement {
 
 	private NetworkInformation   networkInformation;
+	private NetworkSynchronizer  networkSynchronizer;
 	private LocationSynchronizer locationSynchronizer;
 	private Context              context;
 	private ExtendedOverlayItem  eItem;
 	private Station              station;
 	private ImageButton          alarmButton;
+	private boolean             active;
 	
 	public StationInfoWidget (MapView mapView, SynchronizableElement parentActivity) {
 		super(R.layout.station_info, mapView);
 		context = parentActivity.getSynchronizableActivity().getApplicationContext();
 		networkInformation = NetworkInformation.getInstance(context);
 		locationSynchronizer = LocationSynchronizer.getInstance(parentActivity);
+		networkSynchronizer  = NetworkSynchronizer.getInstance(context);
 		alarmButton = (ImageButton)mView.findViewById(R.id.alarmButton);
 	}
 	
@@ -57,7 +63,7 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 	public void onOpen(Object item) {
 		//super.onOpen(item);
 		eItem = (ExtendedOverlayItem)item;
-		
+
 		int    freeBikes, freeSlots, brokenBikes, brokenSlots;
 		LinearLayout.LayoutParams layoutParams;
 		String formattedDistance = "";
@@ -116,11 +122,26 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			layoutParams.setMargins(5, 5, 5, 5);
 			alarmButton.setLayoutParams(layoutParams);
+			
+			if (networkSynchronizer.hasAlarm(station.getNEstacio())) {
+				alarmButton.setImageResource(R.drawable.bell_active);
+				active = true;
+			} else {
+				alarmButton.setImageResource(R.drawable.bell);
+				active = false;
+			}
 		} else {
 			layoutParams = new LinearLayout.LayoutParams(0,0);
-			layoutParams.setMargins(5, 5, 5, 5);
+			layoutParams.setMargins(0, 0, 0, 0);
 			alarmButton.setLayoutParams(layoutParams);
 		}
+		alarmButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toggleAlarm();	
+			}
+		});
+		
 		locationSynchronizer.addSynchronizableElement(this);
 	}
 	
@@ -160,5 +181,17 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 	public FragmentActivity getSynchronizableActivity() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void toggleAlarm() {
+		if (active) {
+			networkSynchronizer.removeAlarm(station.getNEstacio());
+			active = false;
+			alarmButton.setImageResource(R.drawable.bell);
+		} else {
+			networkSynchronizer.addAlarm(station.getNEstacio());
+			active = true;
+			alarmButton.setImageResource(R.drawable.bell_active);
+		}
 	}
 }

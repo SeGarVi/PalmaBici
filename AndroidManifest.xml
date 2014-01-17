@@ -59,6 +59,7 @@
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
+        <service android:name=".network.synchronizer.NetworkStationAlarm" android:label="NetworkStationAlarm" android:logo="@drawable/launcher" android:icon="@drawable/launcher"></service>
     </application>
 
 </manifest>

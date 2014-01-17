@@ -21,8 +21,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.sax.StartElementListener;
 
 import com.poguico.palmabici.DatabaseManager;
 import com.poguico.palmabici.SynchronizableElement;
@@ -37,6 +39,7 @@ public class NetworkSynchronizer {
 	private Context context;
 	private Long    lastUpdate = null;
 	private NetworkSynchronizationState syncState = NetworkSynchronizationState.UPDATED;
+	private Intent networkStationAlarm = null;
 	
 	private NetworkSynchronizer(Context context) {
 		synchronizableElements = new ArrayList<SynchronizableElement>();
@@ -98,6 +101,18 @@ public class NetworkSynchronizer {
 		return NetworkSynchronizationState.UPDATING;
 	}
 	
+	public void addAlarm(String id) {
+		NetworkStationAlarm.addAlarm(context, id);
+		if (!NetworkStationAlarm.isActive()) {
+			networkStationAlarm = new Intent(context, NetworkStationAlarm.class);
+			context.startService(networkStationAlarm);
+		}
+	}
+	
+	public void removeAlarm(String id) {
+		NetworkStationAlarm.removeAlarm(id);
+	}
+	
 	public synchronized void addSynchronizableElement(SynchronizableElement element) {
 		if (!synchronizableElements.contains(element)) { 
 			synchronizableElements.add(element);
@@ -106,5 +121,9 @@ public class NetworkSynchronizer {
 	
 	public synchronized void detachSynchronizableElement(SynchronizableElement element) {
 		synchronizableElements.remove(element);
+	}
+	
+	public boolean hasAlarm(String id) {
+		return NetworkStationAlarm.hasAlarm(id);
 	}
 }
