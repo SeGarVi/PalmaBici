@@ -103,15 +103,9 @@ public class NetworkStationAlarm extends IntentService {
 		Bitmap bigIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.palmabici_bw);
 		Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		
-		Intent resultIntent = new Intent(this, MainActivity.class);
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		stackBuilder.addParentStack(MainActivity.class);
-		stackBuilder.addNextIntent(resultIntent);
-		PendingIntent resultPendingIntent =
-		        stackBuilder.getPendingIntent(
-		            0,
-		            PendingIntent.FLAG_UPDATE_CURRENT
-		        );
+		PendingIntent intent=PendingIntent.getActivity(this, 0,
+				new Intent(this, MainActivity.class),
+				0);
 		
 		NotificationCompat.Builder mBuilder =
 		        new NotificationCompat.Builder(this)
@@ -121,11 +115,12 @@ public class NetworkStationAlarm extends IntentService {
 		        .setContentText("Alarm service finished!")
 		        .setLights(0x0000ff00, 1000, 1000)
 		        .setTicker("Alarm service finished!")
-		        .setSound(uri);
+		        .setSound(uri)
+		        .setAutoCancel(true);
 		
 		NotificationManager mgr=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
-		mBuilder.setContentIntent(resultPendingIntent);
+		mBuilder.setContentIntent(intent);
 		mgr.notify(1234, mBuilder.build());
 	}
 
