@@ -55,5 +55,9 @@ Affero GNU General Public License for more details
     <string name="last_updated">Actualizado hace</string>
     <string name="ago"></string>
     <string name="more_than">más de</string>
+    <string name="there_is">Hay </string>
+    <string name="there_are">Hay </string>
+    <string name="bike_available_in"> bici disponbible en </string>
+    <string name="bikes_available_in"> bicis disponbibles en </string>
 
 </resources>

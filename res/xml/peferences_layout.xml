@@ -37,6 +37,13 @@
 	        android:summary="@string/preferences_show_bike_lane_tip"
 	        android:title="@string/preferences_show_bike_lane">        
 	    </CheckBoxPreference>
+	    
+        <CheckBoxPreference
+	        android:key="only_one_alarm"
+	        android:defaultValue="true"
+	        android:summary="@string/preferences_only_one_alarm_tip"
+	        android:title="@string/preferences_only_one_alarm">        
+	    </CheckBoxPreference>
     </PreferenceCategory>
     
     <!-- <PreferenceCategory android:title="@string/preferences_list" />

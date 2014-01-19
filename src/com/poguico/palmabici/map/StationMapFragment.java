@@ -44,6 +44,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -231,6 +232,7 @@ public class StationMapFragment extends Fragment implements
         edit.putInt(PREFS_SCROLL_Y, mMapView.getScrollY());
         edit.putInt(PREFS_ZOOM_LEVEL, mMapView.getZoomLevel());
         edit.putInt(PREFS_SHOWN_MARKER, markerOverlay.getBubbledItemId());
+        edit.putString(PREFS_SHOWN_STATION, null);
         edit.commit();
         markerOverlay.hideBubble();
         
@@ -240,10 +242,14 @@ public class StationMapFragment extends Fragment implements
 	@Override
     public void onResume() {
 		int shownBubble;
+		String activeStation;
         super.onResume();
         
-        shownBubble = mPrefs.getInt(PREFS_SHOWN_MARKER, -1);
-        if (shownBubble >= 0) {
+        shownBubble   = mPrefs.getInt(PREFS_SHOWN_MARKER, -1);
+        activeStation = mPrefs.getString(PREFS_SHOWN_STATION, null);
+        if (activeStation != null) {
+        	markerOverlay.showBubbleOnItem(mapMarkers.get(activeStation), mMapView, true);
+        } else if (shownBubble >= 0) {
         	markerOverlay.showBubbleOnItem(shownBubble, mMapView, true);	
         }
         

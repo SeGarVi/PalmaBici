@@ -68,4 +68,20 @@ public class Formatter {
 		
 		return ret; 
 	}
+	
+	public static String formatBikesAvailableMessage(Context context, Station station) {
+		String message = "";
+		if (station.getBusySlots() > 1) {
+			message += context.getString(R.string.there_are) + " "
+			        +  station.getBusySlots() + " "
+			        +  context.getString(R.string.bikes_available_in) + " ";
+		} else {
+			message += context.getString(R.string.there_is) + " "
+			        +  station.getBusySlots() + " "
+			        +  context.getString(R.string.bike_available_in) + " ";
+		}
+		message += station.getName();
+		
+		return message;
+	}
 }

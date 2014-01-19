@@ -48,6 +48,7 @@ public interface OpenStreetMapConstants {
 	public static final String PREFS_SHOW_COMPASS = "showCompass";
 	
 	public static final String PREFS_SHOWN_MARKER = "shownMarker";
+	public static final String PREFS_SHOWN_STATION = "shownStation";
 
 	// ===========================================================
 	// Methods

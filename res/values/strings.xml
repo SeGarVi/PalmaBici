@@ -58,6 +58,8 @@ Affero GNU General Public License for more details
     <string name="preferences_show_bike_lane">Show bike lane</string>
     <string name="preferences_map">Map</string>
     <string name="preferences_show_bike_lane_tip">Show bike lane and cycle streets in the map</string>
+    <string name="preferences_only_one_alarm">Only one alarm</string>
+    <string name="preferences_only_one_alarm_tip">If there is more than one alarm set, only the first will ring.</string>
     <string name="connectivity_error">You don\'t have internet connection!</string>
     <string name="free_bikes">Free bikes</string>
     <string name="free_slots">Free slots</string>
@@ -71,5 +73,8 @@ Affero GNU General Public License for more details
     <string name="last_updated">Updated</string>
     <string name="ago">ago</string>
     <string name="more_than">more than</string>
-
+    <string name="there_is">There is </string>
+    <string name="there_are">There are </string>
+    <string name="bike_available_in"> bike available in </string>
+    <string name="bikes_available_in"> bikes available in </string>
 </resources>
