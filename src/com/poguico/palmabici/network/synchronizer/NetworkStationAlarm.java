@@ -3,17 +3,21 @@ package com.poguico.palmabici.network.synchronizer;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
+import com.poguico.palmabici.MainActivity;
 import com.poguico.palmabici.R;
 import com.poguico.palmabici.util.NetworkInformation;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 public class NetworkStationAlarm extends IntentService {
@@ -52,15 +56,6 @@ public class NetworkStationAlarm extends IntentService {
 	
 	@Override
 	protected void onHandleIntent(Intent arg0) {
-		Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		NotificationCompat.Builder mBuilder =
-		        new NotificationCompat.Builder(this)
-		        .setSmallIcon(R.drawable.launcher)
-		        .setContentTitle("AlarmService")
-		        .setContentText("Alarm service finished!")
-		        .setSound(uri);
-		
-		NotificationManager mgr=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		Log.i("NetworkStationAlarm", "Starting thread");
 		while (!NetworkStationAlarm.stationAlarms.isEmpty()) {
 			Log.i("NetworkStationAlarm", "Getting network info...");
@@ -94,7 +89,7 @@ public class NetworkStationAlarm extends IntentService {
 			}
 		}
 		Log.i("NetworkStationAlarm", "Finishing thread");
-		mgr.notify(1234, mBuilder.build());
+		showNotification();
 	}
 
 	@Override
@@ -102,6 +97,36 @@ public class NetworkStationAlarm extends IntentService {
 		Log.i("NetworkStationAlarm", "Destroying class");
 		active = false;
 		super.onDestroy();
+	}
+	
+	public void showNotification() {
+		Bitmap bigIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.palmabici_bw);
+		Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		
+		Intent resultIntent = new Intent(this, MainActivity.class);
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		stackBuilder.addParentStack(MainActivity.class);
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPendingIntent =
+		        stackBuilder.getPendingIntent(
+		            0,
+		            PendingIntent.FLAG_UPDATE_CURRENT
+		        );
+		
+		NotificationCompat.Builder mBuilder =
+		        new NotificationCompat.Builder(this)
+		        .setSmallIcon(R.drawable.bike)
+		        .setLargeIcon(bigIcon)
+		        .setContentTitle("AlarmService")
+		        .setContentText("Alarm service finished!")
+		        .setLights(0x0000ff00, 1000, 1000)
+		        .setTicker("Alarm service finished!")
+		        .setSound(uri);
+		
+		NotificationManager mgr=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+		mBuilder.setContentIntent(resultPendingIntent);
+		mgr.notify(1234, mBuilder.build());
 	}
 
 	public static boolean isActive() {
