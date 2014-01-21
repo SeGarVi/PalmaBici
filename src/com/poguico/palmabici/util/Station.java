@@ -32,6 +32,7 @@ public class Station implements Comparable <Station> {
     private Location location;
     private Float distance;
     private boolean favourite;
+    private boolean hasAlarm;
     private float bearing;
     
     /*
@@ -49,12 +50,14 @@ public class Station implements Comparable <Station> {
     aMap.put("15", "J. Verdaguer - J. Balmes");
     aMap.put("16", "Parc de sa Riera");
     aMap.put("17", "Aragó - J. Balmes");
+    aMap.put("18", "Metge Darder");
     aMap.put("21", "Pl. Alexander Flemimg");
     aMap.put("24", "Blanquerna - C. de Sallent");
     aMap.put("25", "Blanquerna - Bartolomé");
     aMap.put("27", "Pl. París");
     aMap.put("29", "Institut Balear");
     aMap.put("31", "Pl. Madrid");
+    aMap.put("34", "Sant Ferran");
     aMap.put("37", "Av. Argentina");
     aMap.put("41", "Fàbrica");
     aMap.put("45", "Jaume III");
@@ -64,11 +67,14 @@ public class Station implements Comparable <Station> {
     aMap.put("51", "Via Roma");
     aMap.put("52", "Cecili Metel");
     aMap.put("55", "Pl. Santa Eulàlia");
-    aMap.put("56", "Pl. del Mercat");
+    //aMap.put("56", "Pl. del Mercat");
     aMap.put("59", "Mateu Enric Lladó");
     aMap.put("60", "Travessera Ballester");
     aMap.put("63", "Pl. d'Espanya");
     aMap.put("65", "Pl. Alexandre Jaume");
+    aMap.put("61", "Pl. del Pont");
+    aMap.put("70", "Ctra. de Valldemossa");
+    aMap.put("77", "Son Costa - Son Fortesa");
     niceNames = Collections.unmodifiableMap(aMap);
     }
     
@@ -102,7 +108,7 @@ public class Station implements Comparable <Station> {
 	    aMap.put("51", new GeoPoint(39.575189, 2.647993));
 	    aMap.put("52", new GeoPoint(39.576453, 2.650509));
 	    aMap.put("55", new GeoPoint(39.569171, 2.650747));
-	    aMap.put("56", new GeoPoint(39.571149, 2.648555));
+	    //aMap.put("56", new GeoPoint(39.571149, 2.648555));
 	    aMap.put("59", new GeoPoint(39.567688, 2.656039));
 	    aMap.put("60", new GeoPoint(39.570273, 2.655827));
 	    aMap.put("63", new GeoPoint(39.575190, 2.654070));
@@ -112,7 +118,8 @@ public class Station implements Comparable <Station> {
     
     public Station(int id, String nEstacio, String name, double stationLong,
     		        double stationLat, int freeSlots, int busySlots,
-    		        int brokenSlots, int brokenBikes, boolean favourite) {
+    		        int brokenSlots, int brokenBikes, boolean favourite,
+    		        boolean hasAlarm) {
         this.id = id;
         this.nEstacio = nEstacio;
         this.freeSlots = freeSlots;
@@ -122,6 +129,7 @@ public class Station implements Comparable <Station> {
         this.slots = freeSlots + busySlots + brokenSlots;
         this.name = niceNames.get(nEstacio);
         this.favourite = favourite;
+        this.hasAlarm = hasAlarm;
                 
         location = new Location(LocationManager.NETWORK_PROVIDER);
         
@@ -222,4 +230,8 @@ public class Station implements Comparable <Station> {
         
         return exterF.compareTo(interF);
     }
+
+	public boolean hasAlarm() {
+		return hasAlarm;
+	}
 }

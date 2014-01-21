@@ -26,8 +26,7 @@
 	        android:key="autoupdate"
 	        android:defaultValue="true"
 	        android:summary="@string/preferences_autoupdate_tip"
-	        android:title="@string/preferences_autoupdate">        
-	    </CheckBoxPreference>
+	        android:title="@string/preferences_autoupdate" />
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/preferences_map" >
@@ -35,15 +34,21 @@
 	        android:key="show_bike_lane"
 	        android:defaultValue="true"
 	        android:summary="@string/preferences_show_bike_lane_tip"
-	        android:title="@string/preferences_show_bike_lane">        
-	    </CheckBoxPreference>
-	    
+	        android:title="@string/preferences_show_bike_lane" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/preferences_alarms" >
         <CheckBoxPreference
 	        android:key="only_one_alarm"
 	        android:defaultValue="true"
 	        android:summary="@string/preferences_only_one_alarm_tip"
-	        android:title="@string/preferences_only_one_alarm">        
-	    </CheckBoxPreference>
+	        android:title="@string/preferences_only_one_alarm" />
+	    
+        <CheckBoxPreference
+	        android:key="alarm_timeout"
+	        android:defaultValue="false"
+	        android:summary="@string/preferences_alarm_timeout_tip"
+	        android:title="@string/preferences_alarm_timeout" />
     </PreferenceCategory>
     
     <!-- <PreferenceCategory android:title="@string/preferences_list" />

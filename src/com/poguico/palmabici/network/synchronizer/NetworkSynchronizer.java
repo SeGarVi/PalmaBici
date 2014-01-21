@@ -28,6 +28,7 @@ import android.sax.StartElementListener;
 
 import com.poguico.palmabici.DatabaseManager;
 import com.poguico.palmabici.SynchronizableElement;
+import com.poguico.palmabici.util.Station;
 
 public class NetworkSynchronizer {
 	private static final long UPDATE_TIME = 600000;
@@ -101,16 +102,16 @@ public class NetworkSynchronizer {
 		return NetworkSynchronizationState.UPDATING;
 	}
 	
-	public void addAlarm(String id) {
-		NetworkStationAlarm.addAlarm(context, id);
+	public void addAlarm(Station station) {
+		NetworkStationAlarm.addAlarm(context, station);
 		if (!NetworkStationAlarm.isActive()) {
 			networkStationAlarm = new Intent(context, NetworkStationAlarm.class);
 			context.startService(networkStationAlarm);
 		}
 	}
 	
-	public void removeAlarm(String id) {
-		NetworkStationAlarm.removeAlarm(id);
+	public void removeAlarm(Station station) {
+		NetworkStationAlarm.removeAlarm(station);
 	}
 	
 	public synchronized void addSynchronizableElement(SynchronizableElement element) {

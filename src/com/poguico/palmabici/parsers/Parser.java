@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.poguico.palmabici.network.synchronizer.NetworkStationAlarm;
 import com.poguico.palmabici.util.Station;
 
 public class Parser {
@@ -31,6 +32,7 @@ public class Parser {
         JSONArray jsonArray;
         JSONObject jsonObject;
         Long lngAcum=0L, latAcum=0L;
+        String nEstacio;
         
         try {
             jsonArray = new JSONArray(data);
@@ -41,8 +43,9 @@ public class Parser {
                 lngAcum += jsonObject.getLong("lng");
                 latAcum += jsonObject.getLong("lat");
                 
+                nEstacio = jsonObject.getString("name").substring(1, 3);
                 stations.add(new Station(jsonObject.getInt("id"),
-                                         jsonObject.getString("name").substring(1, 3),
+                                         nEstacio,
                                          jsonObject.getString("name").substring(5),
                                          jsonObject.getDouble("lng") / 1e6,
                                          jsonObject.getDouble("lat") / 1e6,
@@ -50,7 +53,8 @@ public class Parser {
                                          jsonObject.getInt("bikes"),
                                          jsonObject.getInt("free_fck"),
                                          jsonObject.getInt("bikes_fck"),
-                                         false));
+                                         false,
+                                         NetworkStationAlarm.hasAlarm(nEstacio)));
             }
         } catch (Exception e) {
             e.printStackTrace();

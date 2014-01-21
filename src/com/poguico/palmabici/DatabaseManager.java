@@ -29,7 +29,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 	
-	private static final int    DB_VERSION = 4;
+	private static final int    DB_VERSION = 5;
 	private static final String DB_NAME    = "palmabici";
 	private static final String STATION_TABLE_NAME     = "station";
 	private static final String LAST_UPDATE_TABLE_NAME = "last_update";
@@ -45,12 +45,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
             		+ "free_slots   INTEGER, "
             		+ "busy_slots   INTEGER, "
             		+ "broken_slots INTEGER, "
-            		+ "broken_bikes INTEGER"
+            		+ "broken_bikes INTEGER,"
+            		+ "has_alarm    INTEGER"
             		+ ");";
 	private static final String STATION_TABLE_V4UPDATE =
             "ALTER TABLE \"" + STATION_TABLE_NAME + "\" "
             		+ "ADD broken_slots   INTEGER DEFAULT 0, "
             		+ "ADD broken_bikes   INTEGER DEFAULT 0"
+            		+ ";";
+	private static final String STATION_TABLE_V5UPDATE =
+            "ALTER TABLE \"" + STATION_TABLE_NAME + "\" "
+            		+ "ADD has_alarm INTEGER DEFAULT 0"
             		+ ";";
 	private static final String LAST_UPDATE_TABLE_CREATE =
             "CREATE TABLE \"" + LAST_UPDATE_TABLE_NAME + "\" (time INTEGER);";
@@ -69,7 +74,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			"DELETE FROM \"" + STATION_TABLE_NAME + "\"";
 	private static final String DELETE_LAST_UPDATE_TIME =
 			"DELETE FROM \"" + LAST_UPDATE_TABLE_NAME + "\"";
-	
 	
 	private static DatabaseManager instance;
 	
@@ -91,6 +95,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			db.execSQL(LAST_UPDATE_TABLE_CREATE);
 		} else if (oldVersion == 3 ) {
 			db.execSQL(STATION_TABLE_V4UPDATE);
+			db.execSQL(STATION_TABLE_V5UPDATE);
+		} else if (oldVersion == 4) {
+			db.execSQL(STATION_TABLE_V5UPDATE);
 		}
 	}
 
@@ -119,8 +126,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		}
 		
 		c.close();		
-		if (db != null)
-		    db.close();
+		db.close();
 		
 		return res;
 	}
@@ -130,7 +136,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		SQLiteDatabase db;
 		Cursor c;
 		int idCol, nEstacioCol, nameCol, stationLongCol, stationLatCol,
-		    freeSlotsCol,  busySlotsCol, brokenSlotsCol, brokenBikesCol;
+		    freeSlotsCol,  busySlotsCol, brokenSlotsCol, brokenBikesCol, hasAlarm;
 		
 		db = instance.getReadableDatabase();
 		c  = db.rawQuery(GET_STATIONS, null);
@@ -144,6 +150,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		busySlotsCol   = c.getColumnIndex("busy_slots");
 		brokenSlotsCol = c.getColumnIndex("broken_slots");
 		brokenBikesCol = c.getColumnIndex("broken_bikes");
+		hasAlarm       = c.getColumnIndex("has_alarm");
 		
 		if (c.moveToFirst()) {
 			do {
@@ -156,13 +163,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
 											c.getInt(busySlotsCol),
 											c.getInt(brokenSlotsCol),
 											c.getInt(brokenBikesCol),
-											false));
+											false,
+											c.getInt(hasAlarm) == 1));
 			} while(c.moveToNext());
 		}
 		
-		c.close();		
-		if (db != null)
-		    db.close();
+		c.close();
+		db.close();
 		
 		return stationList;
 	}
@@ -184,11 +191,46 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			values.put("busy_slots", station.getBusySlots());
 			values.put("broken_slots", station.getBrokenSlots());
 			values.put("broken_bikes", station.getBrokenBikes());
+			values.put("has_alarm", station.hasAlarm()? 1 : 0);
 			db.insert(STATION_TABLE_NAME, null, values);
 		}
 		
-		if (db != null)
-		    db.close();
+		/*SQLiteDatabase db;
+		ContentValues values = new ContentValues();
+		
+		db = instance.getReadableDatabase();
+
+		// New value for one column
+		values.put("has_alarm", value);
+
+		for (Station station : stations) {
+			values.put("id", station.getId());
+			values.put("n_estacio", station.getNEstacio());
+			values.put("name", station.getName());
+			values.put("station_long", station.getLong());
+			values.put("station_lat", station.getLat());
+			values.put("free_slots", station.getFreeSlots());
+			values.put("busy_slots", station.getBusySlots());
+			values.put("broken_slots", station.getBrokenSlots());
+			values.put("broken_bikes", station.getBrokenBikes());
+			db.update(
+		    STATION_TABLE_NAME,
+		    values,
+		    selection,
+		    selectionArgs)
+		}
+
+		// Which row to update, based on the ID
+		String selection = "id" + " LIKE ?";
+		String[] selectionArgs = { String.valueOf(station.getId()) };
+
+		int count = db.update(
+		    STATION_TABLE_NAME,
+		    values,
+		    selection,
+		    selectionArgs);*/
+		
+		db.close();
 	}
 	
 	public long getLastUpdateTime () {
@@ -206,8 +248,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		}
 		
 		c.close();		
-		if (db != null)
-		    db.close();
+		
+		db.close();
 		
 		return res;
 	}
@@ -221,6 +263,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		db.execSQL(DELETE_LAST_UPDATE_TIME);
 		values.put("time", time);
 		db.insert(LAST_UPDATE_TABLE_NAME, null, values);
+		db.close();
 	}
 	
 	public void saveFavouriteStations (ArrayList <Station> stations) {
@@ -239,7 +282,36 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			}
 		}
 		
-		if (db != null)
-		    db.close();
+		db.close();
+	}
+	
+	public void setAlarm(Station station) {
+		setAlarmValue(station, 1);
+	}
+	
+	public void removeAlarm(Station station) {
+		setAlarmValue(station, 0);
+	}
+	
+	private void setAlarmValue(Station station, int value) {
+		SQLiteDatabase db;
+		ContentValues values = new ContentValues();
+		
+		db = instance.getReadableDatabase();
+
+		// New value for one column
+		values.put("has_alarm", value);
+
+		// Which row to update, based on the ID
+		String selection = "id" + " LIKE ?";
+		String[] selectionArgs = { String.valueOf(station.getId()) };
+
+		int count = db.update(
+		    STATION_TABLE_NAME,
+		    values,
+		    selection,
+		    selectionArgs);
+		
+		db.close();
 	}
 }

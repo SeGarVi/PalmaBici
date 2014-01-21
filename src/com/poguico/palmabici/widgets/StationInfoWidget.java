@@ -185,11 +185,11 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 	
 	public void toggleAlarm() {
 		if (active) {
-			networkSynchronizer.removeAlarm(station.getNEstacio());
+			networkSynchronizer.removeAlarm(station);
 			active = false;
 			alarmButton.setImageResource(R.drawable.bell);
 		} else {
-			networkSynchronizer.addAlarm(station.getNEstacio());
+			networkSynchronizer.addAlarm(station);
 			active = true;
 			alarmButton.setImageResource(R.drawable.bell_active);
 		}

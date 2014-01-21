@@ -25,6 +25,8 @@ import org.osmdroid.util.GeoPoint;
 import android.content.Context;
 
 import com.poguico.palmabici.DatabaseManager;
+import com.poguico.palmabici.network.synchronizer.NetworkStationAlarm;
+import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 
 public class NetworkInformation {
     private static NetworkInformation instance = null;
@@ -34,6 +36,7 @@ public class NetworkInformation {
     private HashMap<String, Station> mappedNetwork;
     private ArrayList <String>       favourites;
     private long                     lastUpdateTime;
+    private NetworkSynchronizer      networkSynchronizer;
     
     private NetworkInformation (Context context) {
     	DatabaseManager dbManager = DatabaseManager.getInstance(context);
@@ -43,6 +46,13 @@ public class NetworkInformation {
         lastUpdateTime = dbManager.getLastUpdateTime();
         mappedNetwork  = new HashMap<String, Station>();
         setNetwork(dbManager.getLastStationNetworkState(context));
+        
+        networkSynchronizer = NetworkSynchronizer.getInstance(context);
+        for (Station station : network) {
+        	if (station.hasAlarm()) {
+        		networkSynchronizer.addAlarm(station);
+        	}
+        }
     }
     
     public static synchronized NetworkInformation getInstance (Context context) {

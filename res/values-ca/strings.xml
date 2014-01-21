@@ -46,6 +46,11 @@ Affero GNU General Public License for more details
     <string name="preferences_map">Mapa</string>
     <string name="preferences_show_bike_lane_tip">Mostrar carrils bici i ciclocarrers al mapa</string>
     <string name="connectivity_error">No disposes de connexió a internet!</string>
+    <string name="preferences_alarms">Alarmes</string>
+    <string name="preferences_only_one_alarm">Només una alarma</string>
+    <string name="preferences_only_one_alarm_tip">Si hi ha més d\'una alarma activada, només sonará la primera.</string>
+    <string name="preferences_alarm_timeout">Temps d\'espera</string>
+    <string name="preferences_alarm_timeout_tip">Si no hi ha cap bicicleta disponible en 20 minuts, es desactiven les alarmes (estalvia bateria i transmissió de dades).</string>
     <string name="free_bikes">Bicis lliures</string>
     <string name="free_slots">Anclatges lliures</string>
     <string name="broken_bikes">Bicis avariades</string>
