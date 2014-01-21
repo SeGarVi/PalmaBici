@@ -18,6 +18,7 @@
 package com.poguico.palmabici.widgets;
 
 import android.content.Context;
+import android.content.res.Resources.NotFoundException;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -33,6 +34,7 @@ import org.osmdroid.views.MapView;
 
 import com.poguico.palmabici.R;
 import com.poguico.palmabici.SynchronizableElement;
+import com.poguico.palmabici.network.synchronizer.NetworkStationAlarm;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.synchronizers.LocationSynchronizer;
 import com.poguico.palmabici.util.Formatter;
@@ -139,6 +141,28 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 			@Override
 			public void onClick(View v) {
 				toggleAlarm();	
+				String filename  = "marker0";
+				filename +=  (station.getBrokenBikes() > 0 ||
+						      station.getBrokenSlots() > 0) ?
+						    	"_alert" : "";
+				filename +=  (NetworkStationAlarm.hasAlarm(station.getNEstacio())) ?
+					    	"_alarm" : "";
+				try {
+					eItem.setMarker(context.getResources().getDrawable(
+							R.drawable.class.getDeclaredField(filename).getInt(null)));
+				} catch (NotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchFieldException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		

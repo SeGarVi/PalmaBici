@@ -50,6 +50,7 @@ import android.view.ViewGroup;
 
 import com.poguico.palmabici.R;
 import com.poguico.palmabici.SynchronizableElement;
+import com.poguico.palmabici.network.synchronizer.NetworkStationAlarm;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.synchronizers.LocationSynchronizer;
 import com.poguico.palmabici.util.BikeLane;
@@ -139,6 +140,8 @@ public class StationMapFragment extends Fragment implements
 					filename +=  (station.getBrokenBikes() > 0 ||
 							      station.getBrokenSlots() > 0) ?
 							    	"_alert" : "";
+					filename +=  (NetworkStationAlarm.hasAlarm(station.getNEstacio())) ?
+						    	"_alarm" : "";
 					marker.setMarker(
 						getResources().getDrawable(
 							R.drawable.class.getDeclaredField(filename).getInt(null)));
