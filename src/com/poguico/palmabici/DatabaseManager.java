@@ -174,7 +174,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		return stationList;
 	}
 	
-	public void saveLastStationNetworkState (ArrayList <Station> stations) {
+	public synchronized void saveLastStationNetworkState (ArrayList <Station> stations) {
 		SQLiteDatabase db;
 		ContentValues values = new ContentValues(7);
 		
@@ -194,41 +194,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			values.put("has_alarm", station.hasAlarm()? 1 : 0);
 			db.insert(STATION_TABLE_NAME, null, values);
 		}
-		
-		/*SQLiteDatabase db;
-		ContentValues values = new ContentValues();
-		
-		db = instance.getReadableDatabase();
-
-		// New value for one column
-		values.put("has_alarm", value);
-
-		for (Station station : stations) {
-			values.put("id", station.getId());
-			values.put("n_estacio", station.getNEstacio());
-			values.put("name", station.getName());
-			values.put("station_long", station.getLong());
-			values.put("station_lat", station.getLat());
-			values.put("free_slots", station.getFreeSlots());
-			values.put("busy_slots", station.getBusySlots());
-			values.put("broken_slots", station.getBrokenSlots());
-			values.put("broken_bikes", station.getBrokenBikes());
-			db.update(
-		    STATION_TABLE_NAME,
-		    values,
-		    selection,
-		    selectionArgs)
-		}
-
-		// Which row to update, based on the ID
-		String selection = "id" + " LIKE ?";
-		String[] selectionArgs = { String.valueOf(station.getId()) };
-
-		int count = db.update(
-		    STATION_TABLE_NAME,
-		    values,
-		    selection,
-		    selectionArgs);*/
 		
 		db.close();
 	}
@@ -306,7 +271,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		String selection = "id" + " LIKE ?";
 		String[] selectionArgs = { String.valueOf(station.getId()) };
 
-		int count = db.update(
+		db.update(
 		    STATION_TABLE_NAME,
 		    values,
 		    selection,

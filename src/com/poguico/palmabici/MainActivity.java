@@ -22,7 +22,6 @@ import java.util.Calendar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.poguico.palmabici.map.OpenStreetMapConstants;
-import com.poguico.palmabici.map.StationMapFragment;
 import com.poguico.palmabici.notification.NotificationManager;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer.NetworkSynchronizationState;
@@ -31,14 +30,12 @@ import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.widget.TextView;
 
 public class MainActivity extends    SherlockFragmentActivity
@@ -49,7 +46,6 @@ public class MainActivity extends    SherlockFragmentActivity
 	private SharedPreferences    conf = null;
 	private NetworkSynchronizer  synchronizer;
 	private NetworkInformation   network;
-	private Context              context;
 		
     @Override
     public void onCreate(Bundle savedInstanceState) {

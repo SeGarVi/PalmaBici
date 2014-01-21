@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.sax.StartElementListener;
 
 import com.poguico.palmabici.DatabaseManager;
 import com.poguico.palmabici.SynchronizableElement;

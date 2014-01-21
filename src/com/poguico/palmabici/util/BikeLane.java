@@ -29,7 +29,6 @@ import org.xmlpull.v1.XmlPullParser;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.os.IInterface;
 import android.util.DisplayMetrics;
 
 public class BikeLane {

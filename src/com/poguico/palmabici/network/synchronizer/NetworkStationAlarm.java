@@ -19,11 +19,11 @@ package com.poguico.palmabici.network.synchronizer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.Semaphore;
 
 import com.poguico.palmabici.DatabaseManager;
 import com.poguico.palmabici.MainActivity;
 import com.poguico.palmabici.R;
+import com.poguico.palmabici.SynchronizableElement;
 import com.poguico.palmabici.map.OpenStreetMapConstants;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
@@ -40,36 +40,34 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class NetworkStationAlarm extends IntentService 
-									implements OpenStreetMapConstants{
+									implements OpenStreetMapConstants, SynchronizableElement{
 
 	private static final String ONLY_ONE_ALARM = "only_one_alarm";
 	private static final long WAIT_TIME = 30000;
-	private static final long TIMEOUT = 60000;
+	private static final long TIMEOUT = 1200000;
 	
 	private static ArrayList<String> stationAlarmsId = null;
 	private static boolean active = false;
 	private static DatabaseManager dbManager;
 	private static Context context = null;
-	private static NetworkInformation networkInformation = null;
 	
-	private Semaphore semaphore;
 	private SharedPreferences conf;
 	
 	public NetworkStationAlarm() {
 		super("NetworkStationAlarm");
 		Log.i("NetworkStationAlarm", "Initializing class");
 		active = true;
-		semaphore = new Semaphore(1);
 	}
 
 	public static synchronized void addAlarm(Context c, Station station) {
 		if (stationAlarmsId == null) {
 			Log.i("NetworkStationAlarm", "Initializing alarms list");
-			networkInformation = NetworkInformation.getInstance(context);
+			//networkInformation = NetworkInformation.getInstance(context);
 			stationAlarmsId = new ArrayList<String>();
 			dbManager = DatabaseManager.getInstance(c);
 			context = c;
@@ -89,6 +87,8 @@ public class NetworkStationAlarm extends IntentService
 	}
 	
 	public static synchronized void removeAlarms() {
+		NetworkInformation networkInformation =
+				NetworkInformation.getInstance(context);
 		for (String id : stationAlarmsId) {
 			dbManager.removeAlarm(networkInformation.get(id));
 		}
@@ -100,57 +100,58 @@ public class NetworkStationAlarm extends IntentService
 		Log.i("NetworkStationAlarm", "Starting thread");
 		long startTime = Calendar.getInstance().getTimeInMillis();
 		long now = startTime;
-		final NetworkInformation networkInformation =
-				NetworkInformation.getInstance(context);
+		NetworkSynchronizer networkSynchronizer =
+				NetworkSynchronizer.getInstance(context);
 		conf=PreferenceManager
 				.getDefaultSharedPreferences(context);
 		
+		networkSynchronizer.addSynchronizableElement(this);
 		while (!NetworkStationAlarm.stationAlarmsId.isEmpty() &&
 				!(conf.getBoolean("alarm_timeout", false) && now - startTime > TIMEOUT)) {
 			Log.i("NetworkStationAlarm", "Getting network info...");
-			NetworkSynchronizerTask.synchronize(context, new NetworkSyncCallback() {
-				
-				@Override
-				public void onNetworkSynchronized(long updateTime) {
-					Log.i("NetworkStationAlarm", "Network synchronized");
-					Station station;
-					for (String nEstacio : stationAlarmsId) {
-						station = networkInformation.get(nEstacio);
-						Log.i("NetworkStationAlarm", "Station " + station.getNEstacio() + " has " + station.getBusySlots() + " bikes available");
-						if (station.getBusySlots() > 0) {
-							showNotification(station);
-							
-							if (conf.getBoolean(ONLY_ONE_ALARM, true)) {
-								NetworkStationAlarm.removeAlarms();
-							} else {							
-								NetworkStationAlarm.removeAlarm(station);
-							}
-						}
-					}
-					semaphore.release();
-				}
-				
-				@Override
-				public void onNetworkError(String errorCode) {
-					Log.i("NetworkStationAlarm", "Error when synchornizing");
-					semaphore.release();
-				}
-			});
+			
+			networkSynchronizer.sync(true);
 			
 			try {
-				semaphore.acquire();
-				Thread.sleep(30000);
+				Thread.sleep(WAIT_TIME);
 				now = Calendar.getInstance().getTimeInMillis();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		
+		networkSynchronizer.detachSynchronizableElement(this);
 		if (!NetworkStationAlarm.stationAlarmsId.isEmpty()) {
 			NetworkStationAlarm.removeAlarms();
 		}
 		Log.i("NetworkStationAlarm", "Finishing thread");
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void onSuccessfulNetworkSynchronization() {
+		Log.i("NetworkStationAlarm", "Network synchronized");
+		Station station;
+		ArrayList<String> ids =
+				(ArrayList<String>)NetworkStationAlarm.stationAlarmsId.clone();
+		NetworkInformation networkInformation =
+				NetworkInformation.getInstance(context);
+		for (String nEstacio : ids) {
+			station = networkInformation.get(nEstacio);
+			Log.i("NetworkStationAlarm", "Station " + station.getNEstacio() + " has " + station.getBusySlots() + " bikes available");
+			if (station.getBusySlots() > 0) {
+				showNotification(station);
+				
+				if (conf.getBoolean(ONLY_ONE_ALARM, true)) {
+					NetworkStationAlarm.removeAlarms();
+				} else {							
+					NetworkStationAlarm.removeAlarm(station);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onUnsuccessfulNetworkSynchronization() {}
 
 	@Override
 	public void onDestroy() {
@@ -200,5 +201,17 @@ public class NetworkStationAlarm extends IntentService
 	
 	public static boolean hasAlarm(String id) {
 		return stationAlarmsId != null && stationAlarmsId.contains(id);
+	}
+
+	@Override
+	public void onLocationSynchronization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public FragmentActivity getSynchronizableActivity() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

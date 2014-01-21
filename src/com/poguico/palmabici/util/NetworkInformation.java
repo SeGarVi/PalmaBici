@@ -25,7 +25,6 @@ import org.osmdroid.util.GeoPoint;
 import android.content.Context;
 
 import com.poguico.palmabici.DatabaseManager;
-import com.poguico.palmabici.network.synchronizer.NetworkStationAlarm;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 
 public class NetworkInformation {
