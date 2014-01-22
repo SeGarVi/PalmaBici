@@ -167,9 +167,12 @@ public class NetworkStationAlarm extends IntentService
 		Bitmap bigIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.palmabici_bw);
 		Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		
-		PendingIntent pendingIntent=PendingIntent.getActivity(this, 0,
-				new Intent(context, MainActivity.class),
-				0);
+		PendingIntent pendingIntent=PendingIntent.getActivity(context, 0,
+				new Intent(context, MainActivity.class)
+					.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  |
+							  Intent.FLAG_ACTIVITY_SINGLE_TOP |
+							  Intent.FLAG_ACTIVITY_NEW_TASK),
+					PendingIntent.FLAG_ONE_SHOT);
 		
 		NotificationCompat.Builder mBuilder =
 		        new NotificationCompat.Builder(this)
@@ -192,7 +195,7 @@ public class NetworkStationAlarm extends IntentService
         edit.commit();
 		
 		
-		mgr.notify(1234, mBuilder.build());
+		mgr.notify(0, mBuilder.build());
 	}
 
 	public static boolean isActive() {
