@@ -28,7 +28,7 @@ Affero GNU General Public License for more details
     <string name="view_agpl_license">Llicència AGPL v.3</string>
     <string name="view_apache_license">Llicència Apache v.2</string>
     <string name="credits_author">© 2012 Sergio García Villalonga (yayalose@gmail.com)</string>
-    <string name="credits_license">Aquesta aplicació és programari lliure, distribuit sota la llicència AGPL v.3. Es fa servir la llibreria ActionBarSherlock (http://actionbarsherlock.com/, sota llicència Apache v2.0). A baix pots accedir al text complet de les llicències.</string>
+    <string name="credits_license">Aquesta aplicació és programari lliure, distribuït sota la llicència AGPL v.3. Es fa servir la llibreria ActionBarSherlock (http://actionbarsherlock.com/, sota llicència Apache v2.0). A baix pots accedir al text complet de les llicències.</string>
     <string name="credits_collaborate">Ets lliure de descarregar-te i modificar el codi font d\'aquesta app, així com de redistribuir-la amb o sense modificacions amb la mateixa llicència. Si vols participar en el desenvolupament, envia\'m un correu :)</string>
     <string name="credits_citybik">La informació sobre l\'estat de les estacions s\'obté fent servir l\'API de City Bikes (http://www.citybik.es/), sota llicència LGPL.</string>
     <string name="credits_osm">Els mapes es descarreguen utilitzant una versió lleugerament modificada de l\'API d\'OpenStreetMap per Android osmdroid (https://code.google.com/p/osmdroid/), sota llicència Apache v2.0. El codi modificat el pots trobar a la meva pàgina de GitHub.</string>
@@ -48,13 +48,13 @@ Affero GNU General Public License for more details
     <string name="connectivity_error">No disposes de connexió a internet!</string>
     <string name="preferences_alarms">Alarmes</string>
     <string name="preferences_only_one_alarm">Només una alarma</string>
-    <string name="preferences_only_one_alarm_tip">Si hi ha més d\'una alarma activada, només sonará la primera.</string>
+    <string name="preferences_only_one_alarm_tip">Si hi ha més d\'una alarma activada, només sonarà la primera.</string>
     <string name="preferences_alarm_timeout">Temps d\'espera</string>
     <string name="preferences_alarm_timeout_tip">Si no hi ha cap bicicleta disponible en 20 minuts, es desactiven les alarmes (estalvia bateria i transmissió de dades).</string>
     <string name="free_bikes">Bicis lliures</string>
-    <string name="free_slots">Anclatges lliures</string>
+    <string name="free_slots">Ancoratges lliures</string>
     <string name="broken_bikes">Bicis avariades</string>
-    <string name="broken_slots">Anclatges avariats</string>
+    <string name="broken_slots">Ancoratges avariats</string>
     <string name="add_to_favorites">Afegir a favorits</string>
     <string name="remove_from_favorites">Eliminar de favorits</string>
     <string name="last_updated">Actualitzat fa</string>
@@ -62,7 +62,7 @@ Affero GNU General Public License for more details
     <string name="more_than">més de</string>
     <string name="there_is">Hi ha </string>
     <string name="there_are">Hi ha </string>
-    <string name="bike_available_in"> bici disponbible a </string>
-    <string name="bikes_available_in"> bicis disponbibles a </string>
+    <string name="bike_available_in"> bici disponible a </string>
+    <string name="bikes_available_in"> bicis disponibles a </string>
 
 </resources>
