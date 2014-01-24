@@ -107,7 +107,7 @@ public class NetworkStationAlarm extends IntentService
 		
 		networkSynchronizer.addSynchronizableElement(this);
 		while (!NetworkStationAlarm.stationAlarmsId.isEmpty() &&
-				!(conf.getBoolean("alarm_timeout", false) && now - startTime > TIMEOUT)) {
+				!(conf.getBoolean("alarm_timeout", true) && now - startTime > TIMEOUT)) {
 			Log.i("NetworkStationAlarm", "Getting network info...");
 			
 			networkSynchronizer.sync(true);

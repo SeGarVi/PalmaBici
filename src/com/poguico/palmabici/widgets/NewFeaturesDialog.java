@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
+ * Copyright 2014 Sergio Garcia Villalonga (yayalose@gmail.com)
  *
  * This file is part of PalmaBici.
  *

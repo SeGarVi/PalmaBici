@@ -46,7 +46,7 @@
 	    
         <CheckBoxPreference
 	        android:key="alarm_timeout"
-	        android:defaultValue="false"
+	        android:defaultValue="true"
 	        android:summary="@string/preferences_alarm_timeout_tip"
 	        android:title="@string/preferences_alarm_timeout" />
     </PreferenceCategory>
