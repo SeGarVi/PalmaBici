@@ -28,10 +28,14 @@ import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer.NetworkSyn
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.widgets.CreditsDialog;
+import com.poguico.palmabici.widgets.NewFeaturesDialog;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -49,6 +53,12 @@ public class MainActivity extends    SherlockFragmentActivity
 		
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	int savedVersionNumber;
+    	SharedPreferences sharedPref;
+    	PackageInfo pi;
+    	String initPrefs     = "palmabici_init_prefs";
+    	String versionNumber = "version_number";
+    	int currentVersionNumber        = 0;
     	super.onCreate(savedInstanceState);
     	synchronizer = NetworkSynchronizer.getInstance(this.getApplicationContext());
     	network = NetworkInformation.getInstance(this.getApplicationContext());
@@ -56,7 +66,21 @@ public class MainActivity extends    SherlockFragmentActivity
     	
     	synchronizer.addSynchronizableElement(this);
     	
-    	setContentView(R.layout.main);
+    	sharedPref = getSharedPreferences(initPrefs, Context.MODE_PRIVATE);
+    	savedVersionNumber = sharedPref.getInt(versionNumber, 0);
+    	try {
+            pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+            currentVersionNumber = pi.versionCode;
+        } catch (Exception e) {}
+ 
+        if (currentVersionNumber > savedVersionNumber) {
+        	new NewFeaturesDialog(this).show();
+            Editor editor   = sharedPref.edit();
+            editor.putInt(versionNumber, currentVersionNumber);
+            editor.commit();
+        }
+        
+        setContentView(R.layout.main);
     }
     
     @Override
@@ -101,7 +125,7 @@ public class MainActivity extends    SherlockFragmentActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
     @Override
 	protected void onResume() {
     	NetworkSynchronizationState syncState;

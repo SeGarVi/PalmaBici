@@ -80,4 +80,10 @@ Affero GNU General Public License for more details
     <string name="there_are">There are </string>
     <string name="bike_available_in"> bike available in </string>
     <string name="bikes_available_in"> bikes available in </string>
+    <string name="new_features_new">New!</string>
+    <string name="new_features_1">Add alarms in the stations where there is no bike available, PalmaBici will warn you when there is some!</string>
+    <string name="new_features_2">By default, if you set more than one alarm, only one will ring while the others will be disabled.</string>
+    <string name="new_features_3">Also by default, to save your battery and data plan, if you set some alarm and there is no bike in 20 minutes or less, the alarms will be disables.</string>
+    <string name="new_features_4">This behavior can be changed in the preferences.</string>
+    
 </resources>

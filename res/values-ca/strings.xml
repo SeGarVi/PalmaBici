@@ -64,5 +64,11 @@ Affero GNU General Public License for more details
     <string name="there_are">Hi ha </string>
     <string name="bike_available_in"> bici disponible a </string>
     <string name="bikes_available_in"> bicis disponibles a </string>
+    <string name="new_features_new">Nou!</string>
+    <string name="new_features_1">Afegeix alarmes a les estacions on no queden bicicletes lliures, PalmaBici t\'avisarà quan n\'hi hagi alguna!</string>
+    <string name="new_features_2">Per defecte, si actives més d\'una alarma només sonarà la primera. En aquest moment la resta es desactivaran.</string>
+    <string name="new_features_3">També per defecte, per estalviar bateria i dades, si actives qualque alarma i no hi ha bicicletes lliures abans de 20 minuts, les alarmes es desactivaran.</string>
+    <string name="new_features_4">Aquest comportament es pot canviar en les preferències.</string>
+    
 
 </resources>
