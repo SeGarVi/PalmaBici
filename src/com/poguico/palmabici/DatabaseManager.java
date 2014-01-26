@@ -96,11 +96,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		if (oldVersion == 2 ) {
 			db.execSQL(STATION_TABLE_CREATE);
 			db.execSQL(LAST_UPDATE_TABLE_CREATE);
-		} else if (oldVersion == 3 ) {
-			db.execSQL(STATION_TABLE_V4UPDATE_1);
-			db.execSQL(STATION_TABLE_V4UPDATE_2);
-			db.execSQL(STATION_TABLE_V5UPDATE);
-		} else if (oldVersion == 4) {
+		} else if (oldVersion == 3 || oldVersion == 4) {
 			db.execSQL(STATION_TABLE_V5UPDATE);
 		}
 	}
