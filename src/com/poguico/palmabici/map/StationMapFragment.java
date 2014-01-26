@@ -308,14 +308,16 @@ public class StationMapFragment extends Fragment implements
 			myLocation =
 				locationSynchronizer.getLocation();
 			
-			distance = new float[1];
-			Location.distanceBetween(network.getCenter().getLatitude(),
-					                 network.getCenter().getLongitude(),
-									 myLocation.getLatitude(),
-                                     myLocation.getLongitude(), distance);
-			
-			if (distance != null && distance[0] <= 10000) {
-				mMapView.getController().animateTo(new GeoPoint(myLocation));
+			if (myLocation != null) {
+				distance = new float[1];
+				Location.distanceBetween(network.getCenter().getLatitude(),
+						                 network.getCenter().getLongitude(),
+										 myLocation.getLatitude(),
+	                                     myLocation.getLongitude(), distance);
+				
+				if (distance != null && distance[0] <= 10000) {
+					mMapView.getController().animateTo(new GeoPoint(myLocation));
+				}
 			}
 		}
 	}
