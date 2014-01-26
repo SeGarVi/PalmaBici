@@ -48,14 +48,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
             		+ "broken_bikes INTEGER,"
             		+ "has_alarm    INTEGER"
             		+ ");";
-	private static final String STATION_TABLE_V4UPDATE =
+	private static final String STATION_TABLE_V4UPDATE_1 =
             "ALTER TABLE \"" + STATION_TABLE_NAME + "\" "
-            		+ "ADD broken_slots   INTEGER DEFAULT 0, "
-            		+ "ADD broken_bikes   INTEGER DEFAULT 0"
+            		+ "ADD COLUMN broken_slots   INTEGER DEFAULT 0"
+            		+ ";";
+	private static final String STATION_TABLE_V4UPDATE_2 =
+            "ALTER TABLE \"" + STATION_TABLE_NAME + "\" "
+            		+ "ADD COLUMN broken_bikes   INTEGER DEFAULT 0"
             		+ ";";
 	private static final String STATION_TABLE_V5UPDATE =
             "ALTER TABLE \"" + STATION_TABLE_NAME + "\" "
-            		+ "ADD has_alarm INTEGER DEFAULT 0"
+            		+ "ADD COLUMN has_alarm INTEGER DEFAULT 0"
             		+ ";";
 	private static final String LAST_UPDATE_TABLE_CREATE =
             "CREATE TABLE \"" + LAST_UPDATE_TABLE_NAME + "\" (time INTEGER);";
@@ -94,7 +97,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 			db.execSQL(STATION_TABLE_CREATE);
 			db.execSQL(LAST_UPDATE_TABLE_CREATE);
 		} else if (oldVersion == 3 ) {
-			db.execSQL(STATION_TABLE_V4UPDATE);
+			db.execSQL(STATION_TABLE_V4UPDATE_1);
+			db.execSQL(STATION_TABLE_V4UPDATE_2);
 			db.execSQL(STATION_TABLE_V5UPDATE);
 		} else if (oldVersion == 4) {
 			db.execSQL(STATION_TABLE_V5UPDATE);
