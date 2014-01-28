@@ -66,7 +66,7 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		//super.onOpen(item);
 		eItem = (ExtendedOverlayItem)item;
 
-		int    freeBikes, freeSlots, brokenBikes, brokenSlots;
+		int    freeBikes, freeSlots;
 		LinearLayout.LayoutParams layoutParams;
 		String formattedDistance = "";
 		
@@ -85,8 +85,6 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		
 		freeBikes   = station.getBusySlots();
 		freeSlots   = station.getFreeSlots();
-		brokenBikes = station.getBrokenBikes();
-		brokenSlots = station.getBrokenSlots();
 		
 		if (myLocation != null) {
 			Location.distanceBetween(station.getLat(),
@@ -103,20 +101,8 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		tvFreeBikes.setText(String.valueOf(freeBikes));
 		tvFreeSlots.setText(String.valueOf(freeSlots));
 		
-		if (brokenBikes > 0 || brokenSlots > 0) {
-			TextView tvBrokenBikes =
-					(TextView)mView.findViewById(R.id.brokenBikes);
-			TextView tvBrokenSlots =
-					(TextView)mView.findViewById(R.id.brokenSlots);
-			tvBrokenBikes.setText(String.valueOf(brokenBikes));
-			tvBrokenSlots.setText(String.valueOf(brokenSlots));
-			lyBrokenApparel.setLayoutParams(
-					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
-												  LayoutParams.WRAP_CONTENT));
-		} else {
-			lyBrokenApparel.setLayoutParams(
-					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,0));
-		}
+		lyBrokenApparel.setLayoutParams(
+		    new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,0));
 		
 		if (station.getBusySlots() == 0 &&
 				station.getSlots() != station.getBrokenSlots()) {
