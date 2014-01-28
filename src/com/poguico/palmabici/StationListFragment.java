@@ -72,7 +72,7 @@ public class StationListFragment extends ListFragment {
     		TextView distance = (TextView)  rowView.findViewById(R.id.distance);
     		//ImageView compass = (ImageView) rowView.findViewById(R.id.compass);
     				
-    		id.setText(stations.get(position).getNEstacio() + " · ");		
+    		//id.setText(stations.get(position).getNEstacio() + " · ");		
     		name.setText(stations.get(position).getName());
     		bikes.setText(context.getString(R.string.free_bikes) + ": " + stations.get(position).getBusySlots());
     		holes.setText(context.getString(R.string.free_slots) + ": " + stations.get(position).getFreeSlots());
