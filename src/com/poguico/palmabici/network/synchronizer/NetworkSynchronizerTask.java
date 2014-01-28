@@ -43,7 +43,7 @@ public class NetworkSynchronizerTask {
 	private static final int    HTTP_STATUS_OK = 200;
 	private static final String STR_HTTP_STATUS_OK = "200";
 	private static final String STR_HTTP_STATUS_NOT_FOUND = "404";
-	private static final String URL = "http://api.citybik.es/palma.json";
+	private static final String URL = "http://api.citybik.es/bicipalma.json";
 	
 	public static void synchronize(Context context, NetworkSyncCallback callback) {
 		SynchronizeTask task = new SynchronizeTask(context, callback);
