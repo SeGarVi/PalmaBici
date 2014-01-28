@@ -51,7 +51,7 @@ public class NetworkStationAlarm extends IntentService
 	private static final long WAIT_TIME = 30000;
 	private static final long TIMEOUT = 1200000;
 	
-	private static ArrayList<String> stationAlarmsId = null;
+	private static ArrayList<Integer> stationAlarmsId = null;
 	private static boolean active = false;
 	private static DatabaseManager dbManager;
 	private static Context context = null;
@@ -68,28 +68,28 @@ public class NetworkStationAlarm extends IntentService
 		if (stationAlarmsId == null) {
 			Log.i("NetworkStationAlarm", "Initializing alarms list");
 			//networkInformation = NetworkInformation.getInstance(context);
-			stationAlarmsId = new ArrayList<String>();
+			stationAlarmsId = new ArrayList<Integer>();
 			dbManager = DatabaseManager.getInstance(c);
 			context = c;
 		}
 		
-		Log.i("NetworkStationAlarm", "Adding alarm for station " + station.getNEstacio());
+		Log.i("NetworkStationAlarm", "Adding alarm for station " + station.getId());
 		dbManager.setAlarm(station);
-		stationAlarmsId.add(station.getNEstacio());
+		stationAlarmsId.add(station.getId());
 	}
 	
 	public static synchronized void removeAlarm(Station station) {
-		if (stationAlarmsId.contains(station.getNEstacio())) {
+		if (stationAlarmsId.contains(station.getId())) {
 			dbManager.removeAlarm(station);
-			stationAlarmsId.remove(station.getNEstacio());
-			Log.i("NetworkStationAlarm", "Alarm for station " + station.getNEstacio() + " removed");
+			stationAlarmsId.remove(station.getId());
+			Log.i("NetworkStationAlarm", "Alarm for station " + station.getId() + " removed");
 		}
 	}
 	
 	public static synchronized void removeAlarms() {
 		NetworkInformation networkInformation =
 				NetworkInformation.getInstance(context);
-		for (String id : stationAlarmsId) {
+		for (Integer id : stationAlarmsId) {
 			dbManager.removeAlarm(networkInformation.get(id));
 		}
 		stationAlarmsId.clear();
@@ -135,9 +135,9 @@ public class NetworkStationAlarm extends IntentService
 				(ArrayList<String>)NetworkStationAlarm.stationAlarmsId.clone();
 		NetworkInformation networkInformation =
 				NetworkInformation.getInstance(context);
-		for (String nEstacio : ids) {
-			station = networkInformation.get(nEstacio);
-			Log.i("NetworkStationAlarm", "Station " + station.getNEstacio() + " has " + station.getBusySlots() + " bikes available");
+		for (Integer id : ids) {
+			station = networkInformation.get(id);
+			Log.i("NetworkStationAlarm", "Station " + station.getId() + " has " + station.getBusySlots() + " bikes available");
 			if (station.getBusySlots() > 0) {
 				showNotification(station);
 				
@@ -191,7 +191,7 @@ public class NetworkStationAlarm extends IntentService
 		
     	mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     	edit = mPrefs.edit();
-        edit.putString(PREFS_SHOWN_STATION, station.getNEstacio());
+        edit.putString(PREFS_SHOWN_STATION, station.getId());
         edit.commit();
 		
 		
@@ -202,7 +202,7 @@ public class NetworkStationAlarm extends IntentService
 		return active;
 	}
 	
-	public static boolean hasAlarm(String id) {
+	public static boolean hasAlarm(Integer id) {
 		return stationAlarmsId != null && stationAlarmsId.contains(id);
 	}
 
