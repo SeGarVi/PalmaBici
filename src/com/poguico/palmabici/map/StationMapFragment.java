@@ -71,7 +71,7 @@ public class StationMapFragment extends Fragment implements
 	private ScaleBarOverlay mScaleBarOverlay;
     private ResourceProxy mResourceProxy;
 	
-	private HashMap <String, ExtendedOverlayItem> mapMarkers = null;
+	private HashMap <Integer, ExtendedOverlayItem> mapMarkers = null;
     
     private static final String BIKE_LANE_OPTION = "show_bike_lane";
     
@@ -126,26 +126,23 @@ public class StationMapFragment extends Fragment implements
 		int    percentage;
 		
 		if (mapMarkers == null || force) {
-			mapMarkers = new HashMap<String, ExtendedOverlayItem>();
+			mapMarkers = new HashMap<Integer, ExtendedOverlayItem>();
 			for (Station station : network.getNetwork()) {
 				percentage = (int)Math.round((station.getBusySlots()*10 / station.getSlots()));
 				
 				ExtendedOverlayItem marker = new ExtendedOverlayItem(
 						station.getName(),
-						station.getNEstacio(),
+						station.getId(),
 						new GeoPoint(station.getLat(), station.getLong()),
 						this.getActivity());
 				try {
 					filename  = "marker" + percentage*10;
-					filename +=  (station.getBrokenBikes() > 0 ||
-							      station.getBrokenSlots() > 0) ?
-							    	"_alert" : "";
-					filename +=  (NetworkStationAlarm.hasAlarm(station.getNEstacio())) ?
+					filename +=  (NetworkStationAlarm.hasAlarm(station.getId())) ?
 						    	"_alarm" : "";
 					marker.setMarker(
 						getResources().getDrawable(
 							R.drawable.class.getDeclaredField(filename).getInt(null)));
-					mapMarkers.put(station.getNEstacio(),marker);
+					mapMarkers.put(station.getId(),marker);
 				} catch (NotFoundException e) {
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
