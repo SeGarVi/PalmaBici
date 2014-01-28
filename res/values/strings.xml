@@ -85,5 +85,6 @@ Affero GNU General Public License for more details
     <string name="new_features_2">By default, if you set more than one alarm, only one will ring while the others will be disabled.</string>
     <string name="new_features_3">Also by default, to save your battery and data plan, if you set some alarm and there is no bike in 20 minutes or less, the alarms will be disabled.</string>
     <string name="new_features_4">This behavior can be changed in the preferences.</string>
+    <string name="new_features_5">This version is an urgent one built to support the new third party data structures. It may be a little buggy. New updates will appear the next weeks. If the stations are not shown in the beggining, please perform an update with the top-right button.</string>
     
 </resources>

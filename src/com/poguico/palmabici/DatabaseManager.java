@@ -99,7 +99,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		SQLiteDatabase db;
 		Cursor c;
 		int idCol;
-		ArrayList<String> res = new ArrayList<String>();
+		ArrayList<Integer> res = new ArrayList<Integer>();
 		
 		db = instance.getReadableDatabase();
 		c = db.rawQuery(GET_FAVOURITE_STATIONS, null);
@@ -107,7 +107,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 		
 		if (c.moveToFirst()) {
 			do {
-				res.add(c.getString(idCol));
+				res.add(c.getInt(idCol));
 			} while(c.moveToNext());
 		}
 		

@@ -131,8 +131,8 @@ public class NetworkStationAlarm extends IntentService
 	public void onSuccessfulNetworkSynchronization() {
 		Log.i("NetworkStationAlarm", "Network synchronized");
 		Station station;
-		ArrayList<String> ids =
-				(ArrayList<String>)NetworkStationAlarm.stationAlarmsId.clone();
+		ArrayList<Integer> ids =
+				(ArrayList<Integer>)NetworkStationAlarm.stationAlarmsId.clone();
 		NetworkInformation networkInformation =
 				NetworkInformation.getInstance(context);
 		for (Integer id : ids) {
@@ -191,7 +191,7 @@ public class NetworkStationAlarm extends IntentService
 		
     	mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     	edit = mPrefs.edit();
-        edit.putString(PREFS_SHOWN_STATION, station.getId());
+        edit.putInt(PREFS_SHOWN_STATION, station.getId());
         edit.commit();
 		
 		

@@ -32,7 +32,7 @@ public class Parser {
         JSONArray jsonArray;
         JSONObject jsonObject;
         Long lngAcum=0L, latAcum=0L;
-        String nEstacio;
+        int id;
         
         try {
             jsonArray = new JSONArray(data);
@@ -43,14 +43,15 @@ public class Parser {
                 lngAcum += jsonObject.getLong("lng");
                 latAcum += jsonObject.getLong("lat");
                 
-                stations.add(new Station(jsonObject.getInt("id"),
+                id = jsonObject.getInt("id");
+                stations.add(new Station(id,
                                          jsonObject.getString("name"),
                                          jsonObject.getDouble("lng") / 1e6,
                                          jsonObject.getDouble("lat") / 1e6,
                                          jsonObject.getInt("free"),
                                          jsonObject.getInt("bikes"),
                                          false,
-                                         NetworkStationAlarm.hasAlarm(nEstacio)));
+                                         NetworkStationAlarm.hasAlarm(id)));
             }
         } catch (Exception e) {
             e.printStackTrace();

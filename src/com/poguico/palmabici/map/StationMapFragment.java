@@ -128,29 +128,31 @@ public class StationMapFragment extends Fragment implements
 		if (mapMarkers == null || force) {
 			mapMarkers = new HashMap<Integer, ExtendedOverlayItem>();
 			for (Station station : network.getNetwork()) {
-				percentage = (int)Math.round((station.getBusySlots()*10 / station.getSlots()));
-				
-				ExtendedOverlayItem marker = new ExtendedOverlayItem(
-						station.getName(),
-						station.getId(),
-						new GeoPoint(station.getLat(), station.getLong()),
-						this.getActivity());
-				try {
-					filename  = "marker" + percentage*10;
-					filename +=  (NetworkStationAlarm.hasAlarm(station.getId())) ?
-						    	"_alarm" : "";
-					marker.setMarker(
-						getResources().getDrawable(
-							R.drawable.class.getDeclaredField(filename).getInt(null)));
-					mapMarkers.put(station.getId(),marker);
-				} catch (NotFoundException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (NoSuchFieldException e) {
-					e.printStackTrace();
+				if (station.getSlots() > 0) {
+					percentage = (int)Math.round((station.getBusySlots()*10 / station.getSlots()));
+					
+					ExtendedOverlayItem marker = new ExtendedOverlayItem(
+							station.getName(),
+							String.valueOf(station.getId()),
+							new GeoPoint(station.getLat(), station.getLong()),
+							context);
+					try {
+						filename  = "marker" + percentage*10;
+						filename +=  (NetworkStationAlarm.hasAlarm(station.getId())) ?
+							    	"_alarm" : "";
+						marker.setMarker(
+							getResources().getDrawable(
+								R.drawable.class.getDeclaredField(filename).getInt(null)));
+						mapMarkers.put(station.getId(),marker);
+					} catch (NotFoundException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (NoSuchFieldException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -231,7 +233,7 @@ public class StationMapFragment extends Fragment implements
         edit.putInt(PREFS_SCROLL_Y, mMapView.getScrollY());
         edit.putInt(PREFS_ZOOM_LEVEL, mMapView.getZoomLevel());
         edit.putInt(PREFS_SHOWN_MARKER, markerOverlay.getBubbledItemId());
-        edit.putString(PREFS_SHOWN_STATION, null);
+        edit.putInt(PREFS_SHOWN_STATION, -1);
         edit.commit();
         markerOverlay.hideBubble();
         
@@ -241,12 +243,12 @@ public class StationMapFragment extends Fragment implements
 	@Override
     public void onResume() {
 		int shownBubble;
-		String activeStation;
+		Integer activeStation;
         super.onResume();
         
         shownBubble   = mPrefs.getInt(PREFS_SHOWN_MARKER, -1);
-        activeStation = mPrefs.getString(PREFS_SHOWN_STATION, null);
-        if (activeStation != null) {
+        activeStation = mPrefs.getInt(PREFS_SHOWN_STATION, -1);
+        if (activeStation >= 0) {
         	markerOverlay.showBubbleOnItem(mapMarkers.get(activeStation), mMapView, true);
         } else if (shownBubble >= 0) {
         	markerOverlay.showBubbleOnItem(shownBubble, mMapView, true);	

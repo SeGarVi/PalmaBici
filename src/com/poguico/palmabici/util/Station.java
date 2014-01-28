@@ -122,16 +122,16 @@ public class Station implements Comparable <Station> {
         this.id = id;
         this.freeSlots = freeSlots;
         this.busySlots = busySlots;
-        this.slots = freeSlots + busySlots + brokenSlots;
-        this.name = niceNames.get(nEstacio);
+        this.slots = freeSlots + busySlots;
+        this.name = niceNames.get(id);
         this.favourite = favourite;
         this.hasAlarm = hasAlarm;
                 
         location = new Location(LocationManager.NETWORK_PROVIDER);
         
-        if (correctLocations.get(nEstacio) != null) {
-            location.setLatitude(correctLocations.get(nEstacio).getLatitude());
-            location.setLongitude(correctLocations.get(nEstacio).getLongitude());
+        if (correctLocations.get(id) != null) {
+            location.setLatitude(correctLocations.get(id).getLatitude());
+            location.setLongitude(correctLocations.get(id).getLongitude());
         } else {
             location.setLatitude(stationLat);
             location.setLongitude(stationLong);

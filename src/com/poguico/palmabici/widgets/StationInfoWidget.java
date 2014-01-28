@@ -72,7 +72,7 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		
 		float[] distance           = new float[1];
 		Location myLocation         = locationSynchronizer.getLocation();
-		station = networkInformation.get(eItem.getDescription());
+		station = networkInformation.get(Integer.parseInt(eItem.getDescription()));
 		
 		TextView title =
 				(TextView)mView.findViewById(R.id.markerTitle);
@@ -104,14 +104,13 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		lyBrokenApparel.setLayoutParams(
 		    new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,0));
 		
-		if (station.getBusySlots() == 0 &&
-				station.getSlots() != station.getBrokenSlots()) {
+		if (station.getBusySlots() == 0) {
 			layoutParams = new LinearLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			layoutParams.setMargins(5, 5, 5, 5);
 			alarmButton.setLayoutParams(layoutParams);
 			
-			if (networkSynchronizer.hasAlarm(station.getNEstacio())) {
+			if (networkSynchronizer.hasAlarm(station.getId())) {
 				alarmButton.setImageResource(R.drawable.bell_active);
 				active = true;
 			} else {
@@ -128,10 +127,7 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 			public void onClick(View v) {
 				toggleAlarm();	
 				String filename  = "marker0";
-				filename +=  (station.getBrokenBikes() > 0 ||
-						      station.getBrokenSlots() > 0) ?
-						    	"_alert" : "";
-				filename +=  (NetworkStationAlarm.hasAlarm(station.getNEstacio())) ?
+				filename +=  (NetworkStationAlarm.hasAlarm(station.getId())) ?
 					    	"_alarm" : "";
 				try {
 					eItem.setMarker(context.getResources().getDrawable(
@@ -171,7 +167,7 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 	public void onLocationSynchronization() {
 		float[] distance           = new float[1];
 		Location my_location        = locationSynchronizer.getLocation();
-		Station  station = networkInformation.get(eItem.getDescription());
+		Station  station = networkInformation.get(Integer.parseInt(eItem.getDescription()));
 		
 		Location.distanceBetween(station.getLat(),
 				 station.getLong(),

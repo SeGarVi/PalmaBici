@@ -69,4 +69,5 @@ Affero GNU General Public License for more details
     <string name="new_features_2">Por defecto, si activas más de una alarma solo sonará la primera. En ese momento el resto se desactivarán.</string>
     <string name="new_features_3">También por defecto, para ahorrar batería y datos, si activas alguna alarma y no hay bicicletas libres antes de 20 minutos, las alarmas se desactivarán.</string>
     <string name="new_features_4">Este comportamiento se puede cambiar en las preferencias.</string>
+    <string name="new_features_5">Esta versión es una versión urgente para dar soporte a las nuevos datos de terceros. Puede contener algunos errores. En las próximas semanas se irán publicando nuevas actualitzaciones. Si al abrir la aplicación no se muestran las estaciones, actualiza manualmente con el botón situado arriba a la derecha.</string>
 </resources>

@@ -123,7 +123,7 @@ public class NetworkSynchronizer {
 		synchronizableElements.remove(element);
 	}
 	
-	public boolean hasAlarm(String id) {
+	public boolean hasAlarm(Integer id) {
 		return NetworkStationAlarm.hasAlarm(id);
 	}
 }
