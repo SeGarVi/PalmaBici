@@ -32,8 +32,8 @@ public class NetworkInformation {
     
     private GeoPoint                 center;
     private ArrayList <Station>      network;
-    private HashMap<String, Station> mappedNetwork;
-    private ArrayList <String>       favourites;
+    private HashMap<Integer, Station> mappedNetwork;
+    private ArrayList <Integer>       favourites;
     private long                     lastUpdateTime;
     private NetworkSynchronizer      networkSynchronizer;
     
@@ -43,7 +43,7 @@ public class NetworkInformation {
     	center         = new GeoPoint(39.574689, 2.651332);
         favourites     = dbManager.getFavouriteStations();
         lastUpdateTime = dbManager.getLastUpdateTime();
-        mappedNetwork  = new HashMap<String, Station>();
+        mappedNetwork  = new HashMap<Integer, Station>();
         setNetwork(dbManager.getLastStationNetworkState(context));
         
         networkSynchronizer = NetworkSynchronizer.getInstance(context);
@@ -69,7 +69,7 @@ public class NetworkInformation {
         this.center = center;
     }
 
-    public ArrayList<String> getFavourites() {
+    public ArrayList<Integer> getFavourites() {
         return favourites;
     }
 
@@ -84,7 +84,7 @@ public class NetworkInformation {
     public synchronized void setNetwork(ArrayList<Station> network) {
         this.network = network;
         for (Station station : network) {
-            mappedNetwork.put(station.getNEstacio(), station);
+            mappedNetwork.put(station.getId(), station);
         }
     }
 
@@ -92,28 +92,28 @@ public class NetworkInformation {
         return network;
     }
     
-    public synchronized void setFavourite(String id) {
+    public synchronized void setFavourite(Integer id) {
         favourites.add(id);
     }
     
-    public synchronized void unSetFavourite(String id) {
+    public synchronized void unSetFavourite(Integer id) {
         favourites.remove(id);
     }
     
-    public synchronized void setFavourites(ArrayList<String> favourites) {
+    public synchronized void setFavourites(ArrayList<Integer> favourites) {
         this.favourites = favourites;
         for (Station station : network) {
-            if (favourites.contains(station.getNEstacio())) {
+            if (favourites.contains(station.getId())) {
                 station.changeFavouriteState();
             }
         }
     }
     
-    public boolean isFavourite(String id) {
+    public boolean isFavourite(Integer id) {
         return favourites.contains(id);
     }
     
-    public Station get(String nEstacio) {
-        return mappedNetwork.get(nEstacio);
+    public Station get(Integer id) {
+        return mappedNetwork.get(id);
     }
 }
