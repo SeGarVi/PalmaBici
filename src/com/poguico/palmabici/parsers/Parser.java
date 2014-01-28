@@ -43,16 +43,12 @@ public class Parser {
                 lngAcum += jsonObject.getLong("lng");
                 latAcum += jsonObject.getLong("lat");
                 
-                nEstacio = jsonObject.getString("name").substring(1, 3);
                 stations.add(new Station(jsonObject.getInt("id"),
-                                         nEstacio,
-                                         jsonObject.getString("name").substring(5),
+                                         jsonObject.getString("name"),
                                          jsonObject.getDouble("lng") / 1e6,
                                          jsonObject.getDouble("lat") / 1e6,
                                          jsonObject.getInt("free"),
                                          jsonObject.getInt("bikes"),
-                                         jsonObject.getInt("free_fck"),
-                                         jsonObject.getInt("bikes_fck"),
                                          false,
                                          NetworkStationAlarm.hasAlarm(nEstacio)));
             }
