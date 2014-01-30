@@ -84,7 +84,9 @@ public class NetworkSynchronizer {
 			public void onNetworkSynchronized(long updateTime) {
 				syncState  = NetworkSynchronizationState.UPDATED;
 				lastUpdate = updateTime;
-				for (SynchronizableElement activity : synchronizableElements) {
+				ArrayList<SynchronizableElement> syncElements =
+                                    (ArrayList<SynchronizableElement>)synchronizableElements.clone();
+				for (SynchronizableElement activity : syncElements) {
 					activity.onSuccessfulNetworkSynchronization();
 				}
 			}
@@ -92,7 +94,9 @@ public class NetworkSynchronizer {
 			@Override
 			public void onNetworkError(String errorCode) {
 				syncState = NetworkSynchronizationState.ERROR;
-				for (SynchronizableElement activity : synchronizableElements) {
+				ArrayList<SynchronizableElement> syncElements =
+                                    (ArrayList<SynchronizableElement>)synchronizableElements.clone();
+				for (SynchronizableElement activity : syncElements) {
 					activity.onUnsuccessfulNetworkSynchronization();
 				}
 			}
