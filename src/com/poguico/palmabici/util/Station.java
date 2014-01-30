@@ -27,7 +27,8 @@ import android.location.Location;
 import android.location.LocationManager;
 
 public class Station implements Comparable <Station> {
-    private int id, freeSlots, busySlots, slots;
+    private Integer id;
+    private freeSlots, busySlots, slots;
     private String name;
     private Location location;
     private Float distance;
@@ -85,7 +86,7 @@ public class Station implements Comparable <Station> {
     private static final Map<Integer, GeoPoint> correctLocations;
     static {
         Map<Integer, GeoPoint> aMap = new HashMap<Integer, GeoPoint>();
-        aMap.put(0, new GeoPoint(39.566129, 2.659499));
+            aMap.put(0, new GeoPoint(39.566129, 2.659499));
 	    aMap.put(1, new GeoPoint(39.571255, 2.665796));
 	    aMap.put(5, new GeoPoint(39.572946, 2.657238));
 	    aMap.put(4, new GeoPoint(39.574468, 2.663871));
@@ -116,7 +117,7 @@ public class Station implements Comparable <Station> {
 	    correctLocations = Collections.unmodifiableMap(aMap);
     }
     
-    public Station(int id, String name, double stationLong, double stationLat,
+    public Station(Integer id, String name, double stationLong, double stationLat,
     		        int freeSlots, int busySlots, boolean favourite,
     		        boolean hasAlarm) {
         this.id = id;
@@ -138,11 +139,11 @@ public class Station implements Comparable <Station> {
         }
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
