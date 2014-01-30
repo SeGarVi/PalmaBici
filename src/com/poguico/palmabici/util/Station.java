@@ -28,7 +28,7 @@ import android.location.LocationManager;
 
 public class Station implements Comparable <Station> {
     private Integer id;
-    private freeSlots, busySlots, slots;
+    private int freeSlots, busySlots, slots;
     private String name;
     private Location location;
     private Float distance;
