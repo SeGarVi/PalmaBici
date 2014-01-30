@@ -116,4 +116,8 @@ public class NetworkInformation {
     public Station get(Integer id) {
         return mappedNetwork.get(id);
     }
+    
+    public int getNumberStations() {
+        return (network == null)? 0 : network.size();
+    }
 }
