@@ -17,37 +17,46 @@
   (https://www.gnu.org/licenses/agpl-3.0.html).
     
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/frame_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
-    <!-- <fragment
-        android:id="@+id/map_fragment"
-        android:name="com.poguico.palmabici.StationMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" /> -->
-    <fragment
-       class="com.poguico.palmabici.map.StationMapFragment"
-       android:id="@+id/map_fragment"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent" />
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
         
-    <!-- <FrameLayout
-        android:id="@+id/map_fragment"
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" /> -->
-
-    <TextView
-        android:id="@+id/lastUpdatedLabel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:alpha="0.75"
-        android:gravity="center"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent" >
+        
+        <fragment
+	       class="com.poguico.palmabici.map.StationMapFragment"
+	       android:id="@+id/map_fragment"
+	       android:layout_width="match_parent"
+	       android:layout_height="match_parent" />
+	
+	    <TextView
+	        android:id="@+id/lastUpdatedLabel"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="bottom|center"
+	        android:alpha="0.75"
+	        android:gravity="center"
+	        android:paddingBottom="3dp"
+	        android:paddingTop="3dp"
+	        android:textSize="16dp"
+	        android:textStyle="bold" />
+        
+    </FrameLayout>
+        
+    <!-- The navigation drawer -->
+    <ListView android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@color/sidebar_item_separator"
+        android:dividerHeight="1dp"
+        android:background="@color/white"
+        android:paddingLeft="20dp"/>
 	    
-</FrameLayout>
+</android.support.v4.widget.DrawerLayout>

@@ -37,4 +37,7 @@
     <color name="list_favourite_item">#feff9f</color>
     <color name="list_not_favourite_item">#fff</color>
     <color name="bike_lane">#ff00ff00</color>
+    <color name="main_blue">#000597</color>
+    <color name="white">#fff</color>
+    <color name="sidebar_item_separator">#D0D0FF</color>
 </resources>

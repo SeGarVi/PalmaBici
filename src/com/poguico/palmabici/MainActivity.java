@@ -27,16 +27,14 @@ import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer.NetworkSynchronizationState;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
-import com.poguico.palmabici.widgets.CreditsDialog;
 import com.poguico.palmabici.widgets.NewFeaturesDialog;
+import com.poguico.palmabici.widgets.SidebarMenu;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -44,7 +42,6 @@ import android.widget.TextView;
 
 public class MainActivity extends    SherlockFragmentActivity
                           implements SynchronizableElement,OpenStreetMapConstants{
-	private static final String REPORT_URL = "https://github.com/SeGarVi/PalmaBici/issues/new";
 	
 	private ProgressDialog       dialog;	
 	private SharedPreferences    conf = null;
@@ -79,8 +76,9 @@ public class MainActivity extends    SherlockFragmentActivity
             editor.putInt(versionNumber, currentVersionNumber);
             editor.commit();
         }
-        
+
         setContentView(R.layout.main);
+        SidebarMenu.setDrawer(this);
     }
     
     @Override
@@ -105,22 +103,6 @@ public class MainActivity extends    SherlockFragmentActivity
             	if (syncState == NetworkSynchronizationState.ERROR) {
     				onUnsuccessfulNetworkSynchronization();
     			}
-                break;
-
-            case R.id.menu_credits:
-            	new CreditsDialog(this).show();
-                break;
-
-            case R.id.menu_preferences:
-            	Intent preferencesActivity =
-            	new Intent(this, PreferencesActivity.class);
-            	this.startActivity(preferencesActivity);
-                break;
-                
-            case R.id.menu_report:
-                Intent issueIntent = new Intent(Intent.ACTION_VIEW);
-                issueIntent.setData(Uri.parse(REPORT_URL));
-                startActivity(issueIntent);
                 break;
         }
         return super.onOptionsItemSelected(item);

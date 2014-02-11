@@ -194,7 +194,6 @@ public class NetworkStationAlarm extends IntentService
         edit.putInt(PREFS_SHOWN_STATION, station.getId());
         edit.commit();
 		
-		
 		mgr.notify(0, mBuilder.build());
 	}
 
