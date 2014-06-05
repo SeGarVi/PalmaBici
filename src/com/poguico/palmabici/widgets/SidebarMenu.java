@@ -32,7 +32,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +45,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SidebarMenu {
+public class SidebarMenu extends Fragment{
 
 	private static final String CONTACT_URL = "mailto:yayalose+palmabici@gmail.com";
 	private static final String GPLAY_URL = "https://play.google.com/store/apps/details?id=com.poguico.palmabici";
 	
-	private static List<SidebarElement> elements;
+	private static SidebarElement[] elements;
 	private static DrawerLayout mDrawerLayout;
     private static ListView mDrawerList;
     private static ActionBarDrawerToggle mDrawerToggle;
@@ -66,11 +68,11 @@ public class SidebarMenu {
     
 	private static class SidebarElementAdapter extends ArrayAdapter<SidebarElement> {
 		private final Context context;
-    	private final List<SidebarElement> sidebarElements;
+    	private final SidebarElement[] sidebarElements;
     	private int layoutResourceId = R.layout.drawer_list_item;
 		
 		protected SidebarElementAdapter(Context context,
-				List<SidebarElement> sidebarElements) {
+				SidebarElement[] sidebarElements) {
 			super(context, R.layout.drawer_list_item, sidebarElements);
 			this.context = context;
 			this.sidebarElements = sidebarElements;
@@ -90,8 +92,8 @@ public class SidebarMenu {
 	    		ImageView icon =(ImageView) drawerListItem.findViewById(R.id.sidebar_element_image);
 	    		TextView  text = (TextView) drawerListItem.findViewById(R.id.sidebar_element_text);
 	    		
-	    		icon.setImageDrawable(sidebarElements.get(position).icon);
-	    		text.setText(sidebarElements.get(position).name);
+	    		icon.setImageDrawable(sidebarElements[position].icon);
+	    		text.setText(sidebarElements[position].name);
 			}
     		
 			return drawerListItem;
@@ -135,51 +137,58 @@ public class SidebarMenu {
 			}
 		});
 
+	    ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
-        /*activity.getActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getActionBar().setHomeButtonEnabled(true);
-	    mDrawerToggle = new ActionBarDrawerToggle(
-                activity,
-                mDrawerLayout, 
-                R.drawable.ic_drawer, 
-                R.string.drawer_open, 
-                R.string.drawer_close 
-                ) {
+        mDrawerToggle = new ActionBarDrawerToggle(
+        		activity,                    /* host Activity */
+                mDrawerLayout,                    /* DrawerLayout object */
+                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
 
-            *//** Called when a drawer has settled in a completely closed state. *//*
+            /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
             }
 
-            *//** Called when a drawer has settled in a completely open state. *//*
+            /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
             }
-        };*/
+        };
 
-        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mDrawerToggle.syncState();
+            }
+        });
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 	}
 	
-	private static List<SidebarElement> initElements () {
-		ArrayList<SidebarElement> aList = new ArrayList<SidebarElement>();
-	    aList.add(new SidebarElement(
+	private static SidebarElement[] initElements () {
+		SidebarElement[] aList = new SidebarElement[5];
+	    aList[0] = new SidebarElement(
 		    	context.getResources().getDrawable(R.drawable.ic_action_settings),
-		    	context.getResources().getString(R.string.sidebar_list_settings)));
-	    aList.add(new SidebarElement(
+		    	context.getResources().getString(R.string.sidebar_list_settings));
+	    aList[1] = new SidebarElement(
 		    	context.getResources().getDrawable(R.drawable.ic_action_star),
-		    	context.getResources().getString(R.string.sidebar_list_qualify)));
-	    aList.add(new SidebarElement(
+		    	context.getResources().getString(R.string.sidebar_list_qualify));
+	    aList[2] = new SidebarElement(
 		    	context.getResources().getDrawable(R.drawable.ic_action_share),
-		    	context.getResources().getString(R.string.sidebar_list_spread)));
-	    aList.add(new SidebarElement(
+		    	context.getResources().getString(R.string.sidebar_list_spread));
+	    aList[3] = new SidebarElement(
 		    	context.getResources().getDrawable(R.drawable.ic_action_mail),
-		    	context.getResources().getString(R.string.sidebar_list_contact)));
-	    aList.add(new SidebarElement(
+		    	context.getResources().getString(R.string.sidebar_list_contact));
+	    aList[4] = new SidebarElement(
 		    	context.getResources().getDrawable(R.drawable.ic_action_user),
-		    	context.getResources().getString(R.string.sidebar_list_credits)));
-	    return Collections.unmodifiableList(aList);
+		    	context.getResources().getString(R.string.sidebar_list_credits));
+	    return aList;
 	}
 	
 	private static Runnable closeDrawerRunnable() {
