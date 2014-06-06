@@ -74,8 +74,13 @@ public class LocationSynchronizer {
 			}
 		};
 		
-		manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000L, 0, listener);
-		manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000L, 0, listener);
+		if (manager.getAllProviders().contains(LocationManager.GPS_PROVIDER)) {
+			manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000L, 0, listener);
+		}
+		
+		if (manager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
+			manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000L, 0, listener);
+		}
 		
 		if (location == null)
 			location =  manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
