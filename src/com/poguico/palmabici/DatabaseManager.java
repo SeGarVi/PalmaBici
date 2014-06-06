@@ -26,6 +26,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 	
@@ -66,10 +67,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
 	private static final String DELETE_LAST_UPDATE_TIME =
 			"DELETE FROM \"" + LAST_UPDATE_TABLE_NAME + "\"";
 	
-	private static DatabaseManager instance;
+	private static DatabaseManager instance = null;
 	
 	private DatabaseManager(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
+		Log.i("PalmaBici : DatabaseManager", "Constructor executing");
 	}
 
 	@Override
