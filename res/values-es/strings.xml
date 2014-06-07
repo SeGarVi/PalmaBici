@@ -57,17 +57,15 @@ Affero GNU General Public License for more details
     <string name="broken_slots">Anclajes averiados</string>
     <string name="add_to_favorites">Añadir a favoritos</string>
     <string name="remove_from_favorites">Eliminar de favoritos</string>
-    <string name="last_updated">Actualizado hace</string>
-    <string name="ago"></string>
-    <string name="more_than">más de</string>
-    <string name="there_is">Hay </string>
-    <string name="there_are">Hay </string>
-    <string name="bike_available_in"> bici disponbible en </string>
-    <string name="bikes_available_in"> bicis disponbibles en </string>
+    <string name="updated_more_than_days_ago">Actualizado hace más de %1$d d</string>
+    <string name="updated_more_than_hours_ago">Actualizado hace más de %1$d h</string>
+    <string name="updated_minutes_ago">Actualizado hace %1$d m</string>
+    <string name="updated_seconds_ago">Actualizado hace %1$d s</string>
+    <string name="available_bikes_singular">Hay 1 bici disponible en %1$s</string>
+    <string name="available_bikes_plural">Hay %1$d bicis disponibles en %2$s</string>
 	<string name="new_features_new">¡Nuevo!</string>
     <string name="new_features_1">Añade alarmas en las estaciones donde no quedan bicicletas libres, ¡PalmaBici te avisará en cuanto haya alguna!</string>
     <string name="new_features_2">Por defecto, si activas más de una alarma solo sonará la primera. En ese momento el resto se desactivarán.</string>
     <string name="new_features_3">También por defecto, para ahorrar batería y datos, si activas alguna alarma y no hay bicicletas libres antes de 20 minutos, las alarmas se desactivarán.</string>
     <string name="new_features_4">Este comportamiento se puede cambiar en las preferencias.</string>
-    <string name="new_features_5">Esta versión es una versión urgente para dar soporte a las nuevos datos de terceros. Puede contener algunos errores. En las próximas semanas se irán publicando nuevas actualitzaciones. Si al abrir la aplicación no se muestran las estaciones, actualiza manualmente con el botón situado arriba a la derecha.</string>
 </resources>

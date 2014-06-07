@@ -41,7 +41,7 @@ public class Formatter {
 	}
 	
 	public static String formatLastUpdated(long lastUpdated, Context context) {
-		String ret = context.getString(R.string.last_updated) + " ";
+		String ret;
 		
 		long interval = (Calendar.getInstance().getTimeInMillis() -
 							lastUpdated) / 1000;
@@ -49,38 +49,28 @@ public class Formatter {
 		long mins, hours, days;
 				
 		if ((days = interval/86400) > 0) {
-			ret += context.getString(R.string.more_than) + " " + days + " d" +
-					((!context.getString(R.string.ago).equals(""))?
-							" " + context.getString(R.string.ago) : "");
+			ret = context.getString(R.string.updated_more_than_days_ago, days);
 		} else if ((hours = interval/3600) > 0) {
-			ret += context.getString(R.string.more_than) + " " + hours + " h" +
-					((!context.getString(R.string.ago).equals(""))?
-							" " + context.getString(R.string.ago) : "");
+			ret = context.getString(R.string.updated_more_than_hours_ago, hours);
 		} else if ((mins = interval/60) > 0) {
-			ret += mins + " m" +
-					((!context.getString(R.string.ago).equals(""))?
-							" " + context.getString(R.string.ago) : "");
+			ret = context.getString(R.string.updated_minutes_ago, mins);
 		} else {
-			ret += (interval%60) + " s" +
-					((!context.getString(R.string.ago).equals(""))?
-							" " + context.getString(R.string.ago) : "");
+			ret = context.getString(R.string.updated_seconds_ago, (interval%60));
 		}
 		
 		return ret; 
 	}
 	
 	public static String formatBikesAvailableMessage(Context context, Station station) {
-		String message = "";
+		String message;
 		if (station.getBusySlots() > 1) {
-			message += context.getString(R.string.there_are) + " "
-			        +  station.getBusySlots() + " "
-			        +  context.getString(R.string.bikes_available_in) + " ";
+			message = context.getString(R.string.available_bikes_singular,
+										station.getName());
 		} else {
-			message += context.getString(R.string.there_is) + " "
-			        +  station.getBusySlots() + " "
-			        +  context.getString(R.string.bike_available_in) + " ";
+			message = context.getString(R.string.available_bikes_plural,
+					station.getBusySlots(),
+					station.getName());
 		}
-		message += station.getName();
 		
 		return message;
 	}
