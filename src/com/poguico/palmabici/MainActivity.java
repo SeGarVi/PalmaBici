@@ -18,6 +18,7 @@
 package com.poguico.palmabici;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -39,6 +40,7 @@ import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings.System;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 
@@ -54,6 +56,7 @@ public class MainActivity extends    SherlockFragmentActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	int savedVersionNumber;
+    	String language;
     	SharedPreferences sharedPref;
     	PackageInfo pi;
     	String initPrefs     = "palmabici_init_prefs";
@@ -73,7 +76,13 @@ public class MainActivity extends    SherlockFragmentActivity
             currentVersionNumber = pi.versionCode;
         } catch (Exception e) {}
  
-        if (currentVersionNumber > savedVersionNumber) {
+    	language = Locale.getDefault().getLanguage();
+        if (currentVersionNumber > savedVersionNumber &&
+        		(language.equals("de") ||
+        		 language.equals("zh") ||
+        		 language.equals("fr") ||
+        		 language.equals("ru"))) {
+        	
         	new NewFeaturesDialog(this).show();
             Editor editor   = sharedPref.edit();
             editor.putInt(versionNumber, currentVersionNumber);

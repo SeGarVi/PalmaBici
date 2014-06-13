@@ -64,5 +64,5 @@ Affero GNU General Public License for more details
   <string name="available_bikes_singular">Es ist ein Fahrrad in %1$s</string>
   <string name="available_bikes_plural">Es gibt %1$d Fahrräder in %2$s</string>
   <string name="new_features_new">Neu!</string>
-  <string name="new_features_1">Diese Übersetzungen ist in der Beta-Phase und noch nicht genehmigt wurde. Wenn Sie einige Fehler finden, kontaktieren Sie mich und ich werde es korrigieren. Sie können sogar ein Kollaborateur zu werden und zu übersetzen, wenn Sie wollen :)</string>
+  <string name="new_features_1">Diese Übersetzung ist in der Beta-Phase und noch nicht genehmigt wurde. Wenn Sie einige Fehler finden, kontaktieren Sie mich und ich werde es korrigieren. Sie können sogar ein Kollaborateur zu werden und zu übersetzen, wenn Sie wollen :)</string>
 </resources>

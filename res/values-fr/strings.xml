@@ -64,5 +64,5 @@ Affero GNU General Public License for more details
   <string name="available_bikes_singular">Il y a 1 velo disponible dans %1$s</string>
   <string name="available_bikes_plural">Il y a %1$d velos disponibles dans %2$s</string>
   <string name="new_features_new">Nouveau!</string>
-  <string name="new_features_1">Cette traductions est en phase bêta et n\'a pas été approuvé. Si vous trouvez une erreur, s\'il vous plaît contactez-moi et je vais corriger. Vous pouvez même devenir un collaborateur et de le traduire, si vous voulez :)</string>
+  <string name="new_features_1">Cette traduction est en phase bêta et n\'a pas été approuvé. Si vous trouvez une erreur, s\'il vous plaît contactez-moi et je vais corriger. Vous pouvez même devenir un collaborateur et de le traduire, si vous voulez :)</string>
 </resources>
