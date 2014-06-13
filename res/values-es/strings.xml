@@ -64,8 +64,4 @@ Affero GNU General Public License for more details
     <string name="available_bikes_singular">Hay 1 bici disponible en %1$s</string>
     <string name="available_bikes_plural">Hay %1$d bicis disponibles en %2$s</string>
 	<string name="new_features_new">¡Nuevo!</string>
-    <string name="new_features_1">Añade alarmas en las estaciones donde no quedan bicicletas libres, ¡PalmaBici te avisará en cuanto haya alguna!</string>
-    <string name="new_features_2">Por defecto, si activas más de una alarma solo sonará la primera. En ese momento el resto se desactivarán.</string>
-    <string name="new_features_3">También por defecto, para ahorrar batería y datos, si activas alguna alarma y no hay bicicletas libres antes de 20 minutos, las alarmas se desactivarán.</string>
-    <string name="new_features_4">Este comportamiento se puede cambiar en las preferencias.</string>
 </resources>

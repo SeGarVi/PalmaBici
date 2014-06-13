@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-
-Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
-This file is part of PalmaBici.
-PalmaBici is free software: you can redistribute it and/or modify
-it under the terms of the Affero GNU General Public License version 3
-as published by the Free Software Foundation.
-PalmaBici is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-Affero GNU General Public License for more details
-(https://www.gnu.org/licenses/agpl-3.0.html).
--->
-
-<!--
 Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
 This file is part of PalmaBici.
 PalmaBici is free software: you can redistribute it and/or modify
@@ -79,10 +65,6 @@ Affero GNU General Public License for more details
     <string name="available_bikes_singular">There is 1 bike available in %1$s</string>
     <string name="available_bikes_plural">There are %1$d bike available in %2$s</string>
     <string name="new_features_new">New!</string>
-    <string name="new_features_1">Add alarms in the stations where there is no bike available, PalmaBici will warn you when there is some!</string>
-    <string name="new_features_2">By default, if you set more than one alarm, only one will ring while the others will be disabled.</string>
-    <string name="new_features_3">Also by default, to save your battery and data plan, if you set some alarm and there is no bike in 20 minutes or less, the alarms will be disabled.</string>
-    <string name="new_features_4">This behavior can be changed in the preferences.</string>
-    <string name="new_features_5">This version is an urgent one built to support the new third party data structures. It may be a little buggy. New updates will appear the next weeks. If the stations are not shown in the beggining, please perform an update with the top-right button.</string>
-    
+    <string name="new_features_1">This translation is in beta phase and has not been approved. If you find some mistake, please contact me and I will correct it. You can even become a collaborator and translate it, if you want :)</string>
+
 </resources>
