@@ -14,7 +14,7 @@ Affero GNU General Public License for more details
 -->
 
 <resources>
-  <string name="app_name">这个翻译是在测试阶段，并没有被批准。如果您发现有错误，请与我联系，我会改正。你甚至可以成为一个合作者和翻译它，如果你想 :)</string>
+  <string name="app_name">PalmaBici</string>
   <string name="menu_report">报告</string>
   <string name="menu_preferences">设置</string>
   <string name="menu_credits">积分</string>
