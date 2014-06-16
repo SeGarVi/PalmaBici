@@ -67,7 +67,6 @@ public class NetworkStationAlarm extends IntentService
 	public static synchronized void addAlarm(Context c, Station station) {
 		if (stationAlarmsId == null) {
 			Log.i("NetworkStationAlarm", "Initializing alarms list");
-			//networkInformation = NetworkInformation.getInstance(context);
 			stationAlarmsId = new ArrayList<Integer>();
 			dbManager = DatabaseManager.getInstance(c);
 			context = c;

@@ -64,11 +64,11 @@ public class Formatter {
 	public static String formatBikesAvailableMessage(Context context, Station station) {
 		String message;
 		if (station.getBusySlots() > 1) {
-			message = context.getString(R.string.available_bikes_singular,
-										station.getName());
-		} else {
 			message = context.getString(R.string.available_bikes_plural,
 					station.getBusySlots(),
+					station.getName());
+		} else {
+			message = context.getString(R.string.available_bikes_singular,
 					station.getName());
 		}
 		
