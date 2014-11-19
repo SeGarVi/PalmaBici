@@ -43,6 +43,11 @@ import com.poguico.palmabici.util.Station;
 
 public class StationInfoWidget extends DefaultInfoWindow implements SynchronizableElement {
 
+	public interface StationInfoWidgetListener {
+		public void onOpen(Station station);
+		public void onClose();
+	}
+	
 	private NetworkInformation   networkInformation;
 	private NetworkSynchronizer  networkSynchronizer;
 	private LocationSynchronizer locationSynchronizer;
@@ -51,14 +56,18 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 	private Station              station;
 	private ImageButton          alarmButton;
 	private boolean             active;
+	private StationInfoWidgetListener listener;
 	
-	public StationInfoWidget (MapView mapView, SynchronizableElement parentActivity) {
+	public StationInfoWidget (MapView mapView,
+			SynchronizableElement parentActivity,
+			StationInfoWidgetListener listener) {
 		super(R.layout.station_info, mapView);
 		context = parentActivity.getSynchronizableActivity().getApplicationContext();
 		networkInformation = NetworkInformation.getInstance(context);
 		locationSynchronizer = LocationSynchronizer.getInstance(parentActivity);
 		networkSynchronizer  = NetworkSynchronizer.getInstance(context);
 		alarmButton = (ImageButton)mView.findViewById(R.id.alarmButton);
+		this.listener = listener;
 	}
 	
 	@Override
@@ -149,11 +158,13 @@ public class StationInfoWidget extends DefaultInfoWindow implements Synchronizab
 		});
 		
 		locationSynchronizer.addSynchronizableElement(this);
+		listener.onOpen(station);
 	}
 	
 	@Override
 	public void onClose() {
 		locationSynchronizer.detachSynchronizableElement(this);
+		listener.onClose();
 		super.onClose();
 	}
 

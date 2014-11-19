@@ -7,7 +7,9 @@ import java.util.Map;
 import com.poguico.palmabici.R;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -39,13 +41,13 @@ public class FloatingActionButton extends ImageButton {
     private static final Map<ButtonState, Integer> colors;
     static {
         Map<ButtonState, Integer> aMap = new HashMap<ButtonState, Integer>();
-	    aMap.put(ButtonState.UPDATE, R.color.accent);
-	    aMap.put(ButtonState.UPDATING, R.color.white);
-	    aMap.put(ButtonState.SUCCESSFUL, R.color.succesful_updating);
-	    aMap.put(ButtonState.FAILED, R.color.failed_updating);
-	    aMap.put(ButtonState.GOTO, R.color.main_blue);
-	    aMap.put(ButtonState.ALARM_DISABLED, R.color.disabled_alarm);
-	    aMap.put(ButtonState.ALARM_ENABLED, R.color.enabled_alarm);
+	    aMap.put(ButtonState.UPDATE, R.drawable.rounded_button_update);
+	    aMap.put(ButtonState.UPDATING, R.drawable.rounded_button_update);
+	    aMap.put(ButtonState.SUCCESSFUL, R.drawable.rounded_button_successful_update);
+	    aMap.put(ButtonState.FAILED, R.drawable.rounded_button_failed_update);
+	    aMap.put(ButtonState.GOTO, R.drawable.rounded_button_goto);
+	    aMap.put(ButtonState.ALARM_DISABLED, R.drawable.rounded_button_disabled_alarm);
+	    aMap.put(ButtonState.ALARM_ENABLED, R.drawable.rounded_button_enabled_alarm);
 	    colors = Collections.unmodifiableMap(aMap);
     }
 	
@@ -79,11 +81,44 @@ public class FloatingActionButton extends ImageButton {
 	
 	
 	
-	public void toggleState(ButtonState state) {
+	public void toggleState(final ButtonState state) {
+		final FloatingActionButton button = this;
 		this.state = state;
 		
-		((GradientDrawable)this.getBackground()).setColor(colors.get(state));
-		this.setImageDrawable(context.getDrawable(icons.get(state)));
+		if (state != ButtonState.SUCCESSFUL && state != ButtonState.FAILED) {
+			this.setBackground(context.getDrawable(colors.get(state)));
+			this.setImageDrawable(context.getDrawable(icons.get(state)));
+		} else {
+			AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+
+				@Override
+				protected void onPreExecute() {
+					// TODO Auto-generated method stub
+					button.setBackground(context.getDrawable(colors.get(state)));
+					button.setImageDrawable(context.getDrawable(icons.get(state)));
+					super.onPreExecute();
+				}
+
+				@Override
+				protected Void doInBackground(Void... params) {
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return null;
+				}
+				
+				@Override
+				protected void onPostExecute(Void result) {
+					button.toggleState(ButtonState.UPDATE);
+					super.onPostExecute(result);
+				}
+				
+			};
+			task.execute();
+ 		}
 	}
 	
 	public ButtonState getState() {

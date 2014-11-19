@@ -46,7 +46,7 @@
         <item name="android:actionBarStyle">@android:style/Theme.Holo.NoActionBar</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:fitsSystemWindows">true</item>
         
         <item name="android:background">#00599e</item>
         <item name="android:textColor" >#ffffff</item>
@@ -57,6 +57,9 @@
 	</style>
     
     <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
 	        <!-- Main theme colors -->
 	    <!--   your app branding color for the app bar -->
 	    <item name="colorPrimary">@color/primary</item>

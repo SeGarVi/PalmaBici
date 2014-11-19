@@ -23,22 +23,21 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.text.util.Linkify;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class CreditsDialog extends Dialog {
+public class CreditsDialog extends FragmentActivity {
 
 	Button closeButton, webButton, agplButton, codeButton;
 	Context context;
 	Dialog self;
 	
-	public CreditsDialog(Context context) {
-		super(context);
-		this.context = context;
-		self = this;
+	public CreditsDialog() {
+		this.context = getApplicationContext();
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setContentView(R.layout.credits_layout);	

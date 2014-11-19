@@ -59,6 +59,11 @@
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
+        <activity android:name="com.poguico.palmabici.widgets.CreditsDialog" >
+            <intent-filter>
+                <action android:name="android.intent.action.RUN" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name="com.poguico.palmabici.network.synchronizer.NetworkStationAlarm"

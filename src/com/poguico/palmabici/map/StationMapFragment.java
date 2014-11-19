@@ -57,6 +57,7 @@ import com.poguico.palmabici.util.BikeLane;
 import com.poguico.palmabici.util.NetworkInformation;
 import com.poguico.palmabici.util.Station;
 import com.poguico.palmabici.widgets.StationInfoWidget;
+import com.poguico.palmabici.widgets.StationInfoWidget.StationInfoWidgetListener;
 
 public class StationMapFragment extends Fragment implements
 		SynchronizableElement, OpenStreetMapConstants {
@@ -85,7 +86,12 @@ public class StationMapFragment extends Fragment implements
 	private ItemizedOverlayWithBubble<OverlayItem> markerOverlay;
 	private NetworkSynchronizer networkSync;
     private Context context;
+    private StationInfoWidgetListener activity;
 	
+    public void attach(StationInfoWidgetListener activity) {
+    	this.activity = activity;
+    }
+    
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -159,7 +165,7 @@ public class StationMapFragment extends Fragment implements
 			markerOverlay = new ItemizedOverlayWithBubble<OverlayItem>(this.getActivity(), 
 					getResources().getDrawable(R.drawable.marker0),
 					new ArrayList<OverlayItem>(mapMarkers.values()), mMapView,
-					new StationInfoWidget(mMapView, this));
+					new StationInfoWidget(mMapView, this, activity));
 			
 			mMapView.getOverlays().add(markerOverlay);
 		}

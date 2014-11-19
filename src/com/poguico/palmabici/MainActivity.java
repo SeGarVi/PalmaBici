@@ -20,22 +20,29 @@ package com.poguico.palmabici;
 import java.util.Calendar;
 
 import com.poguico.palmabici.map.OpenStreetMapConstants;
+import com.poguico.palmabici.map.StationMapFragment;
 import com.poguico.palmabici.notification.NotificationManager;
 import com.poguico.palmabici.navigationdrawer.NavigationDrawerFragment;
 import com.poguico.palmabici.navigationdrawer.NavigationDrawerFragment.NavigationDrawerCallbacks;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer.NetworkSynchronizationState;
+import com.poguico.palmabici.synchronizers.LocationSynchronizer;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
+import com.poguico.palmabici.util.Station;
+import com.poguico.palmabici.widgets.CreditsDialog;
 import com.poguico.palmabici.widgets.FloatingActionButton;
 import com.poguico.palmabici.widgets.FloatingActionButton.ButtonState;
 import com.poguico.palmabici.widgets.NewFeaturesDialog;
+import com.poguico.palmabici.widgets.StationInfoWidget.StationInfoWidgetListener;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -50,14 +57,21 @@ import android.widget.TextView;
 public class MainActivity extends    ActionBarActivity
                           implements SynchronizableElement,
                           			  OpenStreetMapConstants,
-                          			  NavigationDrawerCallbacks {
+                          			  NavigationDrawerCallbacks,
+                          			StationInfoWidgetListener {
 	
-	private ProgressDialog       dialog;	
+	private static final String EMAIL = "yayalose@gmail.com";
+	private static final String PLAY_URL = "https://play.google.com/store/apps/details?id=com.poguico.palmabici";
+	
+	private ProgressDialog       dialog;
 	private SharedPreferences    conf = null;
 	private NetworkSynchronizer  synchronizer;
 	private NetworkInformation   network;
 	private NavigationDrawerFragment navigationDrawerFragment;
 	private FloatingActionButton floatingActionButton;
+	private StationMapFragment mapFragment;
+	private Station activeStation;
+	private LocationSynchronizer locationSynchronizer;
 		
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,19 +118,36 @@ public class MainActivity extends    ActionBarActivity
 			
 			@Override
 			public void onClick(View v) {
-				NetworkSynchronizationState syncState;
-            	/*dialog = ProgressDialog.show(getApplicationContext(), "",
-            			getString(R.string.refresh_ongoing), true);*/
-            	NetworkSynchronizer synchronizer =
-            			NetworkSynchronizer.getInstance(getApplicationContext());
-            	syncState = synchronizer.sync(true);
-            	floatingActionButton.toggleState(ButtonState.ALARM_ENABLED);
-            	if (syncState == NetworkSynchronizationState.ERROR) {
-    				onUnsuccessfulNetworkSynchronization();
-    			}
+				if (floatingActionButton.getState() == ButtonState.UPDATE) {
+					NetworkSynchronizationState syncState;
+	            	/*dialog = ProgressDialog.show(getApplicationContext(), "",
+	            			getString(R.string.refresh_ongoing), true);*/
+	            	NetworkSynchronizer synchronizer =
+	            			NetworkSynchronizer.getInstance(getApplicationContext());
+	            	syncState = synchronizer.sync(true);
+	            	floatingActionButton.toggleState(ButtonState.UPDATING);
+	            	if (syncState == NetworkSynchronizationState.ERROR) {
+	    				onUnsuccessfulNetworkSynchronization();
+	    			}
+				} else if (floatingActionButton.getState() == ButtonState.FAILED) {
+					floatingActionButton.toggleState(ButtonState.UPDATE);
+				} else if (floatingActionButton.getState() == ButtonState.GOTO) {
+					Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
+						    Uri.parse("http://maps.google.com/maps?saddr=" + locationSynchronizer.getLocation().getLatitude() +","+ locationSynchronizer.getLocation().getLongitude() + "&daddr=" + activeStation.getLat() +","+ activeStation.getLong()));
+						startActivity(intent);
+				} else if (floatingActionButton.getState() == ButtonState.ALARM_ENABLED) {
+					synchronizer.removeAlarm(activeStation);
+					floatingActionButton.toggleState(ButtonState.ALARM_DISABLED);
+				} else if (floatingActionButton.getState() == ButtonState.ALARM_DISABLED) {
+					synchronizer.addAlarm(activeStation);
+					floatingActionButton.toggleState(ButtonState.ALARM_ENABLED);
+				}
 			}
 		});
 		
+		mapFragment = (StationMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+		mapFragment.attach(this);
+		locationSynchronizer = LocationSynchronizer.getInstance(this);
     }
     
     @Override
@@ -186,7 +217,7 @@ public class MainActivity extends    ActionBarActivity
 				 3000,
 				 this,
 				 false);
-    	floatingActionButton.toggleState(ButtonState.UPDATE);
+    	floatingActionButton.toggleState(ButtonState.SUCCESSFUL);
 	}
 
 	@Override
@@ -201,6 +232,7 @@ public class MainActivity extends    ActionBarActivity
 										 this,
 										 true);
 		showLastUpdateTime(true);
+		floatingActionButton.toggleState(ButtonState.FAILED);
 	}
 
 	@Override
@@ -227,7 +259,42 @@ public class MainActivity extends    ActionBarActivity
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		// TODO Auto-generated method stub
-		
+		if (position == 0) {
+			Intent preferencesActivity =
+					new Intent(this, PreferencesActivity.class);
+					this.startActivity(preferencesActivity);
+		} else if (position == 1) {
+			Intent creditsActivity =
+					new Intent(this, CreditsDialog.class);
+					this.startActivity(creditsActivity);
+		} else if (position == 2) {
+			Intent issueIntent = new Intent(Intent.ACTION_VIEW);
+			issueIntent.setData(Uri.parse(EMAIL));
+			startActivity(issueIntent);
+		} else if (position == 3) {
+			
+		} else if (position == 4) {
+			Intent issueIntent = new Intent(Intent.ACTION_VIEW);
+			issueIntent.setData(Uri.parse(PLAY_URL));
+			startActivity(issueIntent);
+		}
+	}
+
+	@Override
+	public void onOpen(Station station) {
+		activeStation = station;
+		if (synchronizer.hasAlarm(station.getId())) {
+			floatingActionButton.toggleState(ButtonState.ALARM_ENABLED);
+		} else if (station.getBusySlots() == 0) {
+			floatingActionButton.toggleState(ButtonState.ALARM_DISABLED);
+		} else {
+			floatingActionButton.toggleState(ButtonState.GOTO);
+		}
+	}
+
+	@Override
+	public void onClose() {
+		this.activeStation = null;
+		floatingActionButton.toggleState(ButtonState.UPDATE);
 	}
 }
