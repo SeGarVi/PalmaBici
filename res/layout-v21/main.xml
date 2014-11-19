@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+  Copyright 2012 Sergio Garcia Villalonga (yayalose@gmail.com)
+  
+  This file is part of PalmaBici.
+  
+  PalmaBici is free software: you can redistribute it and/or modify
+  it under the terms of the Affero GNU General Public License version 3
+  as published by the Free Software Foundation.
+  
+  PalmaBici is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  Affero GNU General Public License for more details
+  (https://www.gnu.org/licenses/agpl-3.0.html).
+    
+-->
+
+ <FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_blue"
+    android:fitsSystemWindows="true"
+	tools:context="com.poguico.palmabici.MainActivity">
+
+	<android.support.v4.widget.DrawerLayout
+	    android:id="@+id/drawer_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	        
+	    <RelativeLayout
+	        android:id="@+id/content_frame"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent" >
+	        
+	        <fragment
+		       class="com.poguico.palmabici.map.StationMapFragment"
+		       android:id="@+id/map_fragment"
+		       android:layout_width="match_parent"
+		       android:layout_height="match_parent" />
+		
+		    <TextView
+		        android:id="@+id/lastUpdatedLabel"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="bottom|center"
+		        android:alpha="0.75"
+		        android:gravity="center"
+		        android:paddingBottom="3dp"
+		        android:paddingTop="3dp"
+		        android:textSize="16sp"
+		        android:textStyle="bold" />
+		    
+		    <com.poguico.palmabici.widgets.FloatingActionButton
+				android:layout_width="56dp"
+				android:layout_height="56dp"
+				android:src="@drawable/ic_sync_black_24dp"
+				android:layout_alignParentBottom="true"
+				android:layout_alignParentRight="true"
+				android:layout_alignParentEnd="true"
+				android:layout_marginRight="16dp"
+				android:layout_marginEnd="16dp"
+				android:layout_marginBottom="16dp"
+				android:id="@+id/fab"
+				android:elevation="8dp"
+				android:background="@drawable/rounded_button" />
+		    
+	    </RelativeLayout>
+	        
+	    <!-- The navigation drawer -->
+	    <fragment
+	        android:id="@+id/navigation_drawer"
+	        android:name="com.poguico.palmabici.navigationdrawer.NavigationDrawerFragment"
+	        android:layout_width="fill_parent"
+	        android:layout_height="match_parent"
+	        android:layout_gravity="start"  
+	        android:choiceMode="singleChoice"
+	        android:divider="@color/sidebar_item_separator"
+	        android:dividerHeight="1dp"
+	        android:background="@color/white"
+	        tools:layout="@layout/fragment_navigation_drawer" />
+		    
+	</android.support.v4.widget.DrawerLayout>
+
+</FrameLayout>
