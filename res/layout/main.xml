@@ -60,7 +60,7 @@
 			android:layout_marginBottom="16dp"
 			android:id="@+id/fab"
 			android:elevation="8dp"
-			android:background="@drawable/rounded_button" />
+			android:background="@drawable/rounded_button_update" />
 	    
     </RelativeLayout>
         

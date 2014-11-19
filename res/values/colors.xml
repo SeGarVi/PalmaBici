@@ -47,8 +47,8 @@
     <color name="primary_dark">#00035F</color>
     <color name="accent">#8BFF16</color>
     
-    <color name="succesful_updating">#2DAE32</color>
-    <color name="failed_updating">#FF2F2F</color>
+    <color name="succesful_update">#2DAE32</color>
+    <color name="failed_update">#FF2F2F</color>
     <color name="disabled_alarm">#C4C4C4</color>
     <color name="enabled_alarm">#FFFF00</color>
 </resources>
