@@ -14,27 +14,36 @@
   limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-	android:layout_height="48dp" 
-	android:orientation="horizontal"
-	android:gravity="center_vertical" >
+    android:layout_height="48dp"
+    android:paddingLeft="16dp"
+    android:paddingStart="16dp"
+    android:paddingRight="16dp"
+    android:paddingEnd="16dp">
 
 	<ImageView 
 	    android:id="@+id/sidebar_element_image"
+	    android:contentDescription="@string/desc_list_item_icon"
 	    android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp"
+		android:layout_centerVertical="true" />
     
 	<TextView
 	    android:id="@+id/sidebar_element_text"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:layout_toEndOf="@id/sidebar_element_image"
+	    android:layout_toRightOf="@id/sidebar_element_image"
 	    android:gravity="center_vertical"
-	    android:paddingLeft="16dp"
-	    android:paddingRight="16dp"
-	    android:textColor="@color/main_blue"
+	    android:minHeight="56dp"
 	    android:textAppearance="?android:attr/textAppearanceMedium"
-	    />
+	    android:textColor="@color/sidebar_text_color"
+	    android:textSize="14sp"
+	    android:textStyle="bold" />
 	
-
-</LinearLayout>
+</RelativeLayout>

@@ -17,19 +17,19 @@
 
 package com.poguico.palmabici;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
-public class PreferencesActivity extends SherlockPreferenceActivity {
+public class PreferencesActivity extends PreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.
         addPreferencesFromResource(R.xml.peferences_layout);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 	}
 	
 	@Override

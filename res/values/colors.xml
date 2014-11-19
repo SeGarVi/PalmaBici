@@ -39,5 +39,16 @@
     <color name="bike_lane">#ff00ff00</color>
     <color name="main_blue">#000597</color>
     <color name="white">#fff</color>
+    <color name="sidebar_text_color">#757575</color>
     <color name="sidebar_item_separator">#D0D0FF</color>
+    <color name="list_background">#fff</color>
+    
+    <color name="primary">#000597</color>
+    <color name="primary_dark">#00035F</color>
+    <color name="accent">#8BFF16</color>
+    
+    <color name="succesful_updating">#2DAE32</color>
+    <color name="failed_updating">#FF2F2F</color>
+    <color name="disabled_alarm">#C4C4C4</color>
+    <color name="enabled_alarm">#FFFF00</color>
 </resources>

@@ -19,16 +19,17 @@ package com.poguico.palmabici;
 
 import java.util.Calendar;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.poguico.palmabici.map.OpenStreetMapConstants;
 import com.poguico.palmabici.notification.NotificationManager;
+import com.poguico.palmabici.navigationdrawer.NavigationDrawerFragment;
+import com.poguico.palmabici.navigationdrawer.NavigationDrawerFragment.NavigationDrawerCallbacks;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer;
 import com.poguico.palmabici.network.synchronizer.NetworkSynchronizer.NetworkSynchronizationState;
 import com.poguico.palmabici.util.Formatter;
 import com.poguico.palmabici.util.NetworkInformation;
+import com.poguico.palmabici.widgets.FloatingActionButton;
+import com.poguico.palmabici.widgets.FloatingActionButton.ButtonState;
 import com.poguico.palmabici.widgets.NewFeaturesDialog;
-import com.poguico.palmabici.widgets.SidebarMenu;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -38,15 +39,25 @@ import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class MainActivity extends    SherlockFragmentActivity
-                          implements SynchronizableElement,OpenStreetMapConstants{
+public class MainActivity extends    ActionBarActivity
+                          implements SynchronizableElement,
+                          			  OpenStreetMapConstants,
+                          			  NavigationDrawerCallbacks {
 	
 	private ProgressDialog       dialog;	
 	private SharedPreferences    conf = null;
 	private NetworkSynchronizer  synchronizer;
 	private NetworkInformation   network;
+	private NavigationDrawerFragment navigationDrawerFragment;
+	private FloatingActionButton floatingActionButton;
 		
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,13 +88,40 @@ public class MainActivity extends    SherlockFragmentActivity
             editor.commit();
         }
 
-        setContentView(R.layout.main);
-        SidebarMenu.setDrawer(this);
+
+		setContentView(R.layout.main);
+        
+        navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.navigation_drawer);
+
+		// Set up the drawer.
+		navigationDrawerFragment.setUp(R.id.navigation_drawer,
+				(DrawerLayout) findViewById(R.id.drawer_layout));
+		
+		floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+		
+		floatingActionButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				NetworkSynchronizationState syncState;
+            	/*dialog = ProgressDialog.show(getApplicationContext(), "",
+            			getString(R.string.refresh_ongoing), true);*/
+            	NetworkSynchronizer synchronizer =
+            			NetworkSynchronizer.getInstance(getApplicationContext());
+            	syncState = synchronizer.sync(true);
+            	floatingActionButton.toggleState(ButtonState.ALARM_ENABLED);
+            	if (syncState == NetworkSynchronizationState.ERROR) {
+    				onUnsuccessfulNetworkSynchronization();
+    			}
+			}
+		});
+		
     }
     
     @Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-    	getSupportMenuInflater().inflate(R.menu.main, menu);
+	public boolean onCreateOptionsMenu(Menu menu) {
+    	//getSupportMenuInflater().inflate(R.menu.main, menu);
     	return true;
 	}
 
@@ -148,6 +186,7 @@ public class MainActivity extends    SherlockFragmentActivity
 				 3000,
 				 this,
 				 false);
+    	floatingActionButton.toggleState(ButtonState.UPDATE);
 	}
 
 	@Override
@@ -184,5 +223,11 @@ public class MainActivity extends    SherlockFragmentActivity
 					 this,
 					 false);
 		}
+	}
+
+	@Override
+	public void onNavigationDrawerItemSelected(int position) {
+		// TODO Auto-generated method stub
+		
 	}
 }

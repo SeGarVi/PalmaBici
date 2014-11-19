@@ -32,8 +32,8 @@
   limitations under the License.
   -->
 
-<resources>
-    
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
@@ -42,11 +42,20 @@
         -->
     </style>
     
-    <style name="WelcomeTheme" parent="android:style/Theme.Holo.Light.NoActionBar">
+    <style name="WelcomeTheme" parent="AppBaseTheme">
+        <item name="android:actionBarStyle">@android:style/Theme.Holo.NoActionBar</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        
         <item name="android:background">#00599e</item>
         <item name="android:textColor" >#ffffff</item>
     </style>
-
+    
+    <style name="TranslucentActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <item name="android:background">@android:color/transparent</item>
+	</style>
+    
     <style name="AppTheme" parent="AppBaseTheme">
 	        <!-- Main theme colors -->
 	    <!--   your app branding color for the app bar -->
@@ -55,7 +64,8 @@
 	    <item name="colorPrimaryDark">@color/primary_dark</item>
 	    <!--   theme UI controls like checkboxes and text fields -->
 	    <item name="colorAccent">@color/accent</item>
-
+		<!-- <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item> -->
     </style>
-
+    
 </resources>
